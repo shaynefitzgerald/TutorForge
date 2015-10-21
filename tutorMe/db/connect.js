@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var schema = require('./schema/index');
 var config = JSON.parse(fs.readFileSync('./config.json'));
 var db_Connection = mongoose.connect(config.ApplicationURI);
-var db_ArchiveConnection = mongoose.connect(config.ArchiveURI);
+//var db_ArchiveConnection = mongoose.connect(config.ArchiveURI);
 exports.schema = {};
 schema.forEach(function(e){
   e.init(db_connection);
@@ -12,4 +12,4 @@ schema.forEach(function(e){
   });
 });
 exports.applicationConnection = db_Connection;
-exports.archiveConnection = db_ArchiveConnection;
+//exports.archiveConnection = db_ArchiveConnection;
