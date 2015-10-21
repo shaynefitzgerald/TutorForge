@@ -23,4 +23,5 @@ exports.init = function(db){
   exports.tutor_Student_FieldValidator = function(dat){
     return true;
   };
+  exports.exportedFields = ['tutor_Student', 'tutor_Student_FieldValidator'];
 };

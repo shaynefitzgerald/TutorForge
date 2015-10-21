@@ -6,7 +6,7 @@ var SchemaObject = {
   ID : { type : Number, unique : true },
   StudentRef : { type : mongoose.Schema.Types.ObjectId, ref : 'StudentModel'},
   Subject : String,
-  
+
 };
 
 exports.init = function(db){
@@ -14,4 +14,5 @@ exports.init = function(db){
   exports.tutor_Tutor_FieldValidator = function(dat){
     return true;
   };
+  exports.exportedFields = ['tutor_Tutor', 'tutor_Tutor_FieldValidator'];
 };

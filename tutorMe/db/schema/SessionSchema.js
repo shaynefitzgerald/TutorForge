@@ -18,4 +18,5 @@ exports.init = function(db){
   exports.tutor_Session_FieldValidator = function(dat){
     return true;
   };
+  exports.exportedFields = ['tutor_Session', 'tutor_Session_FieldValidator'];
 };

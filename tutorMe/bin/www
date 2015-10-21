@@ -58,8 +58,7 @@ function onError(error) {
     throw error;
   }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
+  var bind = typeof port === 'string' ? 'Pipe ' + port
     : 'Port ' + port;
 
   // handle specific listen errors with friendly messages
@@ -83,8 +82,7 @@ function onError(error) {
 
 function onListening() {
   var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
+  var bind = typeof addr === 'string' ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
