@@ -1,0 +1,23 @@
+{
+  "userManagement" : {
+    "api/" : [
+      {
+        "student/" : [
+          "get", "isTutor", "getCourses", "getProfessors"
+        ],
+        "tutor/" :[
+          "get", "schedule"
+        ],
+        "courses/" : [
+          "getCourses", "getStudentsInCourse", "getCourseByTitle",
+        ]
+      }
+    ]
+  },
+  "sessionManagment" : {
+    
+  },
+  "analytics" : {
+
+  },
+}
