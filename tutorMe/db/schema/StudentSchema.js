@@ -4,7 +4,7 @@ require('../mongoose-types/email.js').loadType(mongoose);
 
 var SchemaObject = {
   ID : { type : Number, unique : true },
-  OtherID : { type : Number, unique : true },
+  OtherID : Number,
   LastName : String,
   FirstName : String,
   FullName : String,
