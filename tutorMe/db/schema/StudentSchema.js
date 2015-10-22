@@ -7,6 +7,7 @@ var SchemaObject = {
   OtherID : { type : Number, unique : true },
   LastName : String,
   FirstName : String,
+  FullName : String,
   Gender : String,
   Major : String,
   Email : mongoose.Schema.Types.Email,

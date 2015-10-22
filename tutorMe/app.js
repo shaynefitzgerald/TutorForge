@@ -10,7 +10,7 @@ var users = require('./routes/users');
 
 var app = express();
 
-var database = require('./db/connect');
+var database = require('./db/connect').applicationConnection;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

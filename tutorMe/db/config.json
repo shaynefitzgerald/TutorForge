@@ -1,5 +1,4 @@
 {
   "ApplicationURI" : "mongodb://localhost:27017/TutorMe?poolSize=10",
   "ArchiveURI" : "mongodb://localhost:27017/TutorMeArchives?poolSize=10",
-  
 }
