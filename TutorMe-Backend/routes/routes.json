@@ -15,7 +15,17 @@
     ]
   },
   "sessionManagment" : {
-
+    "api/" : [
+      {
+        "tutor/": [
+          "getWeeklySchedule", "getMonthlySchedule","getPendingRequest"
+          ,"acceptPendingRequest","denyPendingRequest",
+        ],
+        "student/": [
+          "requestAppointment",
+        ]
+      }
+    ]
   },
   "analytics" : {
 

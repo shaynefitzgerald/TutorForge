@@ -3,9 +3,13 @@ var mongoose = require('mongoose');
 require('../mongoose-types/email.js').loadType(mongoose);
 
 var SchemaObject = {
+  isStudentTutor : Boolean,
   ID : { type : Number, unique : true },
-  StudentRef : { type : mongoose.Schema.Types.ObjectId, ref : 'StudentModel'},
+  StudentRef : { type : mongoose.Schema.Types.ObjectId, ref : 'StudentModel' },
   Subject : String,
+  Sessions : [
+    { type : mongoose.Schema.Types.ObjectId, ref : 'SessionModel' }
+  ],
 
 };
 

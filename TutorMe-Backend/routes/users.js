@@ -19,7 +19,7 @@ var db_getStudent = function(db, field, value, callback){
   var Student = db.model('StudentModel');
   var queryObject = {};
   queryObject[field] = value;
-  Student.find({queryObject}, function(err, res){
+  Student.find(queryObject, function(err, res){
     if(err) return callback(false, err);
     return callback(true, res);
   });
