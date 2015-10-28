@@ -49,7 +49,7 @@ exports.init = function(cas, db){
           error : "No StudentID provided"
         }));
 
-      return db_isTutor(req.__database, Number(query.StudentID),
+      return db_isTutor(db, Number(query.StudentID),
         function(success, result){
           if(!success){
             return res.end(JSON.stringify({
@@ -95,7 +95,7 @@ exports.init = function(cas, db){
           error : "Empty Search Values are not allowed."
       }));
     } else {
-      return db_getStudent(req.__database, query.field, query.value,
+      return db_getStudent(db, query.field, query.value,
       function(success, result){
         if(success){
           return res.end(JSON.stringify({
