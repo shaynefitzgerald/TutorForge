@@ -13,7 +13,7 @@ var app = express();
 
 var database = require('./db/connect').applicationConnection;
 
-//XXX: We probably won't need views since population occurs async
+//XXX: We probably won't need views since data population occurs async
 //verify this with Brandon
 
 // // view engine setup
@@ -44,9 +44,9 @@ app.use(session({
 
 var CASInstance = new CASAuthentication({
   cas_url : 'https://casdev.ad.stetson.edu/cas',
-  service_url : 'https://casdev.ad.stetson.edu',
+  service_url : 'https://tutorme.ad.stetson.edu',
   renew : true,
-  is_dev_mode : app.get('env') === 'development',
+  is_dev_mode : true,
   dev_mode_user : 'TestUser',
   session_name : 'cas_user',
   destroy_session : true,
@@ -56,11 +56,11 @@ var CASInstance = new CASAuthentication({
 var routes = require('./routes/index').init(CASInstance, database);
 var users = require('./routes/users').init(CASInstance, database);
 
-app.use('/', routes);
-app.use('/users', users);
+app.use('/api/', routes);
+app.use('/api/users', users);
 
-app.get('/authenticate', cas.bounce_redirect);
-app.get('/logout', CASInstance.logout);
+app.get('/api/authenticate', cas.bounce_redirect);
+app.get('/api/logout', CASInstance.logout);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

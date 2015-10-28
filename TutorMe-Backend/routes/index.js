@@ -4,7 +4,8 @@ var router = express.Router();
 exports.init = function(cas, db){
   /* GET home page. */
   router.get('/', cas.bounce, function(req, res, next) {
-    res.render('index', { title: 'Express' });
+    //TODO: serve index
+    res.end();
   });
   return router;
 };

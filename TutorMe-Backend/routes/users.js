@@ -81,6 +81,7 @@ exports.init = function(cas, db){
     var validFields = [
       "ID","OtherID","FirstName","LastName","FullName","Email"
     ];
+    //FIXME: change to req.body format
     var query = ( url.parse( req.url ).query !== undefined ) ?
       querystring.parse( url.parse( req.url ).query ) : {};
     if(!(query.field in validFields)){
