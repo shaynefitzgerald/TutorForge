@@ -10,7 +10,8 @@ var SchemaObject = {
   Sessions : [
     { type : mongoose.Schema.Types.ObjectId, ref : 'SessionModel' }
   ],
-
+  LifetimeSessionCount : Number,
+  LastArchivedSession : Date,
 };
 
 exports.init = function(db){

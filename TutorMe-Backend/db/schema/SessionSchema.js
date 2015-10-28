@@ -4,7 +4,6 @@ require('../mongoose-types/email.js').loadType(mongoose);
 
 var SchemaObject = {
   Start : Date,
-  End : Date,
   Subject : String,
   Location : String,
   Student : { type : mongoose.Schema.Types.ObjectId , ref : 'StudentModel' },

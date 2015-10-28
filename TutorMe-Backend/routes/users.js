@@ -24,88 +24,92 @@ var db_getStudent = function(db, field, value, callback){
     return callback(true, res);
   });
 };
-/*
-  gets if a student is registered as a tutor.
-  @param StudentID : Number //(800 number)
-  @returns {
-    success : Boolean,
-    //if error
-    error : String,
-    //if succeeded
-    result : Boolean,
-  }
-*/
-router.get('/isTutor', function(req, res, next){
-  res.responseType('application/json');
-  var query = ( url.parse( req.url ).query !== undefined ) ?
-    querystring.parse( url.parse( req.url ).query ) : {};
 
-  if(query.StudentID === undefined)
-    return res.end(JSON.stringify({
-      success : false,
-      error : "No StudentID provided"
-    }));
 
-  return db_isTutor(req.__database, Number(query.StudentID),
-    function(success, result){
-      if(!success){
+exports.init = function(cas, db){
+    /*
+      gets if a student is registered as a tutor.
+      @param StudentID : Number //(800 number)
+      @returns {
+        success : Boolean,
+        //if error
+        error : String,
+        //if succeeded
+        result : Boolean,
+      }
+    */
+    router.get('/isTutor', cas.block, function(req, res, next){
+      res.responseType('application/json');
+      var query = ( url.parse( req.url ).query !== undefined ) ?
+        querystring.parse( url.parse( req.url ).query ) : {};
+
+      if(query.StudentID === undefined)
         return res.end(JSON.stringify({
           success : false,
-          error : res
+          error : "No StudentID provided"
         }));
-      } else {
-        return res.end(JSON.stringify({
-          success : true,
-          result : result
-        }));
-      }
+
+      return db_isTutor(req.__database, Number(query.StudentID),
+        function(success, result){
+          if(!success){
+            return res.end(JSON.stringify({
+              success : false,
+              error : res
+            }));
+          } else {
+            return res.end(JSON.stringify({
+              success : true,
+              result : result
+            }));
+          }
+        });
     });
-});
-/*
-  gets a student record by a field specified by the client.
-  @param field : String // Field to search by
-  @param value : String // value to search by
-  @returns {
-    success : Boolean,
-    //if error,
-    error : String,
-    //if success,
-    result : [Object],
-  }
-*/
-router.get('/get', function(req, res, next){
-  res.responseType("application/json");
-  var validFields = [
-    "ID","OtherID","FirstName","LastName","FullName","Email"
-  ];
-  var query = ( url.parse( req.url ).query !== undefined ) ?
-    querystring.parse( url.parse( req.url ).query ) : {};
-  if(!(query.field in validFields)){
-    return res.end(JSON.stringify({
-      success : false,
-      error : "Invalid Field"
-    }));
-  } else if(query.value === ""){
-    //XXX:Maybe change to allow for empty searches?
-    return res.end(JSON.stringify({
+    /*
+      gets a student record by a field specified by the client.
+      @param field : String // Field to search by
+      @param value : String // value to search by
+      @returns {
+        success : Boolean,
+        //if error,
+        error : String,
+        //if success,
+        result : [Object],
+      }
+    */
+    router.get('/get', cas.block, function(req, res, next){
+    res.responseType("application/json");
+    var validFields = [
+      "ID","OtherID","FirstName","LastName","FullName","Email"
+    ];
+    var query = ( url.parse( req.url ).query !== undefined ) ?
+      querystring.parse( url.parse( req.url ).query ) : {};
+    if(!(query.field in validFields)){
+      return res.end(JSON.stringify({
         success : false,
-        error : "Empty Search Values are not allowed."
-    }));
-  } else {
-    return db_getStudent(req.__database, query.field, query.value,
-    function(success, result){
-      if(success){
-        return res.end(JSON.stringify({
-          success : true,
-          "result" : result
-        }));
-      } else {
-        return res.end(JSON.stringify({
+        error : "Invalid Field"
+      }));
+    } else if(query.value === ""){
+      //XXX:Maybe change to allow for empty searches?
+      return res.end(JSON.stringify({
           success : false,
-          error : result
-        }));
-      }
-    });
-  }
-});
-module.exports = router;
+          error : "Empty Search Values are not allowed."
+      }));
+    } else {
+      return db_getStudent(req.__database, query.field, query.value,
+      function(success, result){
+        if(success){
+          return res.end(JSON.stringify({
+            success : true,
+            "result" : result
+          }));
+        } else {
+          return res.end(JSON.stringify({
+            success : false,
+            error : result
+          }));
+        }
+      });
+    }
+  });
+  return router;
+};

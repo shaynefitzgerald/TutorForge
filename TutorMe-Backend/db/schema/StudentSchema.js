@@ -16,7 +16,8 @@ var SchemaObject = {
     { type : mongoose.Schema.Types.ObjectId, ref : 'SessionModel' }
   ],
   IsTutor : Boolean,
-  TutorRef : { type : mongoose.Schema.Types.ObjectId, ref : 'TutorModel' }
+  TutorRef : { type : mongoose.Schema.Types.ObjectId, ref : 'TutorModel' },
+  LastSubmittedFeedback : Date,
 };
 
 exports.init = function(db){
