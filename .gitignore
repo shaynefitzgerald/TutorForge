@@ -3,7 +3,7 @@
 
 ##Application Specific Ignores
 #session & debug logs
-
+cas-testing/
 .sessionKey
 npm_debug.log
 
