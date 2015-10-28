@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var schema = require('./schema/index');
+var schema = require('./schema/index').dir;
 var config = JSON.parse(fs.readFileSync('./config.json'));
 var db_Connection = mongoose.connect(config.ApplicationURI);
 //var db_ArchiveConnection = mongoose.connect(config.ArchiveURI);
