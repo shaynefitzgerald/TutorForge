@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var forceSSL = require('express-force-ssl');
 
 //CAS Imports
 var CASAuthentication = require('cas-authentication');
@@ -54,12 +55,15 @@ var CASInstance = new CASAuthentication({
 
 //router imports
 var routes = require('./routes/index').init(CASInstance, database);
-var users = require('./routes/users').init(CASInstance, database);
+var students = require('./routes/students').init(CASInstance, database);
+var tutors = require('./routes/tutors').init(CASInstance, database);
 
-app.use('/api/', routes);
-app.use('/api/users', users);
 
-app.get('/api/authenticate', cas.bounce_redirect);
+app.use('/', routes);
+app.use('/api/students', students);
+app.use('/api/tutors', tutors);
+
+app.get('/api/authenticate', CASInstance.bounce_redirect);
 app.get('/api/logout', CASInstance.logout);
 
 // catch 404 and forward to error handler

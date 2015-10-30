@@ -6,7 +6,7 @@
           "get", "isTutor", "getCourses", "getProfessors"
         ],
         "tutor/" :[
-          "get", "schedule"
+          "get", 
         ],
         "courses/" : [
           "getCourses", "getStudentsInCourse", "getCourseByTitle",
