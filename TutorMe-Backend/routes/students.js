@@ -194,7 +194,7 @@ exports.init = function(cas, db){
       }
     */
     router.get('/get', cas.block, function(req, res, next){
-    res.responseType("application/json");
+    res.type('application/json');
     var validFields = [
       "ID","OtherID","FirstName","LastName","FullName","Email"
     ];
