@@ -52,7 +52,7 @@ var db_getStudentProfessors = function(db, studentID, callback){
   if(typeof studentID !== "number"){
     return callback(false, "Invalid STudentID");
   }
-  var Courses = db.mondel('CourseModel');
+  var Courses = db.model('CourseModel');
 
   return Courses.find({'Students' : { $elemMatch : { StudentID : studentID } }},
   function(err, result){
