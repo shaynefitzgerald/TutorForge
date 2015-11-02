@@ -83,7 +83,7 @@ exports.init = function(cas, db){
       }
     */
     router.get('/isTutor', cas.block, function(req, res, next){
-      res.responseType('application/json');
+      res.type('application/json');
       var query = req.body;
 
       if(query.StudentID === undefined)
@@ -119,7 +119,7 @@ exports.init = function(cas, db){
       }
     */
     router.get('/getStudentProfessors', cas.block, function(req, res, next){
-      res.responseType('application/json');
+      res.type('application/json');
       var StudentID;
       var query = req.body;
       try {
@@ -156,7 +156,7 @@ exports.init = function(cas, db){
       }
     */
     router.get('/getStudentCourses', cas.block, function(req, res, next){
-      res.responseType('application/json');
+      res.type('application/json');
       var StudentID;
       var query = req.body;
       try {
