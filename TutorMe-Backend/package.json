@@ -1,22 +1,22 @@
 {
-    "name": "TutorMe-Backend",
-    "version": "0.5.0",
-    "description": "Backend API server for TutorMe at Stetson University",
-    "main": "app.js",
-    "dependencies": {
-      "body-parser": "*",
-      "cas-authentication": "*",
-      "cookie-parser": "*",
-      "debug": "*",
-      "express": "*",
-      "express-force-ssl": "*",
-      "express-session": "*",
-      "jade": "*",
-      "mongoose": "*",
-      "morgan": "*",
-      "node-markdown": "*",
-      "serve-favicon": "*"
-    },
+  "name": "TutorMe-Backend",
+  "version": "0.5.0",
+  "description": "Backend API server for TutorMe at Stetson University",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "*",
+    "cas-authentication": "*",
+    "cookie-parser": "*",
+    "debug": "*",
+    "express": "*",
+    "express-force-ssl": "*",
+    "express-session": "*",
+    "jade": "*",
+    "mongoose": "*",
+    "morgan": "*",
+    "node-markdown": "~0.1.1",
+    "serve-favicon": "*"
+  },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

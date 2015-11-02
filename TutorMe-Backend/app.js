@@ -49,7 +49,7 @@ var CASInstance = new CASAuthentication({
   service_url : 'https://tutorme.ad.stetson.edu',
   cas_version :'2.0',
   renew : false,
-  is_dev_mode : true,
+  is_dev_mode : false,
   dev_mode_user : 'TestUser',
   session_name : 'cas_user',
   destroy_session : true,
