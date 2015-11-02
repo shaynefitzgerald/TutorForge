@@ -31,6 +31,21 @@ fs.readFile('/import/coursescut.json', 'utf8', function (err, data) {
   coursesJson = JSON.parse(data);
 });
 
-//Load Database schema into mongoose model
+//Load students and courses model
 var Student = db.model('StudentModel');
-var Courses = db.model('CoursesModel'); 
+var Courses = db.model('CoursesModel');
+var studentAdd = new Student({
+  ID : dat[ 'ID' ],
+  OtherID : dat[ 'OtherID' ],
+  LastName : dat[ 'LastName' ],
+  FirstName : dat[ 'FirstName' ],
+  FullName : dat[ 'FullName' ],
+  Gender : dat[ 'Gender' ],
+  Major : dat[ 'Major' ],
+  Email : dat[ 'Email' ],
+});
+
+studentAdd.save(function(err){
+  if (err) return callback(err,false);
+  return callback(null,true);
+});
