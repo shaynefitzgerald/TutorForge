@@ -54,3 +54,4 @@ studentJsonArray.forEach(function(json){
   });
 
 });
+//:TODO Modify courses and add them to DB
