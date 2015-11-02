@@ -7,5 +7,8 @@ exports.init = function(cas, db){
     //TODO: serve index
     res.end();
   });
+  router.get('/user', cas.bounce, function(req, res, next){
+    return res.end(JSON.stringify({ username : req.session.cas_user }));
+  });
   return router;
 };

@@ -21,8 +21,8 @@ app.set('port', port);
  */
 
  var options = {
-   key: fs.readFileSync('root/testkeys/key.pem'),
-   cert: fs.readFileSync('root/testkeys/csr.cert')
+   key: fs.readFileSync('/root/testkeys/key.pem'),
+   cert: fs.readFileSync('/root/testkeys/csr.cert')
  };
 
 /**
@@ -30,7 +30,7 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-var httpsServer = https.createServer(options, app)
+var httpsServer = https.createServer(options, app);
 
 /**
  * Listen on provided port, on all network interfaces.

@@ -46,7 +46,8 @@ app.use(session({
 var CASInstance = new CASAuthentication({
   cas_url : 'https://casdev.ad.stetson.edu/cas',
   service_url : 'https://tutorme.ad.stetson.edu',
-  renew : true,
+  cas_version :'2.0',
+  renew : false,
   is_dev_mode : true,
   dev_mode_user : 'TestUser',
   session_name : 'cas_user',
