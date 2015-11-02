@@ -8,4 +8,4 @@ for(var x = 0; x < files.length; x++){
     exports.dir.push(require(__dirname  +'/'+ files[x]));
   }
 }
-console.log(exports.dir);
+//console.log(exports.dir);

@@ -1,6 +1,7 @@
 var express = require('express');
-var router = express.Router();
+
 
 exports.init = function(cas, db){
-  
+  var router = express.Router();
+  return router;
 };

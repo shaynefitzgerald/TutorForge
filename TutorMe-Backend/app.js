@@ -23,6 +23,7 @@ var database = require('./db/connect').applicationConnection;
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -30,11 +31,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 var loadSecret = function(path){
-  try{
-    return require('fs').readFileSync(path);
-  } catch (e){
+  // try{
+  //   return require('fs').readFileSync(path).toString();
+  // } catch (e){
     return "GENERATE-A-SESSION-KEY";
-  }
+  //}
 };
 
 app.use(session({
@@ -52,6 +53,15 @@ var CASInstance = new CASAuthentication({
   dev_mode_user : 'TestUser',
   session_name : 'cas_user',
   destroy_session : true,
+});
+
+app.use(forceSSL);
+
+app.set('forceSSLOptions', {
+  enable301Redirects: true,
+  trustXFPHeader: false,
+  httpsPort: 443,
+  sslRequiredMessage: 'SSL Required.'
 });
 
 //router imports
@@ -81,10 +91,13 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
+    res.end(JSON.stringify({
+      'error' : true ,
+      "result" : {
+        message: err.message,
+        error: err
+      }
+    }));
   });
 }
 
@@ -92,10 +105,11 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+  res.end(JSON.stringify({
+    'error' : true ,
+    "result" : {
+    }
+  }));
 });
 
 

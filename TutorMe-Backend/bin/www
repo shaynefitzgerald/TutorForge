@@ -8,12 +8,12 @@ var app = require('../app');
 var debug = require('debug')('tutorMe:server');
 var http = require('http');
 var https = require('https');
-
+var fs = require('fs');
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '80');
 app.set('port', port);
 
 /**
@@ -22,7 +22,7 @@ app.set('port', port);
 
  var options = {
    key: fs.readFileSync('/root/testkeys/key.pem'),
-   cert: fs.readFileSync('/root/testkeys/csr.cert')
+   cert: fs.readFileSync('/root/testkeys/server.crt')
  };
 
 /**
@@ -36,10 +36,12 @@ var httpsServer = https.createServer(options, app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(80);
 server.on('error', onError);
 server.on('listening', onListening);
-
+httpsServer.listen(443);
+httpsServer.on('error', onError);
+httpsServer.on('listening', onListening);
 /**
  * Normalize a port into a number, string, or false.
  */
