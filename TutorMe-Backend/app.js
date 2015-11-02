@@ -24,6 +24,9 @@ var database = require('./db/connect').applicationConnection;
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
+var fs = require('fs');
+var config = fs.readFileSync(__dirname + '/config/development.json');
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -55,15 +58,18 @@ var CASInstance = new CASAuthentication({
   destroy_session : true,
 });
 
-app.use(forceSSL);
+if(config.isCertificateSelfSigned){
 
-app.set('forceSSLOptions', {
-  enable301Redirects: true,
-  trustXFPHeader: false,
-  httpsPort: 443,
-  sslRequiredMessage: 'SSL Required.'
-});
+  app.use(forceSSL);
 
+  app.set('forceSSLOptions', {
+    enable301Redirects: true,
+    trustXFPHeader: false,
+    httpsPort: 443,
+    sslRequiredMessage: 'SSL Required.'
+  });
+
+}
 //router imports
 var routes = require('./routes/index').init(CASInstance, database);
 var students = require('./routes/students').init(CASInstance, database);
