@@ -53,11 +53,7 @@
 <li>IsTutor : Boolean</li>
 </ul>
 <p><strong>Example Query</strong></p>
-<pre><code>    /api/<span class="hljs-keyword">get</span>
-    {
-        <span class="hljs-string">"field"</span>: <span class="hljs-string">"FullName"</span>,
-        <span class="hljs-string">"value"</span> : <span class="hljs-string">"Some User"</span>,
-    }
+<pre><code>    /api/<span class="hljs-preprocessor">get</span>?<span class="hljs-preprocessor">field</span><span class="hljs-label">=FullName</span>&amp;value<span class="hljs-label">=Some</span>%<span class="hljs-number">20</span>User
 </code></pre>
 <p><strong>Expected Response</strong></p>
 <p><em><strong>On Success</strong></em></p>
@@ -75,7 +71,7 @@
     "<span class="hljs-attribute">result</span>" : <span class="hljs-value"><span class="hljs-string">"Some Error String"</span>
 </span>}
 </code></pre>
-<h3><a id="getStudentCourses__https_get_83"></a>getStudentCourses  <code>[https get]</code></h3>
+<h3><a id="getStudentCourses__https_get_79"></a>getStudentCourses  <code>[https get]</code></h3>
 <pre><code>/api/students/getStudentCourses/
 </code></pre>
 <p>Used to get the courses a student is taking. Resolves ObjectID to full object values, returning all non-database specific values from the appropriate document. Does NOT populate students, use <code>/api/courses/getStudentsInCourse</code> instead.</p>
@@ -86,10 +82,7 @@
 <li>Administrators/Site Admins may poll any student.</li>
 </ul>
 <p><strong>Example Query</strong></p>
-<pre><code>    <span class="hljs-regexp">/api/</span>students<span class="hljs-regexp">/getStudentCourses/</span>
-    {
-        <span class="hljs-string">"StudentID"</span> : <span class="hljs-number">800987654</span>
-    }
+<pre><code>    /api/students/getStudentCourses?StudentID=<span class="hljs-number">800987654</span>
 </code></pre>
 <p><strong>Expected Response</strong></p>
 <p><em><strong>On Success</strong></em></p>
@@ -113,8 +106,8 @@
     "<span class="hljs-attribute">result</span>" : <span class="hljs-value"><span class="hljs-string">"Some Error String"</span>
 </span>}
 </code></pre>
-<h3><a id="getStudentCourses__https_get_127"></a>getStudentCourses  <code>[https get]</code></h3>
-<pre><code>/api/students/getStudentProfessors/
+<h3><a id="getStudentCourses__https_get_120"></a>getStudentCourses  <code>[https get]</code></h3>
+<pre><code>/api/students/getStudentProfessors
 </code></pre>
 <p>Used to get the professors for courses a student is taking.</p>
 <p><strong>Permissions</strong></p>
@@ -124,10 +117,7 @@
 <li>Administrators/Site Admins may poll any student.</li>
 </ul>
 <p><strong>Example Query</strong></p>
-<pre><code>    <span class="hljs-regexp">/api/</span>students<span class="hljs-regexp">/getStudentProfessors/</span>
-    {
-        <span class="hljs-string">"StudentID"</span> : <span class="hljs-number">800987654</span>
-    }
+<pre><code>    /api/students/getStudentProfessors?StudentID=<span class="hljs-number">800987654</span>
 </code></pre>
 <p><strong>Expected Response</strong></p>
 <p><em><strong>On Success</strong></em></p>

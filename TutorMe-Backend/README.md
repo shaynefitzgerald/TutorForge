@@ -54,11 +54,7 @@ Used to get information about a student, by a field provided by the database. Re
 
 **Example Query**
 ```
-    /api/get
-    {
-        "field": "FullName",
-        "value" : "Some User",
-    }
+    /api/get?field=FullName&value=Some%20User
 ```
 **Expected Response**
 
@@ -93,10 +89,7 @@ Used to get the courses a student is taking. Resolves ObjectID to full object va
 
 **Example Query**
 ```
-    /api/students/getStudentCourses/
-    {
-        "StudentID" : 800987654
-    }
+    /api/students/getStudentCourses?StudentID=800987654
 ```
 **Expected Response**
 
@@ -126,7 +119,7 @@ Used to get the courses a student is taking. Resolves ObjectID to full object va
 ```
 
 ### getStudentCourses  `[https get]`
-    /api/students/getStudentProfessors/
+    /api/students/getStudentProfessors
 
 Used to get the professors for courses a student is taking.
 
@@ -137,10 +130,7 @@ Used to get the professors for courses a student is taking.
 
 **Example Query**
 ```
-    /api/students/getStudentProfessors/
-    {
-        "StudentID" : 800987654
-    }
+    /api/students/getStudentProfessors?StudentID=800987654
 ```
 **Expected Response**
 

@@ -84,7 +84,8 @@ exports.init = function(cas, db){
     */
     router.get('/isTutor', cas.block, function(req, res, next){
       res.type('application/json');
-      var query = req.body;
+      var query = ( url.parse( req.url ).query !== null ) ?
+       querystring.parse( url.parse( req.url ).query ) : {};
 
       if(query.StudentID === undefined)
         return res.end(JSON.stringify({
@@ -121,7 +122,8 @@ exports.init = function(cas, db){
     router.get('/getStudentProfessors', cas.block, function(req, res, next){
       res.type('application/json');
       var StudentID;
-      var query = req.body;
+      var query = ( url.parse( req.url ).query !== null ) ?
+       querystring.parse( url.parse( req.url ).query ) : {};
       try {
         StudentID = Number(query.StudentID);
       } catch (e){
@@ -158,7 +160,8 @@ exports.init = function(cas, db){
     router.get('/getStudentCourses', cas.block, function(req, res, next){
       res.type('application/json');
       var StudentID;
-      var query = req.body;
+      var query = ( url.parse( req.url ).query !== null ) ?
+       querystring.parse( url.parse( req.url ).query ) : {};
       try {
         StudentID = Number(query.StudentID);
       } catch (e){
@@ -198,7 +201,8 @@ exports.init = function(cas, db){
     var validFields = [
       "ID","OtherID","FirstName","LastName","FullName","Email"
     ];
-    var query = req.body;
+    var query = ( url.parse( req.url ).query !== null ) ?
+     querystring.parse( url.parse( req.url ).query ) : {};
     if(!(query.field in validFields)){
       return res.end(JSON.stringify({
         success : false,
