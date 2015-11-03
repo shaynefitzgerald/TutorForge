@@ -42,9 +42,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <ul class="nav">
                         <li class="active"><a href="#"><i><img src="images/user.png" alt="" /></i>Home</a></li>
                         <!--								<li><a href="#"><i><img src="images/settings.png" alt="" /></i>Settings</a></li>-->
-                        <li><a href="#"><i><img src="images/mail.png" alt="" /></i>Requests <span class="messages">5</span></a></li>
-                        <li><a class="modal-trigger" href="#appointments_modal"><i><img src="images/events.png" alt="" /></i>Appointments <span class="messages">8</span></a></li>
+                        <li><a class="dropdown-button" href="#" data-activates="requests_dropdown"><i><img src="images/mail.png" alt="" /></i>Requests <span class="messages">1</span></a></li>
+                        <li><a class="modal-trigger" href="#appointments_modal"><i><img src="images/events.png" alt="" /></i>Add Misc Appointment</a></li>
                         <li><a class="modal-trigger" id="sessionButton" href="#session_modal"><i><img src="images/loginArrow.png" alt="" /></i>Start Session</a></li>
+
+                        <!-- Dropdown Structure for requests button -->
+                        <ul id='requests_dropdown' class='dropdown-content'>
+                            <li><a class="modal-trigger" href="#viewRequests_modal">View Requests</a></li>
+                            <li><a class="modal-trigger" href="#makeRequests_modal">Make Request</a></li>
+                        </ul>
+
+
+
 
                         <!-- Modal Structure  for tutor session-->
                         <div id="session_modal" class="modal">
@@ -124,8 +133,78 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                             <button type="button" onclick="addAppointment()">Add Appointment</button>
                                         </div>
 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                            </div>
+                        </div>
 
 
+
+                        <!-- Modal Structure for viewing requests-->
+                        <div id="viewRequests_modal" class="modal">
+                            <div class="modal-content">
+                                <div class="container">
+                                    <div class="row">
+
+                                        <span class="col s12 center-align"><b>Requests</b></span>
+                                        <div class="col s12 center-align">&nbsp;</div>
+
+                                        <div class="col s8">
+                                            Student1 Wants an appointment on <b>10/27/15</b> at <b>6:00 PM</b>
+                                        </div>
+                                        
+                                        <div class="col s2">
+                                            <button type="button" onclick="addAppointment()">Accept</button>
+                                        </div>
+                                        
+                                        <div class="col s2">
+                                            <button type="button" onclick="rejectAppointment()">Reject</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                            </div>
+                        </div>
+
+
+
+                        <!-- Modal Structure for making requests-->
+                        <div id="makeRequests_modal" class="modal">
+                            <div class="modal-content">
+                                <div class="container">
+                                    <div class="row">
+
+                                        <span class="col s12 center-align"><b>Request Appointment</b></span>
+                                        <div class="col s12 center-align">&nbsp;</div>
+                                        
+                                        <div class="col s4 center-align">&nbsp;</div>
+                                        <div class="col s4 center-align">
+                                            <input type="date" class="datepicker center-align" placeholder="Date" id="date_box2">
+                                        </div>
+                                        <div class="col s12 center-align">&nbsp;</div>
+
+
+                                        <div class="col s4 center-align">&nbsp;</div>
+                                        <div class="col s4 center-align">
+                                            <input type="text" class="timepicker center-align" placeholder="Time" id="time_box2">
+                                        </div>
+                                        <div class="col s4 center-align">&nbsp;</div>
+                                        <div class="col s12 center-align">&nbsp;</div>
+                                        
+                                        <div class="col s12 center-align">List of tutors available this day/time</div>
+                                        <div class="col s12 center-align">&nbsp;</div>
+                                        
+                                        <div class="col s12 center-align">
+                                            <button type="button" onclick="requestAppointment()">Request Appointment</button>
+                                        </div>
+                                        
+                                        
 
 
 
@@ -504,6 +583,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             autoclose: true
         });
 
+        $('.dropdown-button').dropdown({
+            inDuration: 300,
+            outDuration: 225,
+            //constrain_width: false, // Does not change width of dropdown to that of the activator
+            hover: true, // Activate on hover
+            gutter: 0, // Spacing from edge
+            belowOrigin: false, // Displays dropdown below the button
+            alignment: 'left' // Displays dropdown with edge aligned to the left of button
+        });
+
+
+
         function toggleProfessors() {
             if (document.getElementById("professor_toggle").checked) {
                 document.getElementById("professor_box").innerHTML = "List of Professors";
@@ -513,7 +604,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 document.getElementById("professor_box").innerHTML = "";
             }
         }
-        
+
 
 
         function loginStudent() {
@@ -621,13 +712,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 
             }
-            
+
         }
-              
+
         function addAppointment() {
-                document.getElementById("date_box").value = "";
-                document.getElementById("time_box").value = "";
-                document.getElementById("reason_box").value = "";
+            document.getElementById("date_box").value = "";
+            document.getElementById("time_box").value = "";
+            document.getElementById("reason_box").value = "";
         }
     </script>
 </body>
