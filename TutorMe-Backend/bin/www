@@ -22,7 +22,7 @@ app.set('port', port);
 
  var options = {
    key: fs.readFileSync('/root/tutorme.stetson.edu.ssl/tutorme.stetson.edu.key'),
-   cert: fs.readFileSync('/root/testkeys/tutorme.stetson.edu.csr')
+   cert: fs.readFileSync('/root/tutorme.stetson.edu.ssl/35005776576718d6.crt')
  };
 
 /**
