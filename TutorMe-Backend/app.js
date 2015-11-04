@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var forceSSL = require('express-force-ssl');
+var lsRoutes = require('express-ls-routes');
 
 //CAS Imports
 var CASAuthentication = require('cas-authentication');
@@ -49,7 +50,7 @@ app.use(session({
 
 var CASInstance = new CASAuthentication({
   cas_url : 'https://casdev.ad.stetson.edu/cas',
-  service_url : 'https://tutorme.ad.stetson.edu',
+  service_url : 'https://tutorme.stetson.edu',
   cas_version :'2.0',
   renew : false,
   is_dev_mode : false,
@@ -82,6 +83,10 @@ app.use('/api/tutors', tutors);
 
 app.get('/api/authenticate', CASInstance.bounce_redirect);
 app.get('/api/logout', CASInstance.logout);
+
+app.get('/routes', lsRoutes(app), function(req, res){
+  res.json(200, req.routes);
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
