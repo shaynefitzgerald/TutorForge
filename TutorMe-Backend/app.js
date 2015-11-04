@@ -87,7 +87,7 @@ app.get('/api/logout', CASInstance.logout);
 app.get('/api/docs/routes', CASInstance.bounce, function(req, res){
   res.type('application/json');
   console.log(app._router.stack);
-  res.end(JSON.stringify(app._router.stack));
+  res.end(JSON.stringify(app._router.stack, null, 2));
 });
 
 // catch 404 and forward to error handler
