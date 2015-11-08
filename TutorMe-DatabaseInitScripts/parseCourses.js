@@ -11,7 +11,7 @@ var studentArray = [];
  * Read unparsed courses json file
  */
 
-var dat = fs.readFileSync('/import/json/coursescut.json', 'utf8')
+var dat = fs.readFileSync('/import/json/coursescut.json', 'utf8');
 coursesJsonArray = JSON.parse(dat);
 
 /*
@@ -19,7 +19,7 @@ coursesJsonArray = JSON.parse(dat);
 */
 var checkForCourse = function(title){
   for (var i = 0; i < remadeCourse.length; i++){
-    if (remadeCourse[i].CourseTitle === json.CourseTitle){
+    if (remadeCourse[i].CourseTitle === title){
       return true;
     }
   }
@@ -33,7 +33,7 @@ var checkForCourse = function(title){
 coursesJsonArray.forEach(function(json){
   var title = json.CourseTitle;
   var inArray = checkForCourse(title);
-  
+
   if (!inArray){
     var newcourse = {};
      newcourse[json.CourseTitle] = {
