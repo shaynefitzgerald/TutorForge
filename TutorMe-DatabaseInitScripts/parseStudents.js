@@ -3,10 +3,9 @@ var fs = require('fs');
 var schema = require('./schema/index').dir;
 var config = JSON.parse(require('fs').readFileSync(__dirname + '/config.json'));
 var db_Connection = mongoose.connect(config.ApplicationURI);
-//db_Connection.on('error', console.error.bind(console, 'connection error:'));
+db_Connection.on('error', console.error.bind(console, 'connection error:'));
 
-var studentJsonArray;
-var coursesJsonArray;
+var studentJsonArray = [];
 
 /* :TODO Loop through directory
 var jsonfiles;
@@ -20,20 +19,13 @@ jsonfiles.forEach(function(file){
 });
 */
 
-//Loads coursescut.json and studentcut.json into an Array of JSON obejcts
-fs.readFile('/import/studentcut.json', 'utf8', function (err, data) {
-  if (err) throw err;
-  studentJsonArray = JSON.parse(data);
-});
+//Loads studentcut.json into an Array of JSON obejcts
+var dat = fs.readFileSync('/import/json/coursescut.json', 'utf8')
+studentJsonArray = JSON.parse(dat);
 
-fs.readFile('/import/coursescut.json', 'utf8', function (err, data) {
-  if (err) throw err;
-  coursesJsonArray = JSON.parse(data);
-});
 
-//Load students and courses model
+//Load student model
 var Student = db.model('StudentModel');
-var Courses = db.model('CoursesModel');
 
 //Loops through array of JSON obejcts and adds each one
 studentJsonArray.forEach(function(json){
@@ -52,6 +44,4 @@ studentJsonArray.forEach(function(json){
     if (err) return callback(err,false);
     return callback(null,true);
   });
-
 });
-//:TODO Modify courses and add them to DB
