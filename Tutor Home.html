@@ -29,6 +29,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script src="js/clndr.js"></script>
     <script src="js/site.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.min.css">
+
     <!----End Calender -------->
 </head>
 
@@ -155,11 +159,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         <div class="col s8">
                                             Student1 Wants an appointment on <b>10/27/15</b> at <b>6:00 PM</b>
                                         </div>
-                                        
+
                                         <div class="col s2">
                                             <button type="button" onclick="addAppointment()">Accept</button>
                                         </div>
-                                        
+
                                         <div class="col s2">
                                             <button type="button" onclick="rejectAppointment()">Reject</button>
                                         </div>
@@ -182,7 +186,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                                         <span class="col s12 center-align"><b>Request Appointment</b></span>
                                         <div class="col s12 center-align">&nbsp;</div>
-                                        
+
                                         <div class="col s4 center-align">&nbsp;</div>
                                         <div class="col s4 center-align">
                                             <input type="date" class="datepicker center-align" placeholder="Date" id="date_box2">
@@ -196,15 +200,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         </div>
                                         <div class="col s4 center-align">&nbsp;</div>
                                         <div class="col s12 center-align">&nbsp;</div>
-                                        
+
                                         <div class="col s12 center-align">List of tutors available this day/time</div>
                                         <div class="col s12 center-align">&nbsp;</div>
-                                        
+
                                         <div class="col s12 center-align">
                                             <button type="button" onclick="requestAppointment()">Request Appointment</button>
                                         </div>
-                                        
-                                        
+
+
 
 
 
@@ -558,8 +562,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         });
                     </script>
                 </div>
-                <div class="column_right_grid calender">
-                    <div class="cal1"> </div>
+                <div class="column_right_grid calender" style="background-color: white">
+                    <div id='calendar'> </div>
                 </div>
             </div>
             <div class="clear"></div>
@@ -569,14 +573,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <p>© 2013 Designed by <a href="http://graphicburger.com/flat-design-ui-components/" target="_blank">GraphicBurger</a> • Template by <a href="http://w3layouts.com" target="_blank">w3layouts</a> </p>
     </div>
     <script>
+        
+        //Jquery Plugin Initilizations
         $(document).ready(function () {
             // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
             $('.modal-trigger').leanModal();
         });
 
         $('.datepicker').pickadate({
+            dateFormat: 'yyyy-mm-dd',
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 1 // Creates a dropdown of 1 years to control year
+
         });
 
         $('.timepicker').pickatime({
@@ -593,9 +601,60 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             alignment: 'left' // Displays dropdown with edge aligned to the left of button
         });
 
+        $(window).load(function () {
+
+            // page is now ready, initialize the calendar...
+
+            $('#calendar').fullCalendar({
+                // put your options and callbacks here
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,basicWeek,basicDay'
+                },
+                eventLimit: 2,
+                prev: 'left-single-arrow',
+                events: [
+                    {
+                        title: 'Tutoring',
+                        start: '2015-11-01'
+                    },
+                    {
+                        title: 'Tutoring',
+                        start: '2015-11-05',
+                        end: '2015-11-05'
+                    },
+                    {
+                        title: 'Joe',
+                        start: '2015-11-12'
+                    },
+                    {
+                        title: 'Bill',
+                        start: '2015-11-12'
+                    },
+                    {
+                        title: 'Casey',
+                        start: '2015-11-12'
+                    },
+                    {
+                        title: 'Bob',
+                        start: '2015-11-12'
+        }
+    ]
+
+
+
+            })
+
+        });
+
+
+
 
 
         function toggleProfessors() {
+            // shows the list of professors
+            
             if (document.getElementById("professor_toggle").checked) {
                 document.getElementById("professor_box").innerHTML = "List of Professors";
 
@@ -636,8 +695,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             //add to the table
             if (document.getElementById("login_box").value != "") {
                 var table = document.getElementById("loggedInStudents");
+                
+                //append to table
                 var row = table.insertRow(-1);
+                
+                //first element
                 var cell1 = row.insertCell(0);
+                //second element
                 var cell2 = row.insertCell(1);
                 cell1.innerHTML = document.getElementById("login_box").value;
                 cell2.innerHTML = "NULL";
@@ -653,11 +717,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 //row.addEventListener('click',  function(){alert("hello")}); 
                 //// or attachEvent, depends on browser
                 //}
+                
+                //add click handlers to the rows
                 addRowHandlers();
-
+                
+                //shows active session
                 document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Resume Session"
 
-
+                //resets fields
                 document.getElementById("login_box").value = "";
                 document.getElementById("professor_toggle").checked = false;
                 toggleProfessors();
@@ -674,7 +741,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             return function () {
                                 var cell = row.getElementsByTagName("td")[0];
                                 var id = cell.innerHTML;
-
+                                
+                                //on click, look for row with this id
                                 removeRow(id);
 
                             };
@@ -689,7 +757,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 var rows = table.getElementsByTagName("tr");
 
 
-
+                //go through rows looking for one with id
                 for (i = 0; i < rows.length; i++) {
                     //alert(document.getElementById("loggedInStudents").getElementsByTagName("tr")[0].innerHTML);
 
@@ -704,7 +772,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                     }
                 }
-
+                
+                //if no one is left, reset session button
                 if (rows.length == 0) {
                     document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Start Session"
 
@@ -716,9 +785,42 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         }
 
         function addAppointment() {
+            var date = document.getElementById("date_box").value;
+            var myDate = new Date(date);
+            var myTitle = document.getElementById("reason_box").value;
+
+            var year = myDate.getFullYear();
+
+            var month = myDate.getMonth() + 1;
+
+            var day = myDate.getDate();
+
+            if (day < 10) {
+                day = "0" + day;
+            }
+
+            if (month < 10) {
+                month = "0" + month;
+            }
+
+            var finalDate = year + "-" + month + "-" + day;
+
+            //reset fields
             document.getElementById("date_box").value = "";
             document.getElementById("time_box").value = "";
             document.getElementById("reason_box").value = "";
+            $('#appointments_modal').closeModal();
+
+
+            //add formated date to calendar
+            $('#calendar').fullCalendar('renderEvent', {
+                title: myTitle,
+                start: finalDate
+            });
+
+
+
+
         }
     </script>
 </body>
