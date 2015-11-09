@@ -5,541 +5,633 @@ License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <!DOCTYPE HTML>
+
 <head>
-<title>Admin Home</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link href="css/StyleStudent.css" rel="stylesheet" type="text/css" media="all"/>
-<link href="css/nav.css" rel="stylesheet" type="text/css" media="all"/>
-<link href='http://fonts.googleapis.com/css?family=Carrois+Gothic+SC' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/login.js"></script>
-<script type="text/javascript" src="js/Chart.js"></script>
- <script type="text/javascript" src="js/jquery.easing.js"></script>
- <script type="text/javascript" src="js/jquery.ulslide.js"></script>
-    <!---------Tutor Add Form------>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <style>
-    body { font-size: 62.5%; }
-    label, input { display:block; }
-    input.text { margin-bottom:12px; width:95%; padding: .4em; }
-    fieldset { padding:0; border:0; margin-top:25px; }
-    h1 { font-size: 1.2em; margin: .6em 0; }
-    div#users-contain { width: 350px; margin: 20px 0; }
-    div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
-    div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
-    .ui-dialog .ui-state-error { padding: .3em; }
-    .validateTips { border: 1px solid transparent; padding: 0.3em; }
-  </style>
-  <script>
-  $(function() {
-    var dialog, form,
- 
-      // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
-      emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
-      name = $( "#name" ),
-      email = $( "#email" ),
-      password = $( "#password" ),
-      allFields = $( [] ).add( name ).add( email ).add( password ),
-      tips = $( ".validateTips" );
- 
-    function updateTips( t ) {
-      tips
-        .text( t )
-        .addClass( "ui-state-highlight" );
-      setTimeout(function() {
-        tips.removeClass( "ui-state-highlight", 1500 );
-      }, 500 );
-    }
- 
-    function checkLength( o, n, min, max ) {
-      if ( o.val().length > max || o.val().length < min ) {
-        o.addClass( "ui-state-error" );
-        updateTips( "Length of " + n + " must be between " +
-          min + " and " + max + "." );
-        return false;
-      } else {
-        return true;
-      }
-    }
- 
-    function checkRegexp( o, regexp, n ) {
-      if ( !( regexp.test( o.val() ) ) ) {
-        o.addClass( "ui-state-error" );
-        updateTips( n );
-        return false;
-      } else {
-        return true;
-      }
-    }
- 
-    function addUser() {
-      var valid = true;
-      allFields.removeClass( "ui-state-error" );
- 
-      valid = valid && checkLength( name, "username", 3, 16 );
-      valid = valid && checkLength( email, "email", 6, 80 );
-      valid = valid && checkLength( password, "password", 5, 16 );
- 
-      valid = valid && checkRegexp( name, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter." );
-      valid = valid && checkRegexp( email, emailRegex, "eg. ui@jquery.com" );
-      valid = valid && checkRegexp( password, /^([0-9])+$/, "#800 field only allow : 0-9" );
- 
-      if ( valid ) {
-        $( "#users tbody" ).append( "<tr>" +
-          "<td>" + name.val() + "</td>" +
-          "<td>" + email.val() + "</td>" +
-          "<td>" + password.val() + "</td>" +
-        "</tr>" );
-        dialog.dialog( "close" );
-      }
-      return valid;
-    }
- 
-    dialog = $( "#dialog-form" ).dialog({
-      autoOpen: false,
-      height: 300,
-      width: 350,
-      modal: true,
-      buttons: {
-        "Create an account": addUser,
-        Cancel: function() {
-          dialog.dialog( "close" );
-        }
-      },
-      close: function() {
-        form[ 0 ].reset();
-        allFields.removeClass( "ui-state-error" );
-      }
-    });
- 
-    form = dialog.find( "form" ).on( "submit", function( event ) {
-      event.preventDefault();
-      addUser();
-    });
- 
-    $( "#create-user" ).button().on( "click", function() {
-      dialog.dialog( "open" );
-    });
-  });
-  </script>
-     <!----Calender -------->
-  <link rel="stylesheet" href="css/clndr.css" type="text/css" />
-  <script src="js/underscore-min.js"></script>
-  <script src= "js/moment-2.2.1.js"></script>
-  <script src="js/clndr.js"></script>
-  <script src="js/site.js"></script>
-  <!----End Calender -------->
+    <title>Tutor Home</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="css/nav.css" rel="stylesheet" type="text/css" media="all" />
+    <link href='http://fonts.googleapis.com/css?family=Carrois+Gothic+SC' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="js/jquery.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/login.js"></script>
+    <script type="text/javascript" src="js/Chart.js"></script>
+    <script type="text/javascript" src="js/jquery.easing.js"></script>
+    <script type="text/javascript" src="js/jquery.ulslide.js"></script>
+    <script src="js/materialize.clockpicker.js"></script>
+    <link rel="stylesheet" href="css/materialize.clockpicker.css" />
+
+    <!----Calender -------->
+    <link rel="stylesheet" property="stylesheet" href="css/clndr.css" type="text/css" />
+    <script src="js/underscore-min.js"></script>
+    <script src="js/moment-2.2.1.js"></script>
+    <script src="js/clndr.js"></script>
+    <script src="js/site.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.min.js"></script>
+    <link rel="stylesheet" property="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+    <link rel="stylesheet" property="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.min.css">
+
+    <!----End Calender -------->
+
+
+    <!--
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/resources/demos/style.css">
+-->
+
+
+
+    <script>
+        $(function () {
+            var dialog, form,
+
+                // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
+                emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+                name = $("#name"),
+                email = $("#email"),
+                password = $("#password"),
+                allFields = $([]).add(name).add(email).add(password),
+                tips = $(".validateTips");
+
+            function updateTips(t) {
+                tips
+                    .text(t)
+                    .addClass("ui-state-highlight");
+                setTimeout(function () {
+                    tips.removeClass("ui-state-highlight", 1500);
+                }, 500);
+            }
+
+            function checkLength(o, n, min, max) {
+                if (o.val().length > max || o.val().length < min) {
+                    o.addClass("ui-state-error");
+                    updateTips("Length of " + n + " must be between " +
+                        min + " and " + max + ".");
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            function checkRegexp(o, regexp, n) {
+                if (!(regexp.test(o.val()))) {
+                    o.addClass("ui-state-error");
+                    updateTips(n);
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            function addUser() {
+                var valid = true;
+                allFields.removeClass("ui-state-error");
+
+                valid = valid && checkLength(name, "username", 3, 16);
+                valid = valid && checkLength(email, "email", 6, 80);
+                valid = valid && checkLength(password, "password", 5, 16);
+
+                valid = valid && checkRegexp(name, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter.");
+                valid = valid && checkRegexp(email, emailRegex, "eg. ui@jquery.com");
+                valid = valid && checkRegexp(password, /^([0-9])+$/, "#800 field only allow : 0-9");
+
+                if (valid) {
+                    $("#users tbody").append("<tr>" +
+                        "<td>" + name.val() + "</td>" +
+                        "<td>" + email.val() + "</td>" +
+                        "<td>" + password.val() + "</td>" +
+                        "</tr>");
+                    dialog.dialog("close");
+                }
+                return valid;
+            }
+
+            dialog = $("#dialog-form").dialog({
+                autoOpen: false,
+                height: 300,
+                width: 350,
+                modal: true,
+                buttons: {
+                    "Create an account": addUser,
+                    Cancel: function () {
+                        dialog.dialog("close");
+                    }
+                },
+                close: function () {
+                    form[0].reset();
+                    allFields.removeClass("ui-state-error");
+                }
+            });
+
+            form = dialog.find("form").on("submit", function (event) {
+                event.preventDefault();
+                addUser();
+            });
+
+            $("#create-user").button().on("click", function () {
+                dialog.dialog("open");
+            });
+        });
+    </script>
+
+
 </head>
 
-<body>			       
-	    <div class="wrap">	 
-	      <div class="header">
-	      	  <div class="header_top">
-					  <div class="menu">
-						  <a class="toggleMenu" href="#"><img src="images/nav.png" alt="" /></a>
-							<ul class="nav">
-                                <li class="active"><a href="#"><i><img src="images/user.png" alt="" /></i>Home</a></li>
-<!--								<li><a href="#"><i><img src="images/settings.png" alt="" /></i>Settings</a></li>-->
-<!--								<li><a href="#"><i><img src="images/mail.png" alt="" /></i>Requests <span class="messages">5</span></a></li>-->
-                                <li><a href="#"><i><img src="images/events.png" alt="" /></i>Appointments <span class="messages">8</span></a></li>
-<!--                                <li><a href="Tutoring%20Session%20Page.html"><i><img src="images/loginArrow.png" alt="" /></i>Make Appointment</a></li>-->
-							<div class="clear"></div>
-						    </ul>
-							<script type="text/javascript" src="js/responsive-nav.js"></script>
-				        </div>	
-					  <div class="profile_details">
-				    		   <div id="loginContainer">
-				                  <a id="loginButton" class=""><span>Me</span></a>   
-				                    <div id="loginBox">                
-				                      <form id="loginForm">
-				                        <fieldset id="body">
-				                            <div class="user-info">
-							        			<h4>Hello,<a href="#"> Brandon Edwards</a></h4>
-							        			<ul>
-							        				<li class="profile active"><a href="#">Profile </a></li>
-							        				<li class="logout"><a href="index.html"> Logout</a></li>
-							        				<div class="clear"></div>		
-							        			</ul>
-							        		</div>			                            
-				                        </fieldset>
-				                    </form>
-				                </div>
-				            </div>
-				             <div class="profile_img">	
-				             	<a href="#"><img src="images/GetPersonaPhoto.jpg" alt="" />	</a>
-                                 
-				             </div>		
-				             <div class="clear"></div>		  	
-					    </div>	
-		 		      <div class="clear"></div>				 
-				   </div>
-			</div>	  					     
-	</div>
-	  <div class="main">  
-	    <div class="wrap">  		 
-	       <div class="column_left">	          
-	    		 <div class="menu_box">
-	    		 	 <h3>Menu Box</h3>
-	    		 	   <div class="menu_box_list">
-				      		<ul>
-<!--						  		<li><a href="#" class="messages"><span>Requests</span><label class="digits">5</label><div class="clear"></div></a></li>-->
-<!--						  		<li class="active"><a href="#" class="invites"><span>Invites</span><label class="digits active">3</label><div class="clear"></div></a></li>-->
-						  		<li><a href="#" class="events"><span>Appointments</span><label class="digits">8</label><div class="clear"></div></a></li>
-<!--						  	<li><a href="#" class="account_settings"><span>Account Settings</span></a></li>-->
-						  		<li><a href="#" class="statistics"><span>Statistics</span></a></li>						  	
-				    		</ul>
-				      </div>
-	    		 </div>
-	    		 <div class="chart">
-		               <h3>My Visits Breakdown</h3>
-		                <div class="diagram">
-		                  <canvas id="canvas" height="220" width="220"> </canvas>
-		                  <h4><span>June</span><br />2013</h4>   
-		                 </div>
-		                     
-		               <!----		              
+<body>
+
+    <div class="wrap">
+        <div class="header">
+            <div class="header_top">
+                <div class="menu">
+                    <a class="toggleMenu" href="#"><img src="images/nav.png" alt="" /></a>
+                    <ul class="nav">
+                        <li class="active"><a href="#"><i><img src="images/user.png" alt="" /></i>Home</a></li>
+                        <li><a class="modal-trigger" href="#appointments_modal"><i><img src="images/events.png" alt="" /></i>Calendar</a></li>
+
+
+
+
+
+
+                        <!-- Modal Structure for Calendar-->
+                        <div id="appointments_modal" class="modal">
+                            <div class="modal-content">
+                                <div class="container">
+                                    <div class="row">
+
+                                        <span class="col s12 center-align"></span>
+                                        <div class="col s12 center-align">&nbsp;</div>
+
+
+                                        <div class="col s4 center-align">&nbsp;</div>
+                                        <div class="col s4 center-align">
+                                            <!--                                            <input type="date" class="datepicker center-align" placeholder="Date" id="date_box">-->
+                                            <div id="calendar"></div>
+
+                                        </div>
+                                        <div class="col s12 center-align">&nbsp;</div>
+
+
+                                        <div class="col s4 center-align">&nbsp;</div>
+                                        <div class="col s4 center-align">
+                                            <!--                                            <input type="text" class="timepicker center-align" placeholder="Time" id="time_box">-->
+                                        </div>
+                                        <div class="col s4 center-align">&nbsp;</div>
+
+                                        <div class="col s12 center-align">
+                                            <!--                                            <input type="text" name="reason" placeholder="reason for appointment" id="reason_box">-->
+                                        </div>
+
+
+
+                                        <div class="col s12 center-align">
+                                            <!--                                            <button type="button" onclick="addAppointment()">Add Appointment</button>-->
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="clear"></div>
+                    </ul>
+
+                    <script type="text/javascript" src="js/responsive-nav.js"></script>
+                </div>
+                <div class="profile_details">
+                    <div id="loginContainer">
+                        <a id="loginButton" class=""><span>Me</span></a>
+                        <div id="loginBox">
+                            <form id="loginForm">
+                                <fieldset id="body">
+                                    <div class="user-info">
+                                        <h4>Hello,<a href="Admin%20Home.html"> Brandon Edwards</a></h4>
+                                        <ul>
+                                            <li class="profile active"><a href="Student%20Home.html">Profile </a></li>
+                                            <li class="logout"><a href="index.html"> Logout</a></li>
+                                            <div class="clear"></div>
+                                        </ul>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="profile_img">
+                        <a href="#"><img src="images/GetPersonaPhoto.jpg" alt="" /> </a>
+
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="wrap">
+            <div class="column_left">
+                <div class="menu_box">
+                    <h3>Menu Box</h3>
+                    <div class="menu_box_list">
+                        <ul>
+                            <!--                            <li><a href="#" class="messages"><span>Requests</span><label class="digits">5</label><div class="clear"></div></a></li>-->
+                            <!--						  		<li class="active"><a href="#" class="invites"><span>Invites</span><label class="digits active">3</label><div class="clear"></div></a></li>-->
+                            <li><a href="#" class="events"><span>Calendar</span><label class="digits">8</label><div class="clear"></div></a></li>
+                            <!--                            <li><a href="#" class="account_settings"><span>Account Settings</span></a></li>-->
+                            <li><a href="#" class="statistics"><span>Statistics</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="chart">
+                    <h3>My Rankings and FeedBack</h3>
+                    <div class="diagram">
+                        <canvas id="canvas" height="220" width="220"> </canvas>
+                        <h4><span>June</span><br />2013</h4>
+                    </div>
+
+                    <!----		              
 						<span><img src="images/chart.png" alt="" /></span>
-						----->					
-						<div class="chart_list">
-			           	  <ul>
-			           	  	<li><a href="#" class="red">Math Class<p class="percentage">21<em>%</em></p></a></li>
-			           	  	<li><a href="#" class="blue">Science Class<p class="percentage">48<em>%</em></p></a></li>
-			           	  	<li><a href="#" class="yellow">JSEM<p Class="percentage">9<em>%</em></p></a></li>
-			           	  	<li><a href="#" class="purple">Writing Class<p class="percentage">32<em>%</em></p></a></li>
-			           	  	<div class="clear"></div>	
-			           	  </ul>
-			           </div>
-			           <script>
-						var doughnutData = [
-								{
-									value: 21,
-									color:"#E64C65"
+						----->
+                    <div class="chart_list">
+                        <ul>
+                            <li><a href="#" class="red">1 Star<p class="percentage">21<em>%</em></p></a></li>
+                            <li><a href="#" class="blue">2 Star<p class="percentage">48<em>%</em></p></a></li>
+                            <li><a href="#" class="yellow">3 Star<p class="percentage">9<em>%</em></p></a></li>
+                            <li><a href="#" class="purple">4 Star<p class="percentage">32<em>%</em></p></a></li>
+                            <div class="clear"></div>
+                        </ul>
+                    </div>
+                    <script>
+                        var doughnutData = [
+                            {
+                                value: 21,
+                                color: "#E64C65"
 								},
-								{
-									value : 48,
-									color : "#11A8AB"
-								},							
-								{
-									value : 32,
-									color : "#4FC4F6"
-								},	
-								{
-									value : 9,
-									color : "#FCB150"
-								},							
-							
-							];				
-							var myDoughnut = new Chart(document.getElementById("canvas").getContext("2d")).Doughnut(doughnutData);					
-					</script>
-		          </div>
-		             <div class="graph">
-		             	<canvas id="line-chart"> </canvas>
-		             	<script>
-							var lineChartData = {
-								labels : ["Apr","May","Jun"],
-								datasets : [									
-									{
-										fillColor : "rgba(255, 255, 255, 0)",
-										strokeColor : "#FFF",
-										pointColor : "#11a8ab",
-										pointStrokeColor : "#FFF",
-										data : [21,48,35]
+                            {
+                                value: 48,
+                                color: "#11A8AB"
+								},
+                            {
+                                value: 32,
+                                color: "#4FC4F6"
+								},
+                            {
+                                value: 9,
+                                color: "#FCB150"
+								},
+
+							];
+                        var myDoughnut = new Chart(document.getElementById("canvas").getContext("2d")).Doughnut(doughnutData);
+                    </script>
+                </div>
+                <div class="graph">
+                    <canvas id="line-chart"> </canvas>
+                    <script>
+                        var lineChartData = {
+                            labels: ["Apr", "May", "Jun"],
+                            datasets: [
+                                {
+                                    fillColor: "rgba(255, 255, 255, 0)",
+                                    strokeColor: "#FFF",
+                                    pointColor: "#11a8ab",
+                                    pointStrokeColor: "#FFF",
+                                    data: [21, 48, 35]
 									}
 								]
-								
-							}
-					
-						var myLine = new Chart(document.getElementById("line-chart").getContext("2d")).Line(lineChartData);
-						
-						</script>
-		             	<!---
+
+                        }
+
+                        var myLine = new Chart(document.getElementById("line-chart").getContext("2d")).Line(lineChartData);
+                    </script>
+                    <!---
 		             	<img src="images/graph.png" alt="" />
 		             	------->
-		             	<div class="graph_list">
-		             		 <div class="week-month-year">
-		             		 	<p><a href="#">Week</a></p>
-		             		 	<p><a href="#" class="active">Month</a></p>
-		             		 	<p><a href="#">year</a></p>
-		             		 	<div class="clear"></div>
-		             		 </div>
-				      			<ul>
-						  		    <li><a href="#"><span class="day_name">Apr</span> 2013 
+                    <div class="graph_list">
+                        <div class="week-month-year">
+                            <p><a href="#">Week</a></p>
+                            <p><a href="#" class="active">Month</a></p>
+                            <p><a href="#">year</a></p>
+                            <div class="clear"></div>
+                        </div>
+                        <ul>
+                            <li><a href="#"><span class="day_name">Apr</span> 2013 
 						  			<label class="digits"><span>+</span>21<em>%</em></label><div class="clear"></div></a></li>
-						  			<li class="active"><a href="#"><span class="day_name">May</span> 2013 
+                            <li class="active"><a href="#"><span class="day_name">May</span> 2013 
 						  			<label class="digits"><span>+</span>48<em>%</em></label><div class="clear"></div></a></li>
-						  			<li><a href="#"><span class="day_name">Jun</span> 2013 
-						  			<label class="digits"><span>+</span>35<em>%</em> </label><div class="clear"></div></a></li>						  			
-				    		</ul>
-				      </div>
-		             </div>
-<!--
-		                 <div class="video_palyer">
-								<iframe src="//player.vimeo.com/video/24363983" width="100%" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe> 
-		                </div>        
--->
-		            
-		          
-<!--
-		          		<div class="social_network_likes">
-				      		<ul>
-				      			<li><a href="#" class="facebook"><i><img src="images/facebook_icon.png" alt=""></i> <span>248k</span></a></li>
-				      			<li><a href="#" class="twitter"><i><img src="images/tweets.png" alt=""></i> <span>30k</span></a></li>
-				      			<li><a href="#" class="googleplus"><i><img src="images/google+.png" alt=""></i> <span>124k</span></a></li>
-				      			<li><a href="#" class="mail"><i><img src="images/mail-hover.png" alt=""></i> <span>89k</span></a></li>
-				      			<div class="clear"></div>
-				    		</ul>
-		          		</div>
--->
-	  		</div> 
-	  		
-            <div class="column_middle">
-              <div class="column_middle_grid1">
-		         <div class="profile_picture">
-		        	<a href=""><img src="images/GetPersonaPhoto.jpg" alt="" />	</a>		         
-		            <div class="profile_picture_name">
-		            	<h2>Brandon Edwards</h2>
-<!--		            	<p>Lorem ipsum dolor sit amet consectetur adipisicing </p>-->
-		            </div>
-<!--		             <span><a href="#"> <img src="images/follow_user.png" alt="" /> </a></span>-->
-		          </div>
-<div id="dialog-form" title="Register Tutor!">
-  <p class="validateTips">Register a Tutor!</p>
- 
-  <form>
-    <fieldset>
-      <label for="name">Name</label>
-      <input type="text" name="name" id="name" value="Jane Smith" class="text ui-widget-content ui-corner-all">
-      <label for="email">Email</label>
-      <input type="text" name="email" id="email" value="jane@smith.com" class="text ui-widget-content ui-corner-all">
-      <label for="password">#800</label>
-      <input type="text" name="password" id="password" value="800000000" class="text ui-widget-content ui-corner-all">
- 
-      <!-- Allow form submission with keyboard without duplicating the dialog button -->
-      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
-    </fieldset>
-  </form>
-</div>
- 
- 
-<div id="users-contain" class="ui-widget">
-  <h1>Register Tutors!</h1>
-  <table id="users" class="ui-widget ui-widget-content">
-    <thead>
-      <tr class="ui-widget-header ">
-        <th>Name</th>
-        <th>Email</th>
-        <th>#800</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<button id="create-user">Register Tutor!</button>
-<!--
-		           <div class="articles_list">
-		           	  <ul>
-		           	  	<li><a href="#" class="red"> <img src="images/comments.png" alt="" /> 23</a></li>
-		           	  	<li><a href="#" class="purple"> <img src="images/views.png" alt="" /> 841</a></li>
-		           	  	<li><a href="#" class="yellow"> <img src="images/likes.png" alt="" /> 49</a></li>
-		           	  	<div class="clear"></div>	
-		           	  </ul>
-		           </div>
--->
-		       </div>
-<!--
-		         <div class="weather">
-		               <h3><i><img src="images/location.png" alt="" /> </i> Cluj-Napoca / Ro</h3>
-		              <div class="today_temp">
-		                <div class="temp">
-							<figure>Fri 29/06<span>24<em>o</em></span></figure>
-						</div>
-						<img src="images/sun.png" alt="" />
-					</div>
-						<div class="temp_list">
-				      			<ul>
-						  		    <li><a href="#"><span class="day_name">Sat</span>&nbsp; 29/06 
-						  			<label class="digits">25<em>o</em> <i><img src="images/sun_icon1.png" alt="" /></i></label><div class="clear"></div></a></li>
-						  			<li class="active"><a href="#"><span class="day_name">Sun</span>&nbsp; 30/06 
-						  			<label class="digits">22<em>o</em> <i><img src="images/clouds.png" alt="" /></i></label><div class="clear"></div></a></li>
-						  			<li><a href="#"><span class="day_name">Mon</span>&nbsp; 01/07 
-						  			<label class="digits">24<em>o</em> <i><img src="images/clouds.png" alt="" /></i></label><div class="clear"></div></a></li>
-						  			<li><a href="#"><span class="day_name">Tue</span>&nbsp; 02/07 
-						  			<label class="digits">26<em>o</em> <i><img src="images/sun_icon1.png" alt="" /></i></label><div class="clear"></div></a></li>
-						  			<li><a href="#"><span class="day_name">Wed</span>&nbsp; 03/07 
-						  			<label class="digits">27<em>o</em> <i><img src="images/sun_icon2.png" alt="" /></i></label><div class="clear"></div></a></li>
-						  			<li><a href="#"><span class="day_name">Thu</span>&nbsp; 04/07
-						  			<label class="digits">29<em>o</em> <i><img src="images/sun_icon2.png" alt="" /></i></label><div class="clear"></div></a></li>
-				    		</ul>
-				      </div>
-		          </div>	           
--->
-<!--
-		         <div class="tweets">
-		               <h3><i><img src="images/tweets.png" alt="" /> </i> Latest Tweets</h3>		              
-						<div class="tweets_list">
-				      		<ul>
-						  		<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore <a href="#">@Neque</a>
-						  			<span>10 minutes ago</span></li>
-						  	   <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore eiusmod <a href="#">#Creative Cloud</a>
-						  			<span>2 hours ago</span></li>
-				    		</ul>
-				      </div>
-		          </div>
--->
-<!--
-		          <div class="social_networks">
-				      		<ul>
-				      			<li><a href="#" class="facebook"><i><img src="images/facebook_icon.png" alt="" /></i> <span>Share to Facebook</span><div class="clear"></div></a></li>
-				      			<li><a href="#" class="twitter"><i><img src="images/tweets.png" alt="" /></i> <span>Share to Twitter</span><div class="clear"></div></a></li>
-				      			<li><a href="#" class="googleplus"><i><img src="images/google+.png" alt="" /></i> <span>Share to Google+</span><div class="clear"></div></a></li>
-				    		</ul>
-		          </div>	           
--->
-<!--
+                            <li><a href="#"><span class="day_name">Jun</span> 2013 
+						  			<label class="digits"><span>+</span>35<em>%</em> </label><div class="clear"></div></a></li>
+                        </ul>
+                    </div>
+                </div>
+                -->
+            </div>
 
--->
-    	    </div>
-    	    
+            <div class="column_middle">
+                <div class="column_middle_grid1">
+                    <div class="profile_picture">
+                        <a href=""><img src="images/GetPersonaPhoto.jpg" alt="" /> </a>
+                        <div class="profile_picture_name">
+                            <h2>Brandon Edwards</h2>
+                            <!--		            	<p>Lorem ipsum dolor sit amet consectetur adipisicing </p>-->
+                        </div>
+                        <!--		             <span><a href="#"> <img src="images/follow_user.png" alt="" /> </a></span>-->
+                    </div>
+
+
+                    <style>
+                        body {
+                            font-size: 62.5%;
+                        }
+                        
+                        label,
+                        input {
+                            display: block;
+                        }
+                        
+                        input.text {
+                            margin-bottom: 12px;
+                            width: 95%;
+                            padding: .4em;
+                        }
+                        
+                        fieldset {
+                            padding: 0;
+                            border: 0;
+                            margin-top: 25px;
+                        }
+                        
+                        h1 {
+                            font-size: 1.2em;
+                            margin: .6em 0;
+                        }
+                        
+                        div#users-contain {
+                            width: 350px;
+                            margin: 20px 0;
+                        }
+                        
+                        div#users-contain table {
+                            margin: 1em 0;
+                            border-collapse: collapse;
+                            width: 100%;
+                        }
+                        
+                        div#users-contain table td,
+                        div#users-contain table th {
+                            border: 1px solid #eee;
+                            padding: .6em 10px;
+                            text-align: left;
+                        }
+                        
+                        .ui-dialog .ui-state-error {
+                            padding: .3em;
+                        }
+                        
+                        .validateTips {
+                            border: 1px solid transparent;
+                            padding: 0.3em;
+                        }
+                    </style>
+
+                    <div id="dialog-form" title="Register Tutor!">
+                        <p class="validateTips">Register a Tutor!</p>
+
+                        <form>
+                            <fieldset>
+                                <label for="name">Name</label>
+                                <input type="text" name="name" id="name" value="Jane Smith" class="text ui-widget-content ui-corner-all">
+                                <label for="email">Email</label>
+                                <input type="text" name="email" id="email" value="jane@smith.com" class="text ui-widget-content ui-corner-all">
+                                <label for="password">#800</label>
+                                <input type="text" name="password" id="password" value="800000000" class="text ui-widget-content ui-corner-all">
+
+                                <!-- Allow form submission with keyboard without duplicating the dialog button -->
+                                <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+                            </fieldset>
+                        </form>
+                    </div>
+
+
+                    <div id="users-contain" class="ui-widget">
+                        <h1>Register Tutors!</h1>
+                        <table id="users" class="ui-widget ui-widget-content">
+                            <thead>
+                                <tr class="ui-widget-header ">
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>#800</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button id="create-user">Register Tutor!</button>
+
+                </div>
+
+            </div>
+
             <div class="column_right">
 
-            	<div class="column_right_grid">
-               <!--  <div class="newsletter">
-				   <h3>Join the newsletter</h3>
-					    <form>
-					    	<span>
-					 	     <i><img src="images/mail.png" alt="" /></i>
-					 	     <input type="text" value="Enter your email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter your email';}">
-					 	    </span>			 	    
-					 		<input type="submit" class="my_button" value="Subscribe">
-					 	</form>
-				   </div>
--->
-<!--
-                     <div class="column_right_grid date_events">
-				     	  <h3><a href="#" id="slide_prev"><img src="images/arrow-left.png" alt="" /></a> Monday <a href="#" id="slide_next"><img src="images/arrow-right.png" alt="" /></a></h3>
-				     	 		<ul id="slide" class="event_dates">					            
-						            <li>26</li>
-						            <li>25</li>
-						            <li>24</li>
-						            <li>23</li>
-						            <li>22</li>
-						            <li>21</li>
-						            <li>20</li>
-						            <li>19</li>
-						            <li>18</li>
-						            <li>17</li>
-						            <li>16</li>
-						            <li>15</li>
-						            <li>14</li>
-						            <li>13</li>
-						            <li>12</li>
-						            <li>11</li>
-						            <li>10</li>
-						            <li>9</li>
-						            <li>8</li>
-						            <li>7</li>
-						            <li>6</li>
-						            <li>5</li>
-						            <li>4</li>
-						            <li>3</li>
-						            <li>2</li>
-						            <li>1</li>
-						            <li>31</li>
-						            <li>30</li>
-						            <li>29</li>
-						            <li>28</li>
-						            <li>27</li>
-						        </ul>
-						         <div class="button"><a href="#">Add Event</a></div>											 				
-				           <script type="text/javascript">
-				            $(function() {						
-				                $('#slide').ulslide({
-				                   
-									effect: {
-										type: 'carousel', // slide or fade
-				                        axis: 'x',        // x, y
-										showCount:1
-									},
-				                    nextButton: '#slide_next',
-				                    prevButton: '#slide_prev',
-				                    duration: 800,
-				                    /*autoslide: 2000,*/
-									easing: 'easeOutBounce'
-				                });
-				            });
-				        </script>
-				    </div>
--->
-				   <div class="column_right_grid calender">
-                      <div class="cal1"> </div>
-				   </div>
-			   </div>
-<!--
-				 <div class="column_right_grid sign-in">
-				 	<div class="sign_in">
-				       <h3>Sign in to your account</h3>
-					    <form>
-					    	<span>
-					 	    <i><img src="images/mail.png" alt="" /></i><input type="text" value="Enter your email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter your email';}">
-					 	    </span>
-					 	    <span>
-					 	     <i><img src="images/lock.png" alt="" /></i>
-					 	     <input type="password" placeholder="password">
-					 	    </span>
-					 		<input type="submit" class="my-button" value="Sign In">
-					 	</form>
-					       <h4><a href="#">Forget Password?</a></h4>				   
-          		       </div>
-          		 	  <div class="signin_facebook">
-					   	 <p><a href="#">  <i> <img src="images/facebook.png" alt="" /></i>Sign in with facebook</a></p>
-				      </div>
-				   </div>
--->
-<!--
-				   <div class="column_right_grid downloading_uploading">
-                      <ul>
-					      <li>                              
-                            <div class="progress">
-                              <div class="progress-bar" style="width:81%"> </div>
-                            </div>
-                            <div class="clearfix">
-                                <p class="downloading"> <i><img src="images/download.png" alt="" /></i> Downloading...</p>
-                                <p class="percentage">81<em>%</em></p>
-                                <div class="clear"></div>
-                            </div>
-                           </li>
-                           <li>                              
-                            <div class="progress">
-                              <div class="progress-bar uploading" style="width:43%"> </div>
-                            </div>
-                            <div class="clearfix">
-                                <p class="downloading"><i><img src="images/upload.png" alt="" /></i> Uploading...</p>
-                                <p class="percentage">43<em>%</em></p>
-                                <div class="clear"></div>
-                            </div>
-                           </li>
-                        </ul>
-				   </div>
--->
-				  
-             </div>
-    	<div class="clear"></div>
- 	 </div>
-   </div>
-  		 <div class="copy-right">
-				<p>© 2013 Designed by <a href="http://graphicburger.com/flat-design-ui-components/" target="_blank">GraphicBurger</a>  • Template by <a href="http://w3layouts.com" target="_blank">w3layouts</a> </p>
-	 	 </div>   
-</body>
-</html>
+                <div class="column_right_grid calender" style="background-color: white">
+                    <div id="calendar_1"></div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="copy-right">
+        <p>© 2013 Designed by <a href="http://graphicburger.com/flat-design-ui-components/" target="_blank">GraphicBurger</a> • Template by <a href="http://w3layouts.com" target="_blank">w3layouts</a> </p>
+    </div>
 
+    <script>
+        //Jquery Plugin Initilizations
+        $(document).ready(function () {
+            // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+            $('.modal-trigger').leanModal();
+        });
+
+        $('.datepicker').pickadate({
+            dateFormat: 'yyyy-mm-dd',
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 1 // Creates a dropdown of 1 years to control year
+
+        });
+
+        $('.timepicker').pickatime({
+            autoclose: true
+        });
+
+        $('.dropdown-button').dropdown({
+            inDuration: 300,
+            outDuration: 225,
+            //constrain_width: false, // Does not change width of dropdown to that of the activator
+            hover: true, // Activate on hover
+            gutter: 0, // Spacing from edge
+            belowOrigin: false, // Displays dropdown below the button
+            alignment: 'left' // Displays dropdown with edge aligned to the left of button
+        });
+
+        $(window).load(function () {
+
+            // page is now ready, initialize the calendar...
+
+            $('#calendar').fullCalendar({
+                // put your options and callbacks here
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,basicWeek,basicDay'
+                },
+                eventLimit: 2,
+                prev: 'left-single-arrow',
+                events: [
+                    {
+                        title: 'Tutoring',
+                        start: '2015-11-01'
+                    },
+                    {
+                        title: 'Tutoring',
+                        start: '2015-11-05',
+                        end: '2015-11-05'
+                    },
+                    {
+                        title: 'Joe',
+                        start: '2015-11-12'
+                    },
+                    {
+                        title: 'Bill',
+                        start: '2015-11-12'
+                    },
+                    {
+                        title: 'Casey',
+                        start: '2015-11-12'
+                    },
+                    {
+                        title: 'Bob',
+                        start: '2015-11-12'
+        }
+    ]
+
+
+
+            })
+
+        });
+
+
+
+
+
+
+
+        //from http://jsfiddle.net/oh16h7cj/ | http://stackoverflow.com/questions/1207939/adding-an-onclick-event-to-a-table-row, adapted to my situation
+    </script>
+    <script>
+        //Jquery Plugin Initilizations
+        $(document).ready(function () {
+            // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+            $('.modal-trigger').leanModal();
+        });
+
+        $('.datepicker').pickadate({
+            dateFormat: 'yyyy-mm-dd',
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 1 // Creates a dropdown of 1 years to control year
+
+        });
+
+        $('.timepicker').pickatime({
+            autoclose: true
+        });
+
+        $('.dropdown-button').dropdown({
+            inDuration: 300,
+            outDuration: 225,
+            //constrain_width: false, // Does not change width of dropdown to that of the activator
+            hover: true, // Activate on hover
+            gutter: 0, // Spacing from edge
+            belowOrigin: false, // Displays dropdown below the button
+            alignment: 'left' // Displays dropdown with edge aligned to the left of button
+        });
+
+        $(window).load(function () {
+
+            // page is now ready, initialize the calendar...
+
+            $('#calendar_1').fullCalendar({
+                // put your options and callbacks here
+
+                dayClick: function () {
+                    alert('a day has been clicked!');
+                },
+
+
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,basicWeek,basicDay'
+                },
+                eventLimit: 2,
+                prev: 'left-single-arrow',
+                events: [
+                    {
+                        title: 'Tutoring',
+                        start: '2015-11-01'
+                    },
+                    {
+                        title: 'Tutoring',
+                        start: '2015-11-05',
+                        end: '2015-11-05'
+                    },
+                    {
+                        title: 'Joe',
+                        start: '2015-11-12'
+                    },
+                    {
+                        title: 'Bill',
+                        start: '2015-11-12'
+                    },
+                    {
+                        title: 'Casey',
+                        start: '2015-11-12'
+                    },
+                    {
+                        title: 'Bob',
+                        start: '2015-11-12'
+        }
+    ]
+
+
+
+            })
+
+        });
+
+
+
+
+
+
+
+        //from http://jsfiddle.net/oh16h7cj/ | http://stackoverflow.com/questions/1207939/adding-an-onclick-event-to-a-table-row, adapted to my situation
+    </script>
+</body>
+
+</html>

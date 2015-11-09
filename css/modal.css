@@ -1,0 +1,37 @@
+.modal:before{
+    content: "";
+    position:fixed;
+    display:none;
+    background-color: rgba(0,0,0,.8);
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+.modal-container {
+    content: "";
+    display: none;
+    position:fixed;
+    top: 50%;
+    left:50%;
+    width: 70%;
+    max-width: 700px;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    padding: 150px;
+    border-radius: 5px;
+    box-shadow: 3px 3px 8px rgba(0,0,0,.6);
+    -webkit-transform:translate(-50%,-200%);
+    -ms-transform: translate(-50%,-200%);
+    transform: translate(-50%,-200%);
+        
+    }
+.modal:target:before {
+display:block;
+}
+.modal:target .modal-container {
+    display: block;
+    -webkit-transform:translate(-50%,0);
+    -ms-transform: translate(-50%,0);
+    transform: translate(-50%,0);
+}
