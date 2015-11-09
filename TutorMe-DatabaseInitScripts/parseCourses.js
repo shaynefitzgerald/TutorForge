@@ -1,7 +1,7 @@
 var fs = require('fs');
 
 /*
- * Create 3 arrays for storing data
+ * Create 4 arrays for storing data
 */
 var coursesJsonArray = [];
 var remadeCourse = [];
@@ -33,7 +33,6 @@ var checkForCourse = function(titl){
  */
 coursesJsonArray.forEach(function(json){
   var title = json.CourseTitle;
-
   var inArray = checkForCourse(title);
 
   if (!inArray){
