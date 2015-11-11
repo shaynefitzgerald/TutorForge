@@ -20,7 +20,7 @@ jsonfiles.forEach(function(file){
 */
 
 //Loads studentcut.json into an Array of JSON obejcts
-var dat = fs.readFileSync('/import/json/coursescut.json', 'utf8')
+var dat = fs.readFileSync('/import/json/coursescut.json', 'utf8');
 studentJsonArray = JSON.parse(dat);
 
 
