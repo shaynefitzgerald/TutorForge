@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var fs = require('fs');
 var schema = require('./schema/index').dir;
 var config = JSON.parse(require('fs').readFileSync(__dirname + '/config.json'));
-var db_Connection = mongoose.connect(config.ApplicationURI);
+var db_Connection = mongoose.connect("mongodb://@localhost:27017/test?poolSize=10");
 db_Connection.on('error', console.error.bind(console, 'connection error:'));
 
 var studentJsonArray = [];
@@ -24,10 +24,13 @@ var dat = fs.readFileSync('/import/json/coursescut.json', 'utf8');
 studentJsonArray = JSON.parse(dat);
 
 
-//Load student model
+//Loads student model for DB
 var Student = db.model('StudentModel');
 
-//Loops through array of JSON obejcts and adds each one
+/*
+  Loop through array of JSON objects and create a database model,
+  then adds the model to the DB
+*/
 studentJsonArray.forEach(function(json){
   var studentAdd = new Student({
     ID : json.ID,

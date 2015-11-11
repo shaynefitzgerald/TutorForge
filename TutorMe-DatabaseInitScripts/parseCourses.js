@@ -1,11 +1,12 @@
 var fs = require('fs');
 
 /*
- * Create 3 arrays for storing data
+ * Create 4 arrays for storing data
 */
 var coursesJsonArray = [];
 var remadeCourse = [];
 var studentArray = [];
+var CourseNames = [];
 
 /*
  * Read unparsed courses json file
@@ -17,9 +18,9 @@ coursesJsonArray = JSON.parse(dat);
 /*
   Function for looping through the json array and determining if the Course title exist
 */
-var checkForCourse = function(title){
-  for (var i = 0; i < remadeCourse.length; i++){
-    if (remadeCourse[i].CourseTitle === title){
+var checkForCourse = function(titl){
+  for (var i = 0; i < CourseNames.length; i++){
+    if (CourseNames[i] === titl){
       return true;
     }
   }
@@ -35,6 +36,7 @@ coursesJsonArray.forEach(function(json){
   var inArray = checkForCourse(title);
 
   if (!inArray){
+    CourseNames.push(title);
     var newcourse = {};
      newcourse[json.CourseTitle] = {
       Students : studentArray,
