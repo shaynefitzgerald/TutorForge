@@ -12,7 +12,21 @@ var containsKeys = function ( a, b ) {
   }
   return ret;
 };
-
+var containsAtLeastOne = function ( a, b ) {
+  var ret = false;
+  for ( var x = 0; x < b.length; x++ ) {
+    if ( ( a.hasOwnProperty( b[ x ] ) ) ) {
+      ret = true;
+    }
+  }
+  return ret;
+};
+var contains = function(v, arr){
+  for(var x = 0; x < arr.length; x++){
+    if(arr[x] === v)
+      return true;
+  } return false;
+};
 var db_isTutor = function(db, studentID, callback){
 
   if(typeof studentID !== "number")
@@ -22,7 +36,8 @@ var db_isTutor = function(db, studentID, callback){
 
   Student.findOne({'StudentID' : studentID}, function(err, res){
     if(err) callback(false, err);
-    if(res !== undefined){
+    console.log(res);
+    if(res !== undefined && res !== null){
       return callback(true, res.isTutor);
     }  else {
       return callback(false, "No Such User");
@@ -33,6 +48,7 @@ var db_getStudent = function(db, field, value, callback){
   var Student = db.model('StudentModel');
   var queryObject = {};
   queryObject[field] = value;
+  console.log(queryObject);
   Student.find(queryObject, function(err, res){
     if(err) return callback(false, err);
     return callback(true, res);
@@ -100,7 +116,7 @@ exports.init = function(cas, db){
           if(!success){
             return res.end(JSON.stringify({
               success : false,
-              error : res
+              error : result
             }));
           } else {
             return res.end(JSON.stringify({
@@ -201,11 +217,18 @@ exports.init = function(cas, db){
     router.get('/get', cas.block, function(req, res, next){
     res.type('application/json');
     var validFields = [
-      "ID","OtherID","FirstName","LastName","FullName","Email"
+      "StudentID","OtherID","FirstName","LastName","FullName","Email"
     ];
+    var queryRequirements = [ 'field', 'value' ];
     var query = ( url.parse( req.url ).query !== null ) ?
      querystring.parse( url.parse( req.url ).query ) : {};
-    if(!(query.field in validFields)){
+    if(!containsKeys(query, queryRequirements)){
+      return res.end(JSON.stringify({
+        success : false,
+        error : "Missing or malformed parameters"
+      }));
+    }
+    if(validFields.indexOf(query.field) > 0){
       return res.end(JSON.stringify({
         success : false,
         error : "Invalid Field"
