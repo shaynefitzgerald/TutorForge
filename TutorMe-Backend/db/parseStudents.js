@@ -1,3 +1,5 @@
+//XXX:THIS NEEDS TO BE MOVED
+
 var mongoose = require('mongoose');
 var fs = require('fs');
 var schema = require('./schema/index').dir;

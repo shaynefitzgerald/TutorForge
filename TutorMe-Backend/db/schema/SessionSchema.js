@@ -11,6 +11,7 @@ var SchemaObject = {
   Tutor : { type : mongoose.Schema.Types.ObjectId, ref : 'TutorModel' },
   RequestedProfessorNotification : Boolean,
   SentProfessorNotification : Boolean,
+  FlagForArchival : Boolean,
 };
 
 exports.init = function(db){

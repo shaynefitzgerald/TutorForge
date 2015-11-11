@@ -59,34 +59,37 @@ var CASInstance = new CASAuthentication({
   destroy_session : true,
 });
 
-if(config.isCertificateSelfSigned){
+app.use(forceSSL);
 
-  app.use(forceSSL);
+app.set('forceSSLOptions', {
+  enable301Redirects: true,
+  trustXFPHeader: false,
+  httpsPort: 443,
+  sslRequiredMessage: 'SSL Required.'
+});
 
-  app.set('forceSSLOptions', {
-    enable301Redirects: true,
-    trustXFPHeader: false,
-    httpsPort: 443,
-    sslRequiredMessage: 'SSL Required.'
-  });
-
-}
 //router imports
 var routes = require('./routes/index').init(CASInstance, database);
 var students = require('./routes/students').init(CASInstance, database);
 var tutors = require('./routes/tutors').init(CASInstance, database);
-
+var appointments = require('./routes/appointments');
 
 app.use('/', routes);
 app.use('/api/students', students);
 app.use('/api/tutors', tutors);
+app.use('/api/sessions', sessionRoutes);
+app.use('/api/appointments', appointments);
 
 app.get('/api/authenticate', CASInstance.bounce_redirect);
 app.get('/api/logout', CASInstance.logout);
 
+/*
+  permissions definition middleware
+*/
+app.use(require('./security.js'));
+
 app.get('/api/docs/routes', CASInstance.bounce, function(req, res){
   res.type('application/json');
-  console.log(app._router.stack);
   res.end(JSON.stringify(app._router.stack, null, 2));
 });
 

@@ -21,7 +21,14 @@ var SchemaObject = {
 };
 
 exports.init = function(db){
-  exports.tutor_Student = db.model('StudentModel', new mongoose.Schema(SchemaObject));
+  var StudentSchema = new mongoose.Schema(SchemaObject);
+
+  StudentSchema.virtual('Username').get(function(){
+    var split = this.Email.toString().split('@');
+    return split[0];
+  });
+
+  exports.tutor_Student = db.model('StudentModel', StudentSchema);
   exports.tutor_Student_FieldValidator = function(dat){
     return true;
   };
