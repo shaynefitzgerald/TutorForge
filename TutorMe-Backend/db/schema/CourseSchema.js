@@ -6,7 +6,6 @@ var SchemaObject = {
   Students : [{
     StudentRef : { type : mongoose.Schema.Types.ObjectId, ref : 'StudentModel' },
     StudentID : String,
-    CourseGrade : String,
   }],
   InstructorLastName : String,
   InstructorFirstName : String,
