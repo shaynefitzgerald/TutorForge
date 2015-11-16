@@ -230,7 +230,7 @@ exports.init = function(cas, db){
         error : "Missing or malformed parameters"
       }));
     }
-    if(validFields.indexOf(query.field) > 0){
+    if(validFields.indexOf(query.field) < 0){
       return res.end(JSON.stringify({
         success : false,
         error : "Invalid Field"
