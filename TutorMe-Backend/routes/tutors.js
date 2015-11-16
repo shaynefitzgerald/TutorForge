@@ -1,13 +1,17 @@
 var express = require('express');
+var url = require('url');
+var querystring = require('querystring');
 
-var error = function(res, err){
+
+
+var fn_error = function(res, err){
   return res.end(JSON.stringify({
     success : false,
     error : err,
   }));
 };
-var success = function(res, result){
-  res.end({ success : true, result : result });
+var fn_success = function(res, result){
+  res.end(JSON.stringify({ success : true, result : result }));
 };
 
 var db_getTutor = function(db, query, callback){
@@ -34,12 +38,13 @@ exports.init = function(cas, db){
      if(query[queryRequirements[0]] === undefined || query[queryRequirements[1] === undefined]){
        return error(res, "Invalid or Malformed parameters");
      }
-     if(!(query.field in validFields)){
-       return error(res, "Invalid Field");
+     console.log(query.field);
+     if(validFields.indexOf(query.field) < 0){
+       return fn_error(res, "Invalid Field");
      }
-     return db_getTutor(db, query, function(err, result){
-       if(!success) return error(res, err);
-       return ;
+     return db_getTutor(db, query, function(success, result){
+       if(!success) return fn_error(res, err);
+       return fn_success(res, result);
      });
 
   });

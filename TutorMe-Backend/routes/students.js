@@ -27,6 +27,7 @@ var contains = function(v, arr){
       return true;
   } return false;
 };
+
 var db_isTutor = function(db, studentID, callback){
 
   var Student = db.model('StudentModel');
@@ -49,7 +50,7 @@ var db_getStudent = function(db, field, value, callback){
   });
 };
 var db_getStudentCourses = function(db, studentID, callback){
-  var Courses = db.mondel('CourseModel');
+  var Courses = db.model('CourseModel');
 
   return Courses.find({'Students' : { $elemMatch : { ID : studentID } }},
   function(err, result){
@@ -133,7 +134,9 @@ exports.init = function(cas, db){
       var query = ( url.parse( req.url ).query !== null ) ?
        querystring.parse( url.parse( req.url ).query ) : {};
       try {
-        StudentID = Number(query.StudentID);
+        StudentID = Number(query.ID);
+        if(Number.isNaN(StudentID))
+          throw new Error();
       } catch (e){
         return res.end(JSON.stringify({
           success : false,

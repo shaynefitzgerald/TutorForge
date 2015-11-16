@@ -45,7 +45,7 @@ exports.init = function(cas, db){
 
   AppointmentRequestModel = db.model('AppointmentRequestModel');
 
-  router.post('/makeRequest', cas.block, function(req, res){
+  router.post('/makeRequest', function(req, res){
 
   });
   router.get('/getAppointmentRequests', function(req, res){

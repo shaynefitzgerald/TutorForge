@@ -25,24 +25,25 @@ var express = require('express');
         return true;
     } return false;
   };
-  var error = function(res, err){
+  var fn_error = function(res, err){
     return res.end(JSON.stringify({
       success : false,
       error : err,
     }));
   };
-  var success = function(res, result){
-    res.end({ success : true, result : result });
+  var fn_success = function(res, result){
+    res.end(JSON.stringify({ success : true, result : result }));
   };
 }
 
 var db_createTutor = function(db, data, callback){
   var TutorModel = db.model('TutorModel');
+  console.log(data);
   if(data.isStudentTutor){
     var StudentModel = db.model('StudentModel');
     StudentModel.findOne({ID:data.ID}, function(err, result){
       if(err) callback(false, err);
-      if(result === null) callback(false, "No Such Student");
+      if(result === null) return callback(false, "No Such Student");
       var toAdd = {
         isStudentTutor : true,
         ID : data.ID,
@@ -79,10 +80,10 @@ var db_createTutor = function(db, data, callback){
     });
   }
 };
-var db_removetutor = function(db, query, callback){
+var db_removeTutor = function(db, query, callback){
   var TutorModel = db.model('TutorModel');
   if(query.isStudentTutor){
-    return TutorModel.findOne({ID : query.ID}, function(err, result){
+    return TutorModel.findOne({ID : Number(query.ID)}, function(err, result){
       if(err) return callback(false, err);
       if(result === null) callback(false, "No Such Tutor");
       var StudentRef = result.StudentRef;
@@ -100,9 +101,11 @@ var db_removetutor = function(db, query, callback){
       });
     });
   } else {
-    return TutorModel.findOne({ID : query.ID}, function(err, result){
+    return TutorModel.findOne({ID : Number(query.ID)}, function(err, result){
       if(err) return callback(false, err);
-      if(result === null) callback(false, "No Such Tutor");
+      console.log(result);
+      if(result === null)
+        return callback(false, "No Such Tutor");
       return result.remove(function(err){
         if(err) return callback(false, err);
         return callback(true);
@@ -118,22 +121,22 @@ exports.init = function(cas, db){
     res.type('application/json');
     var body = req.body;
     if(!containsKeys(body, ['ID', 'Subject', 'isStudentTutor'])){
-      return error(res, "Missing or Malformed Parameters");
+      return fn_error(res, "Missing or Malformed Parameters");
     }
     return db_createTutor(db, body, function(success, result){
-      if(!success) return error(res, err);
-      return success(res, result);
+      if(!success) return fn_error(res, result);
+      return fn_success(res,result);
     });
   });
   router.post('/removeTutor', function(req, res){
     res.type('application/json');
     var body = req.body;
     if(!containsKeys(body, ['ID'])){
-      return error(res, "Missing or Malformed Parameters");
+      return fn_error(res, "Missing or Malformed Parameters");
     }
     return db_removeTutor(db, body, function(success, result){
-      if(!success) return error(res, result);
-      return sucesss(res, result);
+      if(!success) return fn_error(res, result);
+      return fn_success(res, result);
     });
   });
 
