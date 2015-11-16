@@ -89,7 +89,8 @@ app.get('/api/logout', CASInstance.logout);
 /*
   permissions definition middleware
 */
-app.use(require('./security'));
+var security = require('./security.js');
+app.use();
 
 app.get('/api/docs/routes', CASInstance.bounce, function(req, res){
   res.type('application/json');
