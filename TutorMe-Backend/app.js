@@ -72,6 +72,7 @@ app.set('forceSSLOptions', {
 var routes = require('./routes/index').init(CASInstance, database);
 var students = require('./routes/students').init(CASInstance, database);
 var tutors = require('./routes/tutors').init(CASInstance, database);
+var sessionRoutes = require('./routes/sessions');
 var appointments = require('./routes/appointments');
 
 app.use('/', routes);
