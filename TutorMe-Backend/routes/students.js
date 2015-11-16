@@ -29,9 +29,6 @@ var contains = function(v, arr){
 };
 var db_isTutor = function(db, studentID, callback){
 
-  if(typeof studentID !== "number")
-    return callback(false, 'Invalid StudentID');
-
   var Student = db.model('StudentModel');
 
   Student.findOne({'StudentID' : studentID}, function(err, res){
@@ -55,9 +52,6 @@ var db_getStudent = function(db, field, value, callback){
   });
 };
 var db_getStudentCourses = function(db, studentID, callback){
-  if(typeof studentID !== "number"){
-    return callback(false, "Invalid STudentID");
-  }
   var Courses = db.mondel('CourseModel');
 
   return Courses.find({'Students' : { $elemMatch : { StudentID : studentID } }},
@@ -67,9 +61,6 @@ var db_getStudentCourses = function(db, studentID, callback){
   });
 };
 var db_getStudentProfessors = function(db, studentID, callback){
-  if(typeof studentID !== "number"){
-    return callback(false, "Invalid STudentID");
-  }
   var Courses = db.model('CourseModel');
 
   return Courses.find({'Students' : { $elemMatch : { StudentID : studentID } }},
