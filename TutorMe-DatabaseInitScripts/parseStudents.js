@@ -29,6 +29,8 @@ var Student = db.model('StudentModel');
 
 //Loops through array of JSON obejcts and adds each one
 studentJsonArray.forEach(function(json){
+  var Username =  json.Email.split('@');
+  Username = Username[0];
   var studentAdd = new Student({
     ID : json.ID,
     OtherID : json.OtherID,
@@ -38,6 +40,7 @@ studentJsonArray.forEach(function(json){
     Gender : json.Gender,
     Major : json.Major,
     Email : json.Email,
+    Username : Username,
   });
 
   studentAdd.save(function(err){

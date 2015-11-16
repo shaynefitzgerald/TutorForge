@@ -30,10 +30,8 @@ var contains = function(v, arr){
 var db_isTutor = function(db, studentID, callback){
 
   var Student = db.model('StudentModel');
-
-  Student.findOne({'StudentID' : studentID}, function(err, res){
+  Student.findOne({'ID' : Number(studentID)}, function(err, res){
     if(err) callback(false, err);
-    console.log(res);
     if(res !== undefined && res !== null){
       return callback(true, res.isTutor);
     }  else {
@@ -45,7 +43,6 @@ var db_getStudent = function(db, field, value, callback){
   var Student = db.model('StudentModel');
   var queryObject = {};
   queryObject[field] = value;
-  console.log(queryObject);
   Student.find(queryObject, function(err, res){
     if(err) return callback(false, err);
     return callback(true, res);
@@ -54,7 +51,7 @@ var db_getStudent = function(db, field, value, callback){
 var db_getStudentCourses = function(db, studentID, callback){
   var Courses = db.mondel('CourseModel');
 
-  return Courses.find({'Students' : { $elemMatch : { StudentID : studentID } }},
+  return Courses.find({'Students' : { $elemMatch : { ID : studentID } }},
   function(err, result){
     if(err) return callback(false, err);
     return callback(true, result);
@@ -63,7 +60,7 @@ var db_getStudentCourses = function(db, studentID, callback){
 var db_getStudentProfessors = function(db, studentID, callback){
   var Courses = db.model('CourseModel');
 
-  return Courses.find({'Students' : { $elemMatch : { StudentID : studentID } }},
+  return Courses.find({'Students' : { $elemMatch : { ID : studentID } }},
   function(err, result){
     if(err) return callback(false, err);
     var ret = [];
@@ -210,7 +207,7 @@ exports.init = function(cas, db){
     router.get('/get', function(req, res, next){
     res.type('application/json');
     var validFields = [
-      "StudentID","OtherID","FirstName","LastName","FullName","Email"
+      "ID","OtherID","FirstName","LastName","FullName","Email"
     ];
     var queryRequirements = [ 'field', 'value' ];
     var query = ( url.parse( req.url ).query !== null ) ?

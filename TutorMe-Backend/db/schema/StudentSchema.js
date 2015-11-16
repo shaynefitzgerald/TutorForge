@@ -19,18 +19,23 @@ var SchemaObject = {
   TutorRef : { type : mongoose.Schema.Types.ObjectId, ref : 'TutorModel' },
   LastSubmittedFeedback : Date,
 };
+var SchemaOptions = {
+    toObject : {
+      virtuals : true,
+    },
+    toJSON : {
+      virtuals : true,
+    }
+};
+
 
 exports.init = function(db){
-  var StudentSchema = new mongoose.Schema(SchemaObject,
-    {
-      Username : {
-        virtuals : true
-      }
-    }
-  );
+  var StudentSchema = new mongoose.Schema(SchemaObject, SchemaOptions);
 
   StudentSchema.virtual('Username').get(function(){
+
     var split = this.Email.toString().split('@');
+    console.log(split);
     return split[0];
   });
 
