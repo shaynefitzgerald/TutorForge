@@ -68,6 +68,8 @@ app.set('forceSSLOptions', {
   sslRequiredMessage: 'SSL Required.'
 });
 
+console.log(__dirname);
+
 //router imports
 var routes = require('./routes/index').init(CASInstance, database);
 var students = require('./routes/students').init(CASInstance, database);
@@ -87,7 +89,7 @@ app.get('/api/logout', CASInstance.logout);
 /*
   permissions definition middleware
 */
-app.use(require('./security.js'));
+app.use(require('./security'));
 
 app.get('/api/docs/routes', CASInstance.bounce, function(req, res){
   res.type('application/json');
