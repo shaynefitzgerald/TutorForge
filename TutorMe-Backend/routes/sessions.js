@@ -1,5 +1,4 @@
 var express = require('express');
-var security = require('./security.js');
 
 exports.init = function(cas, db){
   var router = express.Router();
