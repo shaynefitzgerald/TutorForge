@@ -52,17 +52,9 @@ exports.init = function(cas, db){
     res.type('application/json');
     var query = ( url.parse( req.url ).query !== null ) ?
      querystring.parse( url.parse( req.url ).query ) : {};
-    if(req.session.permissions.indexOf('t') > -1){
-
-    } else if(req.session.permissions.indexOf('s') > -1){
-
-    } else if(req.session.permissions.indexOf('a') > -1){
-
-    } else {
-
-    }
     res.end();
   });
+
   router.post('/respondToRequest',  function(req, res){
     res.end();
   });

@@ -210,7 +210,7 @@ exports.init = function(cas, db){
     router.get('/get', function(req, res, next){
     res.type('application/json');
     var validFields = [
-      "ID","OtherID","FirstName","LastName","FullName","Email"
+      "ID","OtherID","FirstName","LastName","FullName","Email", "Username"
     ];
     var queryRequirements = [ 'field', 'value' ];
     var query = ( url.parse( req.url ).query !== null ) ?
