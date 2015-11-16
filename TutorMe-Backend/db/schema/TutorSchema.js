@@ -13,6 +13,7 @@ var SchemaObject = {
   ],
   LifetimeSessionCount : Number,
   LastArchivedSession : Date,
+  Username : { virtuals : true },
 };
 
 exports.init = function(db){
