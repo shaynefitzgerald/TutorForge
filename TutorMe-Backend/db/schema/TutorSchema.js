@@ -5,7 +5,7 @@ require('../mongoose-types/email.js').loadType(mongoose);
 var SchemaObject = {
   isStudentTutor : Boolean,
   ID : { type : Number, unique : true },
-  Email : mongoose.schema.types.Email,
+  Email : mongoose.Schema.Types.Email,
   StudentRef : { type : mongoose.Schema.Types.ObjectId, ref : 'StudentModel' },
   Subject : String,
   Sessions : [
