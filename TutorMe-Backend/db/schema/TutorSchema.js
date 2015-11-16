@@ -14,15 +14,17 @@ var SchemaObject = {
   LifetimeSessionCount : Number,
   LastArchivedSession : Date,
 };
+var SchemaOptions = {
+    toObject : {
+      virtuals : true,
+    },
+    toJSON : {
+      virtuals : true,
+    }
+};
 
 exports.init = function(db){
-  var TutorSchema = new mongoose.Schema(SchemaObject,
-    {
-      Username : {
-        virtuals : true
-      }
-    }
-  );
+  var TutorSchema = new mongoose.Schema(SchemaObject, SchemaOptions);
 
   TutorSchema.virtual('Username').get(function(){
     var split = this.Email.toString().split('@');
