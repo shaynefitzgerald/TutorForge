@@ -74,8 +74,8 @@ console.log(__dirname);
 var routes = require('./routes/index').init(CASInstance, database);
 var students = require('./routes/students').init(CASInstance, database);
 var tutors = require('./routes/tutors').init(CASInstance, database);
-var sessionRoutes = require('./routes/sessions');
-var appointments = require('./routes/appointments');
+var sessionRoutes = require('./routes/sessions').init(CASInstance, database);
+var appointments = require('./routes/appointments').init(CASInstance, database);
 
 app.use('/', routes);
 app.use('/api/students', students);
