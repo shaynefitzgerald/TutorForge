@@ -36,15 +36,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!----End Calender -------->
 
 
-    <!--
+
     <meta charset="utf-8">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <!--    <script src="//code.jquery.com/jquery-1.10.2.js"></script>-->
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <link rel="stylesheet" href="/resources/demos/style.css">
--->
 
 
+    <script>
+        $.getJSON('#', function (data) {
+            //data is the JSON string
+        });
+    </script>
 
     <script>
         $(function () {
@@ -117,7 +121,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 width: 350,
                 modal: true,
                 buttons: {
-                    "Create an account": addUser,
+                    "Register a Tutor": addUser,
                     Cancel: function () {
                         dialog.dialog("close");
                     }
@@ -403,8 +407,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         }
                     </style>
 
-                    <div id="dialog-form" title="Register Tutor!">
-                        <p class="validateTips">Register a Tutor!</p>
+                    <div id="dialog-form" title="Register Tutor">
+                        <p class="validateTips">Register Tutor!</p>
 
                         <form>
                             <fieldset>
@@ -423,7 +427,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 
                     <div id="users-contain" class="ui-widget">
-                        <h1>Register Tutors!</h1>
+                        <h1>Recently Registered Tutors!</h1>
                         <table id="users" class="ui-widget ui-widget-content">
                             <thead>
                                 <tr class="ui-widget-header ">
