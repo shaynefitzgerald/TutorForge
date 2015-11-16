@@ -1,6 +1,6 @@
 var mongoose = require("/app/TutorMe/TutorMe-Backend/node_modules/mongoose");
 // var config = JSON.parse(require('fs').readFileSync(__dirname + '/config.json'));
-var db = require('/app/TutorMe/TutorMe-Backend/db/connect.js');
+var db = require('/app/TutorMe/TutorMe-Backend/db/connect.js').applicationConnection;
 // db_Connection.on('error', console.error.bind(console, 'connection error:'));
 var fs = require('fs');
 
@@ -55,7 +55,7 @@ studentJsonArray.forEach(function(json){
 // });
 
   studentAdd.save(function(err){
-    if (err) return callback(err,false);
-    return callback(null,true);
+    if (err) console.log(err);
+    console.log("Success");
   });
 });
