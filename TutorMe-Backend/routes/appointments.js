@@ -1,10 +1,66 @@
 var express = require('express');
 
+var AppointmentRequestModel;
+
+var db_getAppointmentRequests_Students = function(db, query, callback){
+  var StudentModel = db.model('StudentModel');
+  StudentModel.findOne({'Username' : query.Username }, function(err, student){
+    if(err) return callback(false, err);
+
+    if(student === undefined){
+      return callback(false, "No Such User");
+    } else {
+      return AppointmentRequestModel.find({ Student : student._id }, function(err, appointments){
+        if(err) return callback(false, err);
+
+        return callback(true, appointments);
+      });
+    }
+  });
+};
+var db_getAppointmentRequests_Tutors = function(db, query, callback){
+  var TutorModel = db.model('TutorModel');
+  TutorModel.findOne({'Username' : query.Username }, function(err, tutor){
+    if(err) return callback(false, err);
+
+    return AppointmentRequestModel.find({Tutor : tutor._id}, function(err, appointments){
+      if(err) return callback(false, err);
+
+      return callback(true, appointments);
+    });
+  });
+};
+var db_getAppointmentRequests_Administrators = function(db, query, callback){
+  var AdministratorModel = db.model('AdministratorModel');
+  return AppointmentRequestModel.find(query, function(err, appointments){
+    if(err) return callback(false, err);
+
+    return callback(true, appointments);
+  });
+};
+
 
 exports.init = function(cas, db){
   var router = express.Router();
 
+  AppointmentRequestModel = db.model('AppointmentRequestModel');
+
+  router.post('/makeRequest', cas.block, function(req, res){
+
+  });
   router.get('/getAppointmentRequests', cas.block, function(req, res){
+    res.type('application/json');
+    var query = ( url.parse( req.url ).query !== null ) ?
+     querystring.parse( url.parse( req.url ).query ) : {};
+    if(req.session.permissions.indexOf('t') > -1){
+
+    } else if(req.session.permissions.indexOf('s') > -1){
+
+    } else if(req.session.permissions.indexOf('a') > -1){
+
+    } else {
+
+    }
     res.end();
   });
   router.post('/respondToRequest', cas.block, function(req, res){
