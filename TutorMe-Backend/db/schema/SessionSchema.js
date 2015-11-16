@@ -9,6 +9,7 @@ var SchemaObject = {
   Location : String,
   Student : { type : mongoose.Schema.Types.ObjectId , ref : 'StudentModel' },
   Tutor : { type : mongoose.Schema.Types.ObjectId, ref : 'TutorModel' },
+  ForCloss : { type : mongoose.Schema.Types.ObjectId, ref : 'CourseSchema'},
   RequestedProfessorNotification : Boolean,
   SentProfessorNotification : Boolean,
   FlagForArchival : Boolean,

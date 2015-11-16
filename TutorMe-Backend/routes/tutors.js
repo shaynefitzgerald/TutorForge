@@ -23,14 +23,20 @@ var db_getTutor = function(db, query, callback){
     return callback(true, result);
   });
 };
+var db_getAllTutors = function(db, query, callback){
+  
+};
 
 exports.init = function(cas, db){
   var router = express.Router();
-
+  router.get('/getAll', function(req, res){
+    res.type('application/json');
+    return db_getAllTutors()
+  });
   router.get('/get', function(req, res){
     res.type('application/json');
     var validFields = [
-      "ID","Email","Subject"
+      "ID","Email","Subject","Username"
     ];
     var queryRequirements = [ 'field', 'value' ];
     var query = ( url.parse( req.url ).query !== null ) ?

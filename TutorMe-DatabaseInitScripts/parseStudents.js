@@ -1,7 +1,6 @@
 var mongoose = require("/app/TutorMe/TutorMe-Backend/node_modules/mongoose");
-var schema = require('/app/TutorMe/TutorMe-Backend/db/schema/index').dir;
 // var config = JSON.parse(require('fs').readFileSync(__dirname + '/config.json'));
-var db = mongoose.connect("mongodb://@localhost:27017/TutorMe?poolSize=10");
+var db = require('/app/TutorMe/TutorMe-Backend/db/connect.js');
 // db_Connection.on('error', console.error.bind(console, 'connection error:'));
 var fs = require('fs');
 
@@ -14,7 +13,6 @@ var remadeStudents = [];
 //Loads studentcut.json into an Array of JSON obejcts
 var dat = fs.readFileSync('/import/json/studentscut.json', 'utf8');
 studentJsonArray = JSON.parse(dat);
-
 
 //Load student model
 //var StudentModel = mongoose.model('StudentModel', schema[StudentSchema]);
