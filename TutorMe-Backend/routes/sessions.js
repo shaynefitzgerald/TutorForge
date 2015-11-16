@@ -11,7 +11,7 @@ exports.init = function(cas, db){
   router.get('/getPreviousSessions',  function(req, res){
     res.end();
   });
-  router.post('/getScheduledSessions', function(req, res){
+  router.get('/getScheduledSessions', function(req, res){
     res.end();
   });
 
