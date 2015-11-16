@@ -3,8 +3,8 @@ var mongoose = require('mongoose');
 require('../mongoose-types/email.js').loadType(mongoose);
 
 var SchemaObject = {
-  Student : { type : mongoose.schema.types.ObjectId, ref : 'StudentModel' },
-  Tutor : { type : mongoose.schema.types.ObjectId, ref : 'TutorModel' },
+  Student : { type : mongoose.Schema.Types.ObjectId, ref : 'StudentModel' },
+  Tutor : { type : mongoose.Schema.Types.ObjectId, ref : 'TutorModel' },
   RequestedStart : Date,
   Location : String,
   Subject : String,

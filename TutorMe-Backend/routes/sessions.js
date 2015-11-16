@@ -6,13 +6,13 @@ exports.init = function(cas, db){
 
   var permissions = 't';
 
-  router.post('/endSession', cas.block, function(req, res){
+  router.post('/endSession',  function(req, res){
     res.end();
   });
-  router.get('/getPreviousSessions', cas.block, function(req, res){
+  router.get('/getPreviousSessions',  function(req, res){
     res.end();
   });
-  router.post('/getScheduledSessions', cas.block, function(req, res){
+  router.post('/getScheduledSessions', function(req, res){
     res.end();
   });
 
