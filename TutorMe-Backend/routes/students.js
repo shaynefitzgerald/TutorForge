@@ -224,7 +224,7 @@ exports.init = function(cas, db){
     var queryRequirements = [ 'field', 'value' ];
     var query = ( url.parse( req.url ).query !== null ) ?
      querystring.parse( url.parse( req.url ).query ) : {};
-    if(!containsKeys(query, queryRequirements)){
+    if(query[queryRequirements[0]] === undefined && query[queryRequirements[1]] === undefined){
       return res.end(JSON.stringify({
         success : false,
         error : "Missing or malformed parameters"
