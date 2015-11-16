@@ -1,10 +1,9 @@
-/*
-var mongoose = require('mongoose');
-var schema = require('./schema/index').dir;
-var config = JSON.parse(require('fs').readFileSync(__dirname + '/config.json'));
-var db_Connection = mongoose.connect("mongodb://@localhost:27017/test?poolSize=10");
-db_Connection.on('error', console.error.bind(console, 'connection error:'));
-*/
+// var mongoose = require('mongoose');
+// var schema = require('./schema/index').dir;
+// var config = JSON.parse(require('fs').readFileSync(__dirname + '/config.json'));
+// var db_Connection = mongoose.connect("mongodb://@localhost:27017/TutorMe");
+// db_Connection.on('error', console.error.bind(console, 'connection error:'));
+
 var fs = require('fs');
 
 /*
@@ -25,6 +24,7 @@ coursesJsonArray = JSON.parse(dat);
 /*
   Function for looping through the json array and determining if the Course title exist
 */
+
 var checkForCourse = function(titl){
   for (var i = 0; i < CourseNames.length; i++){
     if (CourseNames[i] === titl){
@@ -74,28 +74,29 @@ coursesJsonArray.forEach(function(json){
 /*
   Converts array into a JSON object then saves itto courses.json
 */
-// var coursejson = JSON.stringify(remadeCourse, null, '\t');
-// fs.writeFile("/import/courses.json",coursejson, function(err){
-//   if (err) throw err;
-//   console.log('It is saved');
-// });
 
-var Course = db.model('CourseModel');
-
-remadeCourse.forEach(function(course){
-  var courseToAdd = new Course{
-    Students : json.Students,
-    InstructorLastName : json.InstructorLastName,
-    InstructorFirstName : json.InstructorFirstName,
-    InstructorEmail : json.InstructorEmail,
-    CourseSubject : json.CourseSubject,
-    CourseSection : json.CourseSection,
-    CourseTitle : json.CourseTitle,
-    Term : json.Term,
-  }
-
-  CourseToAdd.save(function(err){
-    if (err) return callback(err,false);
-    return callback(null,true);
-  });
+var coursejson = JSON.stringify(remadeCourse, null, '\t');
+fs.writeFile("/import/parsed/courses.json",coursejson, function(err){
+  if (err) throw err;
+  console.log('It is saved');
 });
+
+// var Course = db.model('CourseModel');
+//
+// remadeCourse.forEach(function(course){
+//   var courseToAdd = new Course{
+//     Students : json.Students,
+//     InstructorLastName : json.InstructorLastName,
+//     InstructorFirstName : json.InstructorFirstName,
+//     InstructorEmail : json.InstructorEmail,
+//     CourseSubject : json.CourseSubject,
+//     CourseSection : json.CourseSection,
+//     CourseTitle : json.CourseTitle,
+//     Term : json.Term,
+//   }
+//
+//   CourseToAdd.save(function(err){
+//     if (err) return callback(err,false);
+//     return callback(null,true);
+//   });
+// });
