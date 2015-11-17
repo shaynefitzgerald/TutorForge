@@ -53,7 +53,7 @@
 <li>IsTutor : Boolean</li>
 </ul>
 <p><strong>Example Query</strong></p>
-<pre><code>    /api/<span class="hljs-preprocessor">get</span>?<span class="hljs-preprocessor">field</span><span class="hljs-label">=FullName</span>&amp;value<span class="hljs-label">=Some</span>%<span class="hljs-number">20</span>User
+<pre><code>    /api/students/<span class="hljs-preprocessor">get</span>?<span class="hljs-preprocessor">field</span><span class="hljs-label">=FullName</span>&amp;value<span class="hljs-label">=Some</span>%<span class="hljs-number">20</span>User
 </code></pre>
 <p><strong>Expected Response</strong></p>
 <p><em><strong>On Success</strong></em></p>
@@ -94,8 +94,8 @@
             "<span class="hljs-attribute">CourseSubject</span>" : <span class="hljs-value"><span class="hljs-string">"Computer Science"</span></span>,
             "<span class="hljs-attribute">CourseSection</span>" : <span class="hljs-value"><span class="hljs-number">432</span></span>,
             "<span class="hljs-attribute">InstructorFirstName</span>" : <span class="hljs-value"><span class="hljs-string">"Joshua"</span></span>,
-            "<span class="hljs-attribute">InstructorLastName</span>" : <span class="hljs-value"><span class="hljs-string">"Eckeroth"</span>
-            <span class="hljs-string">"InstructorEmail"</span> : <span class="hljs-string">"jeckroth@stetson.edu"</span>
+            "<span class="hljs-attribute">InstructorLastName</span>" : <span class="hljs-value"><span class="hljs-string">"Eckeroth"</span></span>,
+            "<span class="hljs-attribute">InstructorEmail</span>" : <span class="hljs-value"><span class="hljs-string">"jeckroth@stetson.edu"</span>
         </span>},
     ]
 </span>}
@@ -137,6 +137,160 @@
     "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">false</span></span>,
     "<span class="hljs-attribute">result</span>" : <span class="hljs-value"><span class="hljs-string">"Some Error String"</span>
 </span>}
+</code></pre>
+<h2><a id="Administrators_157"></a>Administrators</h2>
+<h3><a id="setAsTutor_httpspost_159"></a>setAsTutor <code>[https/post]</code></h3>
+<pre><code>/api/administrator/setAsTutor
+</code></pre>
+<p>Used to setup tutors within the database. May turn a student into a tutor, or create a non-student tutor, the latter requiring more information.</p>
+<p><strong>Permissions</strong></p>
+<ul>
+<li>Only Administrators are allowed to access and POST to this handle.</li>
+</ul>
+<p><strong>Example Query</strong></p>
+<pre><code>/api/administrator/setAsTutor
+</code></pre>
+<p><em>POST Body for non-Student Tutors</em></p>
+<pre><code class="language-json">{
+ "<span class="hljs-attribute">ID</span>" : <span class="hljs-value"><span class="hljs-number">800999999</span></span>,
+ "<span class="hljs-attribute">Subject</span>" : <span class="hljs-value"><span class="hljs-string">"CSCI"</span></span>,
+ "<span class="hljs-attribute">isStudentTutor</span>" : <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+ "<span class="hljs-attribute">Email</span>" : <span class="hljs-value"><span class="hljs-string">"someguy@stetson.edu"</span>
+</span>}
+</code></pre>
+<p><em>POST Body for Student Tutors</em></p>
+<pre><code class="language-json">    {
+        "<span class="hljs-attribute">ID</span>" : <span class="hljs-value"><span class="hljs-number">800999999</span></span>,
+        "<span class="hljs-attribute">Subject</span>" : <span class="hljs-value"><span class="hljs-string">"CSCI"</span></span>,
+        "<span class="hljs-attribute">isStudentTutor</span>" : <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+    }
+</code></pre>
+<p><strong>Expected Response</strong></p>
+<p><em><strong>On Success</strong></em></p>
+<pre><code class="language-json">{
+    "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+    "<span class="hljs-attribute">result</span>" : <span class="hljs-value">{
+        "<span class="hljs-attribute">__v</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+        "<span class="hljs-attribute">isStudentTutor</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+        "<span class="hljs-attribute">ID</span>": <span class="hljs-value"><span class="hljs-number">800999999</span></span>,
+        "<span class="hljs-attribute">Email</span>": <span class="hljs-value"><span class="hljs-string">"someguy@stetson.edu"</span></span>,
+        "<span class="hljs-attribute">Subject</span>": <span class="hljs-value"><span class="hljs-string">"CSCI"</span></span>,
+        "<span class="hljs-attribute">LifetimeSessionCount</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+        "<span class="hljs-attribute">LastArchivedSession</span>": <span class="hljs-value"><span class="hljs-string">"1970-01-01T00:00:00.000Z"</span></span>,
+        "<span class="hljs-attribute">_id</span>": <span class="hljs-value"><span class="hljs-string">"564b80de64fee73c0702f93f"</span></span>,
+        "<span class="hljs-attribute">Sessions</span>": <span class="hljs-value">[<span class="hljs-number">0</span>]</span>,
+        "<span class="hljs-attribute">Username</span>": <span class="hljs-value"><span class="hljs-string">"someguy"</span></span>,
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-string">"564b80de64fee73c0702f93f"</span>
+    </span>}-
+</span>}
+</code></pre>
+<p><em><strong>On Failure</strong></em></p>
+<pre><code class="language-json">{
+    "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+    "<span class="hljs-attribute">error</span>" : <span class="hljs-value">{}</span>,
+}
+</code></pre>
+<p><strong>Note</strong>: While currently error messages are reported in full to the client, the release build will NOT display this robust form of message. Do NOT write code that relies on specific fields from MongoDB error messages.</p>
+<h3><a id="removeTutor_httpspost_223"></a>removeTutor <code>[https/post]</code></h3>
+<pre><code>/api/administrator/removeTutor
+</code></pre>
+<p>Used to remove tutors from the database.</p>
+<p><em>TODO: remove <code>isStudentTutor</code> field from request requirements.</em></p>
+<p><strong>Permissions</strong></p>
+<ul>
+<li>Only Administrators are allowed to access and POST to this handle.</li>
+</ul>
+<p><strong>Example Query</strong></p>
+<pre><code>/api/students/removeTutor
+</code></pre>
+<p><em>POST Body</em></p>
+<pre><code class="language-json">{
+    "<span class="hljs-attribute">ID</span>" : <span class="hljs-value"><span class="hljs-number">800999999</span></span>,
+    "<span class="hljs-attribute">isStudentTutor</span>" : <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+}
+</code></pre>
+<p><strong>Expected Response</strong></p>
+<p><em><strong>On Success</strong></em></p>
+<pre><code class="language-json">{
+    "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">true</span>
+</span>}
+</code></pre>
+<p><em><strong>On Failure</strong></em></p>
+<pre><code class="language-json">{
+    "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+    "<span class="hljs-attribute">error</span>" : <span class="hljs-value">{}</span>,
+}
+</code></pre>
+<h2><a id="Tutors_262"></a>Tutors</h2>
+<h3><a id="getAll_httpsget_264"></a>/getAll <code>[https/get]</code></h3>
+<p>Returns an array of tutors from the database. If passed a Subject, will narrow the search to those subjects.</p>
+<p><strong>Permissions:</strong></p>
+<ul>
+<li>Anyone can call this function.</li>
+</ul>
+<p><strong>Example Query</strong>
+/api/tutors/getAll?Subject=CSCI</p>
+<p><em><strong>On Success</strong></em></p>
+<pre><code class="language-json">{
+    "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+    "<span class="hljs-attribute">result</span>" : <span class="hljs-value">[
+        {
+            "<span class="hljs-attribute">__v</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+            "<span class="hljs-attribute">isStudentTutor</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+            "<span class="hljs-attribute">ID</span>": <span class="hljs-value"><span class="hljs-number">800999999</span></span>,
+            "<span class="hljs-attribute">Email</span>": <span class="hljs-value"><span class="hljs-string">"someguy@stetson.edu"</span></span>,
+            "<span class="hljs-attribute">Subject</span>": <span class="hljs-value"><span class="hljs-string">"CSCI"</span></span>,
+            "<span class="hljs-attribute">LifetimeSessionCount</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+            "<span class="hljs-attribute">LastArchivedSession</span>": <span class="hljs-value"><span class="hljs-string">"1970-01-01T00:00:00.000Z"</span></span>,
+            "<span class="hljs-attribute">_id</span>": <span class="hljs-value"><span class="hljs-string">"564b80de64fee73c0702f93f"</span></span>,
+            "<span class="hljs-attribute">Sessions</span>": <span class="hljs-value">[<span class="hljs-number">0</span>]</span>,
+            "<span class="hljs-attribute">Username</span>": <span class="hljs-value"><span class="hljs-string">"someguy"</span></span>,
+            "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-string">"564b80de64fee73c0702f93f"</span>
+        </span>},
+    ]</span>,
+}
+</code></pre>
+<p><em><strong>On Failure</strong></em></p>
+<pre><code class="language-json">{
+    "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+    "<span class="hljs-attribute">error</span>" : <span class="hljs-value">{}</span>,
+}
+</code></pre>
+<h3><a id="get_httpsget_303"></a>/get <code>[https/get]</code></h3>
+<p>Returns a tutor from the database matching the field provided. Note that sessions are also populated by reference, so this is recommended when pulling a given tutor’s information on login.</p>
+<p>Accepted fields are <code>ID Email Subject Username</code></p>
+<p><strong>Permissions:</strong></p>
+<ul>
+<li>Anyone can call this function.</li>
+</ul>
+<p><strong>Example Query</strong></p>
+<pre><code>/api/tutors/get?ID=800999999
+</code></pre>
+<p><em><strong>On Success</strong></em></p>
+<pre><code class="language-json">{
+    "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+    "<span class="hljs-attribute">result</span>" : <span class="hljs-value">[
+        {
+            "<span class="hljs-attribute">__v</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+            "<span class="hljs-attribute">isStudentTutor</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+            "<span class="hljs-attribute">ID</span>": <span class="hljs-value"><span class="hljs-number">800999999</span></span>,
+            "<span class="hljs-attribute">Email</span>": <span class="hljs-value"><span class="hljs-string">"someguy@stetson.edu"</span></span>,
+            "<span class="hljs-attribute">Subject</span>": <span class="hljs-value"><span class="hljs-string">"CSCI"</span></span>,
+            "<span class="hljs-attribute">LifetimeSessionCount</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+            "<span class="hljs-attribute">LastArchivedSession</span>": <span class="hljs-value"><span class="hljs-string">"1970-01-01T00:00:00.000Z"</span></span>,
+            "<span class="hljs-attribute">_id</span>": <span class="hljs-value"><span class="hljs-string">"564b80de64fee73c0702f93f"</span></span>,
+            "<span class="hljs-attribute">Sessions</span>": <span class="hljs-value">[<span class="hljs-number">0</span>]</span>,
+            "<span class="hljs-attribute">Username</span>": <span class="hljs-value"><span class="hljs-string">"someguy"</span></span>,
+            "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-string">"564b80de64fee73c0702f93f"</span>
+        </span>},
+    ]</span>,
+}
+</code></pre>
+<p><em><strong>On Failure</strong></em></p>
+<pre><code class="language-json">{
+    "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+    "<span class="hljs-attribute">error</span>" : <span class="hljs-value">{}</span>,
+}
 </code></pre>
 
 </body></html>

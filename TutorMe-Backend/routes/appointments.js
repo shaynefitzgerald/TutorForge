@@ -22,7 +22,9 @@ var db_getAppointmentRequests_Tutors = function(db, query, callback){
   var TutorModel = db.model('TutorModel');
   TutorModel.findOne({'Username' : query.Username }, function(err, tutor){
     if(err) return callback(false, err);
-
+    if(tutor === undefined || tutor === null){
+      return callback(false, "No Such User");
+    }
     return AppointmentRequestModel.find({Tutor : tutor._id}, function(err, appointments){
       if(err) return callback(false, err);
 
@@ -48,6 +50,8 @@ exports.init = function(cas, db){
   router.post('/makeRequest', function(req, res){
 
   });
+
+  
   router.get('/getAppointmentRequests', function(req, res){
     res.type('application/json');
     var query = ( url.parse( req.url ).query !== null ) ?

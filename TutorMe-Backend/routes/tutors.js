@@ -2,8 +2,6 @@ var express = require('express');
 var url = require('url');
 var querystring = require('querystring');
 
-
-
 var fn_error = function(res, err){
   return res.end(JSON.stringify({
     success : false,
@@ -24,14 +22,24 @@ var db_getTutor = function(db, query, callback){
   });
 };
 var db_getAllTutors = function(db, query, callback){
-  
+  var TutorModel = db.model('TutorModel');
+  return TutorModel.find({ subject : query } , function(err, result){
+    if(err) return callback(false, err);
+    return callback(true, result);
+  });
 };
 
 exports.init = function(cas, db){
   var router = express.Router();
   router.get('/getAll', function(req, res){
     res.type('application/json');
-    return db_getAllTutors()
+    var query = ( url.parse( req.url ).query !== null ) ?
+     querystring.parse( url.parse( req.url ).query ) : {};
+    var subject = query.subject;
+    return db_getAllTutors(db, subject, function(err, result){
+      if(err) return fn_error(res, err);
+      return fn_success(res, result);
+    });
   });
   router.get('/get', function(req, res){
     res.type('application/json');
@@ -42,7 +50,7 @@ exports.init = function(cas, db){
     var query = ( url.parse( req.url ).query !== null ) ?
      querystring.parse( url.parse( req.url ).query ) : {};
      if(query[queryRequirements[0]] === undefined || query[queryRequirements[1] === undefined]){
-       return error(res, "Invalid or Malformed parameters");
+       return fn_error(res, "Invalid or Malformed parameters");
      }
      console.log(query.field);
      if(validFields.indexOf(query.field) < 0){

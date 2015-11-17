@@ -21,5 +21,8 @@ exports.init = function(cas, db){
       return res.end(e.toString());
     }
   });
+  router.post('/setPermissionsFlags', function(req, res){
+
+  });
   return router;
 };

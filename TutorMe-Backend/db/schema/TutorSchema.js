@@ -5,6 +5,8 @@ require('../mongoose-types/email.js').loadType(mongoose);
 var SchemaObject = {
   isStudentTutor : Boolean,
   ID : { type : Number, unique : true },
+  FirstName : String,
+  LastName : String,
   Email : mongoose.Schema.Types.Email,
   StudentRef : { type : mongoose.Schema.Types.ObjectId, ref : 'StudentModel' },
   Subject : String,
@@ -29,6 +31,9 @@ exports.init = function(db){
   TutorSchema.virtual('Username').get(function(){
     var split = this.Email.toString().split('@');
     return split[0];
+  });
+  TutorSchema.virtual('FullName').get(function(){
+    return this.FirstName + " " + LastName;
   });
 
   exports.tutor_Tutor = db.model('TutorModel', TutorSchema);

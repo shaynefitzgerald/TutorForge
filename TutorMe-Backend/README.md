@@ -54,7 +54,7 @@ Used to get information about a student, by a field provided by the database. Re
 
 **Example Query**
 ```
-    /api/get?field=FullName&value=Some%20User
+    /api/students/get?field=FullName&value=Some%20User
 ```
 **Expected Response**
 
@@ -103,7 +103,7 @@ Used to get the courses a student is taking. Resolves ObjectID to full object va
             "CourseSubject" : "Computer Science",
             "CourseSection" : 432,
             "InstructorFirstName" : "Joshua",
-            "InstructorLastName" : "Eckeroth"
+            "InstructorLastName" : "Eckeroth",
             "InstructorEmail" : "jeckroth@stetson.edu"
         },
     ]
@@ -153,5 +153,194 @@ Used to get the professors for courses a student is taking.
 {
     "success" : false,
     "result" : "Some Error String"
+}
+```
+## Administrators
+
+### setAsTutor `[https/post]`
+    /api/administrator/setAsTutor
+
+Used to setup tutors within the database. May turn a student into a tutor, or create a non-student tutor, the latter requiring more information.
+
+**Permissions**
+- Only Administrators are allowed to access and POST to this handle.
+
+**Example Query**
+
+    /api/administrator/setAsTutor
+
+*POST Body for non-Student Tutors*
+
+```json
+{
+ "ID" : 800999999,
+ "Subject" : "CSCI",
+ "isStudentTutor" : false,
+ "Email" : "someguy@stetson.edu"
+}
+```
+
+*POST Body for Student Tutors*
+
+```json
+    {
+        "ID" : 800999999,
+        "Subject" : "CSCI",
+        "isStudentTutor" : true,
+    }
+```
+
+**Expected Response**
+
+*__On Success__*
+
+```json
+{
+    "success" : true,
+    "result" : {
+        "__v": 0,
+        "isStudentTutor": false,
+        "ID": 800999999,
+        "Email": "someguy@stetson.edu",
+        "Subject": "CSCI",
+        "LifetimeSessionCount": 0,
+        "LastArchivedSession": "1970-01-01T00:00:00.000Z",
+        "_id": "564b80de64fee73c0702f93f",
+        "Sessions": [0],
+        "Username": "someguy",
+        "id": "564b80de64fee73c0702f93f"
+    }-
+}
+```
+*__On Failure__*
+```json
+{
+    "success" : false,
+    "error" : {},
+}
+```
+**Note**: While currently error messages are reported in full to the client, the release build will NOT display this robust form of message. Do NOT write code that relies on specific fields from MongoDB error messages.
+
+### removeTutor `[https/post]`
+    /api/administrator/removeTutor
+
+Used to remove tutors from the database.
+
+*TODO: remove `isStudentTutor` field from request requirements.*
+
+**Permissions**
+- Only Administrators are allowed to access and POST to this handle.
+
+**Example Query**
+
+    /api/students/removeTutor
+
+*POST Body*
+```json
+{
+    "ID" : 800999999,
+    "isStudentTutor" : false,
+}
+```
+
+**Expected Response**
+
+*__On Success__*
+```json
+{
+    "success" : true
+}
+```
+
+*__On Failure__*
+```json
+{
+    "success" : false,
+    "error" : {},
+}
+```
+
+## Tutors
+
+### /getAll `[https/get]`
+
+Returns an array of tutors from the database. If passed a Subject, will narrow the search to those subjects.
+
+**Permissions:**
+- Anyone can call this function.
+
+**Example Query**
+    /api/tutors/getAll?Subject=CSCI
+
+*__On Success__*
+```json
+{
+    "success" : true,
+    "result" : [
+        {
+            "__v": 0,
+            "isStudentTutor": false,
+            "ID": 800999999,
+            "Email": "someguy@stetson.edu",
+            "Subject": "CSCI",
+            "LifetimeSessionCount": 0,
+            "LastArchivedSession": "1970-01-01T00:00:00.000Z",
+            "_id": "564b80de64fee73c0702f93f",
+            "Sessions": [0],
+            "Username": "someguy",
+            "id": "564b80de64fee73c0702f93f"
+        },
+    ],
+}
+```
+
+*__On Failure__*
+```json
+{
+    "success" : false,
+    "error" : {},
+}
+```
+### /get `[https/get]`
+
+Returns a tutor from the database matching the field provided. Note that sessions are also populated by reference, so this is recommended when pulling a given tutor's information on login.
+
+Accepted fields are `ID Email Subject Username`
+
+**Permissions:**
+- Anyone can call this function.
+
+**Example Query**
+
+    /api/tutors/get?ID=800999999
+
+
+*__On Success__*
+```json
+{
+    "success" : true,
+    "result" : [
+        {
+            "__v": 0,
+            "isStudentTutor": false,
+            "ID": 800999999,
+            "Email": "someguy@stetson.edu",
+            "Subject": "CSCI",
+            "LifetimeSessionCount": 0,
+            "LastArchivedSession": "1970-01-01T00:00:00.000Z",
+            "_id": "564b80de64fee73c0702f93f",
+            "Sessions": [0],
+            "Username": "someguy",
+            "id": "564b80de64fee73c0702f93f"
+        },
+    ],
+}
+```
+
+*__On Failure__*
+```json
+{
+    "success" : false,
+    "error" : {},
 }
 ```
