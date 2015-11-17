@@ -1,5 +1,14 @@
 var express = require('express');
 
+var fn_error = function(res, err){
+  return res.end(JSON.stringify({
+    success : false,
+    error : err,
+  }));
+};
+var fn_success = function(res, result){
+  res.end(JSON.stringify({ success : true, result : result }));
+};
 
 exports.init = function(cas, db){
   var router = express.Router();
@@ -22,7 +31,11 @@ exports.init = function(cas, db){
     }
   });
   router.post('/setPermissionsFlags', function(req, res){
-
+    res.type('application/json');
+    var body = req.body;
+    if(body.flags === undefined) fn_error(res, "Missing Parameter: flags");
+    req.session.userPermissions = body.flags;
+    return fn_success(res, req.session);
   });
   return router;
 };
