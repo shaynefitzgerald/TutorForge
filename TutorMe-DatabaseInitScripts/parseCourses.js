@@ -1,9 +1,7 @@
-// var mongoose = require('mongoose');
-// var schema = require('./schema/index').dir;
+var mongoose = require("/app/TutorMe/TutorMe-Backend/node_modules/mongoose");
 // var config = JSON.parse(require('fs').readFileSync(__dirname + '/config.json'));
-// var db_Connection = mongoose.connect("mongodb://@localhost:27017/TutorMe");
+var db = require('/app/TutorMe/TutorMe-Backend/db/connect.js').applicationConnection;
 // db_Connection.on('error', console.error.bind(console, 'connection error:'));
-
 var fs = require('fs');
 
 /*
@@ -45,7 +43,7 @@ coursesJsonArray.forEach(function(json){
   if (!inArray){
     studentArray = [];
     CourseNames.push(title);
-    studentArray.push({StudentRef: "" , StudentID : json.StudentID});
+    studentArray.push({StudentRef: undefined , StudentID : json.StudentID});
     var newcourse = {};
      newcourse = {
       Students : studentArray,
@@ -65,38 +63,38 @@ coursesJsonArray.forEach(function(json){
     for (var x = 0; x < remadeCourse.length; x++){
       var vtitle = remadeCourse[x].CourseTitle;
       if (ctitle === vtitle){
-        remadeCourse[x].Students.push({StudentRef: "" , StudentID : json.StudentID});
+        remadeCourse[x].Students.push({StudentRef: undefined , StudentID : json.StudentID});
       }
     }
   }
 });
 
 /*
-  Converts array into a JSON object then saves itto courses.json
+  Converts array into a JSON object then saves into courses.json
 */
 
-var coursejson = JSON.stringify(remadeCourse, null, '\t');
-fs.writeFile("/import/parsed/courses.json",coursejson, function(err){
-  if (err) throw err;
-  console.log('It is saved');
-});
-
-// var Course = db.model('CourseModel');
-//
-// remadeCourse.forEach(function(course){
-//   var courseToAdd = new Course{
-//     Students : json.Students,
-//     InstructorLastName : json.InstructorLastName,
-//     InstructorFirstName : json.InstructorFirstName,
-//     InstructorEmail : json.InstructorEmail,
-//     CourseSubject : json.CourseSubject,
-//     CourseSection : json.CourseSection,
-//     CourseTitle : json.CourseTitle,
-//     Term : json.Term,
-//   }
-//
-//   CourseToAdd.save(function(err){
-//     if (err) return callback(err,false);
-//     return callback(null,true);
-//   });
+// var coursejson = JSON.stringify(remadeCourse, null, '\t');
+// fs.writeFile("/import/parsed/courses.json",coursejson, function(err){
+//   if (err) throw err;
+//   console.log('It is saved');
 // });
+
+var Course = db.model('CourseModel');
+
+remadeCourse.forEach(function(course){
+  var courseToAdd = new Course({
+    Students : course.Students,
+    InstructorLastName : course.InstructorLastName,
+    InstructorFirstName : course.InstructorFirstName,
+    InstructorEmail : course.InstructorEmail,
+    CourseSubject : course.CourseSubject,
+    CourseSection : course.CourseSection,
+    CourseTitle : course.CourseTitle,
+    Term : course.Term,
+  });
+
+  courseToAdd.save(function(err){
+    if (err) console.log(err);
+    console.log("Success");
+  });
+});
