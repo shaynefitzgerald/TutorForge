@@ -146,52 +146,56 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         <div class="col s4 center-align">&nbsp;</div>
                                         
                                         <div class="col s12 center-align">
-                                            <input type="text" class='dropdown-button center-align' data-activates='subject_dropdown' placeholder="Pick a Subject" onclick="pickSubject()" id="login_box">
+                                            <input type="text" class='dropdown-button center-align' data-activates='subject_dropdown' placeholder="Pick a Subject" id="login_box">
                                         </div>
 
                                             <!-- Dropdown Structure -->
                                             <ul id='subject_dropdown' class='dropdown-content'>
-                                                <li><a href="#!">Accounting</a></li>
-                                                <li><a href="#!">Business</a></li>
-                                                <li><a href="#!">Computer Science</a></li>
-                                                <li><a href="#!">Economics</a></li>
-                                                <li><a href="#!">Finance</a></li>
-                                                <li><a href="#!">Health & Medical Statistics</a></li>
-                                                <li><a href="#!">Math</a></li>
-                                                <li><a href="#!">Music</a></li>
-                                                <li><a href="#!">Physics</a></li>
-                                                <li><a href="#!">Russian</a></li>
-                                                <li><a href="#!">Writing</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Accounting')">Accounting</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Business')">Business</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Computer Science')">Computer Science</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Ecocomics')">Economics</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Finance')">Finance</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Health & Medical Statistics')">Health & Medical Statistics</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Math')">Math</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Music')">Music</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Physics')">Physics</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Russian')">Russian</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Writing')">Writing</a></li>
                                                 
                                             </ul>
+                                        
 
                                         <div class="col s12 center-align">&nbsp;</div>
                                         <div class="col s4 center-align">&nbsp;</div>
                                         
                                         <div class="col s12 center-align">
-                                            <input type="text" class='dropdown-button center-align' href='#' data-activates='tutor_dropdown_computer_science' placeholder="Pick a Tutor" id="chosen_tutor">
+                                            <input type="text" class='dropdown-button center-align' href='#' data-activates='tutor_dropdown' placeholder="Pick a Tutor" id="chosen_tutor">
                                         </div>
                                             <!-- Dropdown Structure -->
+<!--
                                             <ul id='tutor_dropdown_music' class='dropdown-content'>
                                                 <li><a href="#!">Jazmin Skipper</a></li>
                                                 <li><a href="#!">Neil Bonduraunt</a></li>
                                                 <li><a href="#!">Chris Schiefelbein</a></li>                                                
                                             </ul>
+-->
                                         
-                                            <ul id='tutor_dropdown_computer_science' class='dropdown-content'>
-                                                <li><a href="#!">Marisa Gomez</a></li>
-                                                <li><a href="#!">Jacob Hell</a></li>
-                                                <li><a href="#!">CS Tutor #3</a></li>                                                
+                                            <ul id='tutor_dropdown' class='dropdown-content'>
+<!--
+                                                <li><a href="#!" onclick="pickTutor('Marisa Gomez')">Marisa Gomez</a></li>
+                                                <li><a href="#!" onclick="pickTutor('Jacob Hell')">Jacob Hell</a></li>
+                                                <li><a href="#!" onclick="pickTutor('CS Tutor #3')">CS Tutor #3</a></li>                                                
+-->
                                             </ul>
 
                                         <div class="col s12 center-align">
-<!--                                            <button type="button" onclick="loginStudent()">Login Student</button>-->
-                                          <button type="button" onclick="requestAppointment()">Make Request</button>
+<!--                                          <button type="button" onclick="requestAppointment()">Make Request</button>-->
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Enter</a>
+                                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="requestAppointment()">Make Request</a>
                             </div>
                         </div>
                             
@@ -442,7 +446,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				center: 'title',
 				right: 'month,basicWeek,basicDay'
 			},
-			eventLimit: 2,
+//			eventLimit: 2,
 			prev: 'left-single-arrow',
         		events: [
         {
@@ -544,9 +548,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                 //document.getElementById("scheduleButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i>"
 
-
+                document.getElementById("date_box").value = "";
+                document.getElementById("time_box").value = "";
                 document.getElementById("login_box").value = "";
                 document.getElementById("chosen_tutor").value = "";
+                
+                alert("Request sent!");
                // document.getElementById("professor_toggle").checked = false;
                // toggleProfessors();
             }
@@ -564,7 +571,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 var id = cell.innerHTML;
 
                                 //removeRow(id);
-
+                                resendRequest(id);
                             };
                         };
 
@@ -603,14 +610,28 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             
         }
         
-function pickSubject() {
-//    var subject = document.getElementById("login_box").value;
-//    document.getElementById("login_box").value = "";
-
-    var subject = document.getElementById("subject_dropdown");
-    document.getElementById("login_box").value = subject.options[subject.selectedIndex].text;
+function pickSubject(mystring) {
+     document.getElementById("login_box").value = mystring; 
+//     if(mystring == "Accounting")
+//        {
+//            
+//        }
+    var x = document.getElementById("tutor_dropdown")
+    var list = document.createElement("list");
+    option.text = "Poop";
+    x.add(option, x[0]);
     
-}      
+} 
+
+function pickTutor(poop) {
+    document.getElementById("chosen_tutor").value = poop;  
+}
+        
+function resendRequest(id) {
+    var table = document.getElementById("loggedInStudents");
+    alert("Resend Request?")
+    
+}
               
 function addAppointment() {
         	var date = document.getElementById("date_box").value;
