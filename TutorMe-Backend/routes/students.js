@@ -27,9 +27,12 @@ var contains = function(v, arr){
       return true;
   } return false;
 };
+var toEmail = function(name){
+  var concat = "@((?:[a-z][a-z\\.\\d\\-]+)\\.(?:[a-z][a-z\\-]+))(?![\\w\\.])";
+  return new RegExp(name + concat);
+};
 
 var db_isTutor = function(db, studentID, callback){
-
   var Student = db.model('StudentModel');
   Student.findOne({'ID' : Number(studentID)}, function(err, res){
     if(err) callback(false, err);
@@ -43,7 +46,14 @@ var db_isTutor = function(db, studentID, callback){
 var db_getStudent = function(db, field, value, callback){
   var Student = db.model('StudentModel');
   var queryObject = {};
-  queryObject[field] = value;
+  if(field !== "Username"){
+    queryObject[field] = value;
+  } else {
+    Student.find({Email : { $regex : toEmail(value) }}, function(err, res){
+      if(err) return callback(false, err);
+      return callback(true, res);
+    });
+  }
   Student.find(queryObject, function(err, res){
     if(err) return callback(false, err);
     return callback(true, res);

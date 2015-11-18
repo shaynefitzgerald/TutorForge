@@ -15,7 +15,16 @@ var fn_success = function(res, result){
 var db_getTutor = function(db, query, callback){
   var TutorModel = db.model('TutorModel');
   var queryObject = {};
-  queryObject[query.field] = query.value;
+  if(field !== "Username"){
+    queryObject[field] = value;
+  } else {
+    Tutor.find({Email : { $regex : toEmail(value) }})
+      .populate('Sessions')
+      .exec(function(err, res){
+      if(err) return callback(false, err);
+      return callback(true, res);
+    });
+  }
   TutorModel.find(queryObject).populate('Sessions').exec(function(err, result){
     if(err) return callback(false, err);
     return callback(true, result);
