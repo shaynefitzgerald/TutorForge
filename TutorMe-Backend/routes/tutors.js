@@ -61,7 +61,7 @@ exports.init = function(cas, db){
      if(query[queryRequirements[0]] === undefined || query[queryRequirements[1] === undefined]){
        return fn_error(res, "Invalid or Malformed parameters");
      }
-     console.log(query.field);
+    // console.log(query.field);
      if(validFields.indexOf(query.field) < 0){
        return fn_error(res, "Invalid Field");
      }
