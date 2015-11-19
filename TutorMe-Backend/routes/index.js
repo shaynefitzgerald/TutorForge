@@ -37,5 +37,11 @@ exports.init = function(cas, db){
     req.session.userPermissions = body.flags;
     return fn_success(res, req.session);
   });
+
+  router.get('/api/iosauthenticate', cas.bounce, function(req, res){
+    res.type('application/json');
+    return fn_success(res, req.session);
+  });
+
   return router;
 };
