@@ -149,19 +149,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                             <input type="text" class='dropdown-button center-align' data-activates='subject_dropdown' placeholder="Pick a Subject" id="login_box">
                                         </div>
 
-                                            <!-- Dropdown Structure -->
+                                            <!-- Dropdown Structure --> 
                                             <ul id='subject_dropdown' class='dropdown-content'>
-                                                <li><a href="#!" onclick="pickSubject('Accounting')">Accounting</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Business')">Business</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Computer Science')">Computer Science</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Ecocomics')">Economics</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Finance')">Finance</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Health & Medical Statistics')">Health & Medical Statistics</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Math')">Math</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Music')">Music</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Physics')">Physics</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Russian')">Russian</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Writing')">Writing</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Accounting', '0')">Accounting</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Business', '1')">Business</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Computer Science', '2')">Computer Science</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Ecocomics', '3')">Economics</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Finance', '4')">Finance</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Health & Medical Statistics', '5')">Health & Medical Statistics</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Math', 6)">Math</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Music', 7)">Music</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Physics', 8)">Physics</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Russian', 9)">Russian</a></li>
+                                                <li><a href="#!" onclick="pickSubject('Writing', 10)">Writing</a></li>
                                                 
                                             </ul>
                                         
@@ -170,17 +170,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         <div class="col s4 center-align">&nbsp;</div>
                                         
                                         <div class="col s12 center-align">
-                                            <input type="text" class='dropdown-button center-align' href='#' data-activates='tutor_dropdown' placeholder="Pick a Tutor" id="chosen_tutor">
+                                            <input type="text" class='dropdown-button center-align' data-activates='tutor_dropdown' placeholder="Pick a Tutor" id="chosen_tutor">
                                         </div>
-                                            <!-- Dropdown Structure -->
-<!--
-                                            <ul id='tutor_dropdown_music' class='dropdown-content'>
-                                                <li><a href="#!">Jazmin Skipper</a></li>
-                                                <li><a href="#!">Neil Bonduraunt</a></li>
-                                                <li><a href="#!">Chris Schiefelbein</a></li>                                                
-                                            </ul>
--->
-                                        
+                                            <!-- Dropdown Structure -->                                        
                                             <ul id='tutor_dropdown' class='dropdown-content'>
 <!--
                                                 <li><a href="#!" onclick="pickTutor('Marisa Gomez')">Marisa Gomez</a></li>
@@ -260,7 +252,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								<iframe src="//player.vimeo.com/video/24363983" width="100%" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe> 
 		                </div>        
 -->
-		          <div class="column_right_grid calender" style="background-color: white">
+		          <div style="background-color: white">
                 	       <div id='calendar'> </div>
                     </div>  
 		          
@@ -610,16 +602,71 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             
         }
         
-function pickSubject(mystring) {
-     document.getElementById("login_box").value = mystring; 
-//     if(mystring == "Accounting")
-//        {
-//            
-//        }
-    var x = document.getElementById("tutor_dropdown")
-    var list = document.createElement("list");
-    option.text = "Poop";
-    x.add(option, x[0]);
+function pickSubject(subject, tutors) {
+    var subjectArray = ["Accounting", "Business", "Computer Science", "Economics", "Finance", "Health & Medical Statistics", "Math", "Music", "Physics", "Russian", "Writing"];
+    var accountingTutors = ["Bob", "Tim", "Lesz"];
+    var businessTutors = ["Hamlet", "George"];
+    var computerScienceTutors = ["Marisa", "Jacob"];
+    var economicsTutors = ["Hope", "Dameon", "Larkin"];
+    var financeTutors = ["Rose", "Daisy", "Penelope"];
+    var healthTutors =  ["James", "Neil", "Eric"];
+    var mathTutors = ["Matt", "Gerken"];
+    var musicTutors = ["Jazmin", "Neil", "Chris"];
+    var physicsTutors = ["Tyler", "Ari", "Jamontee"];
+    var russianTutors = ["Poop", "Peter", "Gerogia"];
+    var writingTutors = ["Melaina", "Vanessa", "Erica"];
+    
+     document.getElementById("login_box").value = subject;
+     var subjectTutors;
+ 
+        if(subjectArray[tutors] == "Accounting") {
+            subjectTutors = accountingTutors;
+        }
+        else if(subjectArray[tutors] == "Business") {
+            subjectTutors = businessTutors;   
+        }
+        else if(subjectArray[tutors] == "Computer Science") {
+            subjectTutors = computerScienceTutors;     
+        }
+        else if(subjectArray[tutors] == "Economics") {
+            subjectTutors = economicsTutors;
+        }
+        else if(subjectArray[tutors] == "Finance") {
+            subjectTutors = financeTutors;
+        }
+        else if(subjectArray[tutors] == "Health & Medical Statistics") {
+            subjectTutors = healthTutors;
+        }
+        else if(subjectArray[tutors] == "Math") {
+            subjectTutors = mathTutors;
+        }
+        else if(subjectArray[tutors] == "Music") {
+            subjectTutors = musicTutors;
+        }
+        else if(subjectArray[tutors] == "Physics") {
+            subjectTutors = physicsTutors;
+        }
+        else if(subjectArray[tutors] == "Russian") {
+            subjectTutors = russianTutors;
+        }
+        else if(subjectArray[tutors] == "Writing") {
+            subjectTutors = writingTutors;
+        }
+
+    var ul = document.getElementById("tutor_dropdown");
+    while( ul.firstChild ){
+        ul.removeChild(ul.firstChild);
+    }
+    
+     for (i = 0; i < subjectTutors.length; i++) {
+         var ul = document.getElementById("tutor_dropdown");
+         var li = document.createElement("li");
+         li.appendChild(document.createTextNode(subjectTutors[i]));
+         //alert(subjectTutors[i]);
+         li.onclick = function() {document.getElementById("chosen_tutor").value = this.innerHTML};
+         ul.appendChild(li);
+
+     }
     
 } 
 
