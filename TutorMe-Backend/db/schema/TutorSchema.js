@@ -33,7 +33,7 @@ exports.init = function(db){
     return split[0];
   });
   TutorSchema.virtual('FullName').get(function(){
-    return this.FirstName + " " + LastName;
+    return this.FirstName + " " + this.LastName;
   });
 
   exports.tutor_Tutor = db.model('TutorModel', TutorSchema);
