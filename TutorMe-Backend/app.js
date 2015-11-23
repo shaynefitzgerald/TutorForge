@@ -78,6 +78,11 @@ var sessionRoutes = require('./routes/sessions').init(CASInstance, database);
 var appointments = require('./routes/appointments').init(CASInstance, database);
 var administrator = require('./routes/administrator').init(CASInstance, database);
 
+/*
+  permissions definition middleware
+*/
+//app.use(require('./security'));
+
 app.use('/', routes);
 app.use('/api/students', students);
 app.use('/api/tutors', tutors);
@@ -88,10 +93,6 @@ app.use('/api/administrator', administrator);
 app.get('/api/authenticate', CASInstance.bounce_redirect);
 app.get('/api/logout', CASInstance.logout);
 
-/*
-  permissions definition middleware
-*/
-//app.use(require('./security'));
 
 app.get('/api/docs/routes', CASInstance.bounce, function(req, res){
   res.type('application/json');

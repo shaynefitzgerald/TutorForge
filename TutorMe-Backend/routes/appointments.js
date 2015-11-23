@@ -1,8 +1,14 @@
 var express = require('express');
 
-var AppointmentRequestModel;
+
+
+var toEmail = function(name){
+  var concat = "@((?:[a-z][a-z\\.\\d\\-]+)\\.(?:[a-z][a-z\\-]+))(?![\\w\\.])";
+  return new RegExp(name + concat);
+};
 
 var db_getAppointmentRequests_Students = function(db, query, callback){
+  var AppointmentRequestModel = db.model('AppointmentRequestModel');
   var StudentModel = db.model('StudentModel');
   StudentModel.findOne({'Username' : query }, function(err, student){
     if(err) return callback(false, err);
@@ -18,6 +24,7 @@ var db_getAppointmentRequests_Students = function(db, query, callback){
   });
 };
 var db_getAppointmentRequests_Tutors = function(db, query, callback){
+  var AppointmentRequestModel = db.model('AppointmentRequestModel');
   var TutorModel = db.model('TutorModel');
   TutorModel.findOne({'Username' : query}, function(err, tutor){
     if(err) return callback(false, err);
@@ -67,6 +74,60 @@ var db_makeRequest = function(db, query, callback){
   });
 };
 
+var db_validateTutor = function(db, username, reference, callback){
+  var TutorModel = db.model('TutorModel');
+  var AppointmentRequestModel = db.model('AppointmentRequestModel');
+  TutorModel.findOne({
+    Email : toEmail(username)
+  }).exec(function(err, result){
+    if(err) return callback(false, err);
+    if(result === undefined || result === null){
+      return callback(true, false);
+    } else {
+      return AppointmentRequestModel.findOne({ _id : reference }, function(err, appointment){
+        if(err) return callback(false, err);
+        if(appointment === undefined || appointment === null){
+          return callback(true, false);
+        } else {
+          return callback(true, appointment.Tutor = result._id);
+        }
+      });
+    }
+  });
+};
+var db_validateStudent = function(db, username, reference, callback){
+  var StudentModel = db.model('StudentModel');
+  var AppointmentRequestModel = db.model('AppointmentRequestModel');
+  StudentModel.findOne({
+    Email : toEmail(username)
+  }).exec(function(err, result){
+    if(err) return callback(false, err);
+    if(result === undefined || result === null){
+      return callback(true, false);
+    } else {
+      return AppointmentRequestModel.findOne({ _id : reference }, function(err, appointment){
+        if(err) return callback(false, err);
+        if(appointment === undefined || appointment === null){
+          return callback(true, false);
+        } else {
+          return callback(true, appointment.Tutor = result._id);
+        }
+      });
+    }
+  });
+};
+var db_respondToRequest = function(db, reference, response, callback){
+  var AppointmentRequestModel = db.model('AppointmentRequestModel');
+  AppointmentRequestModel.findOne({ _id : reference }, function(err, result){
+    if(err) return callback(false, err);
+    if(result === undefined || result === null){
+      return callback(false, "No such Request by reference: " + reference);
+    } else {
+
+    }
+  });
+};
+
 exports.init = function(cas, db){
   var router = express.Router();
 
@@ -79,7 +140,7 @@ exports.init = function(cas, db){
     'RequestedStart', 'Location', 'Subject'];
     if(containsKeys(query, validKeys)){
       return db_makeRequest(db, query, function(err, result){
-        if(err) return fn_error(res, err);
+        if(err) return fn_error(res, result);
         return fn_success(res);
       });
     } else {
@@ -112,12 +173,12 @@ exports.init = function(cas, db){
      if(query.as !== undefined && query.Username !== undefined){
        if(query.as === "Student"){
          return db_getAppointmentRequests_Students(db, query.Username, function(err, result){
-           if(err) return fn_err(res, err);
+           if(err) return fn_error(res, result);
            return fn_success(res, result);
          });
        } else if(query.as === "Tutor"){
          return db_getAppointmentRequests_Tutors(db, query.Username, function(err, result){
-           if(err) return fn_err(res, err);
+           if(err) return fn_error(res, result);
            return fn_success(res, result);
          });
        } else {
@@ -132,16 +193,49 @@ exports.init = function(cas, db){
     res.type('application/json');
     var query = ( url.parse( req.url ).query !== null ) ?
      querystring.parse( url.parse( req.url ).query ) : {};
-
-     if(query.Reference !== undefined){
-       
-     } else {
+     if(query.Reference === undefined){
        return fn_error(res, "Invalid or Missing Fields");
+     } else {
+       if(req.session.cas_user === undefined || req.session.cas_user === ""){
+        return fn_error(res, "Unauthenticated, please login");
+      } else {
+        return db_validateTutor(db, req.session.cas_user, query.Reference, function(success, result){
+          if(!success) return fn_error(res, result);
+          if(result === true){
+            return db_respondToRequest(db, query.Reference, query.Response, function(success, result){
+              if(!success) return fn_error(res, result);
+              return fn_success(res);
+            });
+          } else {
+            return fn_error(res, "No such Request under the username " + req.session.cas_user);
+          }
+        });
+      }
      }
-
   });
   router.post('/withdrawRequest',  function(req, res){
-    res.end();
+    res.type('application/json');
+    var query = ( url.parse( req.url ).query !== null ) ?
+     querystring.parse( url.parse( req.url ).query ) : {};
+     if(query.Reference === undefined){
+       return fn_error(res, "Invalid or Missing Fields");
+     } else {
+       if(req.session.cas_user === undefined || req.session.cas_user === ""){
+        return fn_error(res, "Unauthenticated, please login");
+      } else {
+        return db_validateStudent(db, req.session.cas_user, query.Reference, function(success, result){
+          if(!success) return fn_error(res, result);
+          else if(success && result){
+            return db_withdrawRequest(db, query.Reference, function(success, result){
+              if(!success) return fn_error(res, result);
+              return fn_success(res);
+            });
+          } else {
+            return fn_error(res, "No such Request with Reference: " + query.Reference);
+          }
+        });
+      }
+    }
   });
 
   return router;

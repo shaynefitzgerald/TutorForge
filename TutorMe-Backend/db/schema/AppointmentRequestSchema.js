@@ -8,6 +8,9 @@ var SchemaObject = {
   RequestedStart : Date,
   Location : String,
   Subject : String,
+  Responded : Boolean,
+  ResponseRejected : Boolean,
+  SessionReference : { type : mongoose.Schema.Types.ObjectId, ref : 'SessionModel' },
 };
 
 exports.init = function(db){

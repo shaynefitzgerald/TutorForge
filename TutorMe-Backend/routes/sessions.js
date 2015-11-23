@@ -3,8 +3,6 @@ var express = require('express');
 exports.init = function(cas, db){
   var router = express.Router();
 
-  var permissions = 't';
-
   router.post('/endSession',  function(req, res){
     res.end();
   });

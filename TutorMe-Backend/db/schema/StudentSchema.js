@@ -35,7 +35,6 @@ exports.init = function(db){
   StudentSchema.virtual('Username').get(function(){
 
     var split = this.Email.toString().split('@');
-    console.log(split);
     return split[0];
   });
 

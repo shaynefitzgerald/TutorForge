@@ -12,6 +12,11 @@ var fn_success = function(res, result){
   res.end(JSON.stringify({ success : true, result : result }));
 };
 
+var toEmail = function(name){
+  var concat = "@((?:[a-z][a-z\\.\\d\\-]+)\\.(?:[a-z][a-z\\-]+))(?![\\w\\.])";
+  return new RegExp(name + concat);
+};
+
 var db_getTutor = function(db, query, callback){
   var TutorModel = db.model('TutorModel');
   var queryObject = {};
