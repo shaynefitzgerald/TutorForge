@@ -10,7 +10,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <title>Tutor Home</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="css/StyleTutor.css" rel="stylesheet" type="text/css" media="all" />
     <link href="css/nav.css" rel="stylesheet" type="text/css" media="all" />
     <link href='http://fonts.googleapis.com/css?family=Carrois+Gothic+SC' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="js/jquery.js"></script>
@@ -46,8 +46,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <ul class="nav">
                         <li class="active"><a href="#"><i><img src="images/user.png" alt="" /></i>Home</a></li>
                         <!--								<li><a href="#"><i><img src="images/settings.png" alt="" /></i>Settings</a></li>-->
-                        <li><a class="dropdown-button" href="#" data-activates="requests_dropdown"><i><img src="images/mail.png" alt="" /></i>Requests <span class="messages">1</span></a></li>
-                        <li><a class="modal-trigger" href="#appointments_modal"><i><img src="images/events.png" alt="" /></i>Add Misc Appointment</a></li>
+                        <li><a class="modal-trigger" href="#viewRequests_modal"><i><img src="images/mail.png" alt="" /></i>View Requests<span class="messages">1</span></a></li>
+                        <li><a class="modal-trigger" href="#makeRequests_modal"><i><img src="images/events.png" alt="" /></i>Make Request</a></li>
                         <li><a class="modal-trigger" id="sessionButton" href="#session_modal"><i><img src="images/loginArrow.png" alt="" /></i>Start Session</a></li>
 
                         <!-- Dropdown Structure for requests button -->
@@ -104,48 +104,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </div>
 
 
-                        <!-- Modal Structure for appointments-->
-                        <div id="appointments_modal" class="modal">
-                            <div class="modal-content">
-                                <div class="container">
-                                    <div class="row">
-
-                                        <span class="col s12 center-align"><b>Add Appointment</b></span>
-                                        <div class="col s12 center-align">&nbsp;</div>
-
-
-                                        <div class="col s4 center-align">&nbsp;</div>
-                                        <div class="col s4 center-align">
-                                            <input type="date" class="datepicker center-align" placeholder="Date" id="date_box">
-                                        </div>
-                                        <div class="col s12 center-align">&nbsp;</div>
-
-
-                                        <div class="col s4 center-align">&nbsp;</div>
-                                        <div class="col s4 center-align">
-                                            <input type="text" class="timepicker center-align" placeholder="Time" id="time_box">
-                                        </div>
-                                        <div class="col s4 center-align">&nbsp;</div>
-
-                                        <div class="col s12 center-align">
-                                            <input type="text" name="reason" placeholder="reason for appointment" id="reason_box">
-                                        </div>
-
-
-
-                                        <div class="col s12 center-align">
-                                            <button type="button" onclick="addAppointment()">Add Appointment</button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-                            </div>
-                        </div>
-
-
 
                         <!-- Modal Structure for viewing requests-->
                         <div id="viewRequests_modal" class="modal">
@@ -189,14 +147,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                                         <div class="col s4 center-align">&nbsp;</div>
                                         <div class="col s4 center-align">
-                                            <input type="date" class="datepicker center-align" placeholder="Date" id="date_box2">
+                                            <input type="date" class="datepicker center-align" placeholder="Date" id="date_box">
                                         </div>
                                         <div class="col s12 center-align">&nbsp;</div>
 
 
                                         <div class="col s4 center-align">&nbsp;</div>
                                         <div class="col s4 center-align">
-                                            <input type="text" class="timepicker center-align" placeholder="Time" id="time_box2">
+                                            <input type="text" class="timepicker center-align" placeholder="Time" id="time_box">
                                         </div>
                                         <div class="col s4 center-align">&nbsp;</div>
                                         <div class="col s12 center-align">&nbsp;</div>
@@ -448,7 +406,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
             <div class="column_right">
                 <!--
-            	<div class="column_right_grid">
+            	<div class="column_right_grid1">
                  <div class="newsletter">
 				   <h3>Join the newsletter</h3>
 					    <form>
@@ -462,7 +420,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			   </div>
 -->
                 <!--
-				 <div class="column_right_grid sign-in">
+				 <div class="column_right_grid1 sign-in">
 				 	<div class="sign_in">
 				       <h3>Sign in to your account</h3>
 					    <form>
@@ -483,7 +441,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				   </div>
 -->
                 <!--
-				   <div class="column_right_grid downloading_uploading">
+				   <div class="column_right_grid1 downloading_uploading">
                       <ul>
 					      <li>                              
                             <div class="progress">
@@ -508,7 +466,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </ul>
 				   </div>
 -->
-                <div class="column_right_grid date_events">
+                <div class="column_right_grid1 date_events">
                     <h3><a href="#" id="slide_prev"><img src="images/arrow-left.png" alt="" /></a> Monday <a href="#" id="slide_next"><img src="images/arrow-right.png" alt="" /></a></h3>
                     <ul id="slide" class="event_dates">
                         <li>26</li>
@@ -612,7 +570,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     center: 'title',
                     right: 'month,basicWeek,basicDay'
                 },
-                eventLimit: 2,
+                //eventLimit: 2,
                 prev: 'left-single-arrow',
                 events: [
                     {
@@ -786,9 +744,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
         function addAppointment() {
             var date = document.getElementById("date_box").value;
+			var time = document.getElementById("time_box").value;
             var myDate = new Date(date);
-            var myTitle = document.getElementById("reason_box").value;
-
+            //var myTitle = document.getElementById("reason_box").value;
+            var myTitle = "Null"
+			
+			
             var year = myDate.getFullYear();
 
             var month = myDate.getMonth() + 1;
@@ -802,25 +763,42 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             if (month < 10) {
                 month = "0" + month;
             }
+			
+			myTime = time.split(":");
+			
+			var hour = parseInt(myTime[0]);
+			
+			if (myTime[1].indexOf("PM") != -1){
+				hour += 12;
+			}
+			
+			time = "T" + hour + ":" + myTime[1].substring(0,2) + ":00";
 
-            var finalDate = year + "-" + month + "-" + day;
+            var finalDate = year + "-" + month + "-" + day + time;
 
             //reset fields
             document.getElementById("date_box").value = "";
             document.getElementById("time_box").value = "";
-            document.getElementById("reason_box").value = "";
-            $('#appointments_modal').closeModal();
+            //document.getElementById("reason_box").value = "";
+            //$('#appointments_modal').closeModal();
+            $('#makeRequests_modal').closeModal();
 
 
             //add formated date to calendar
             $('#calendar').fullCalendar('renderEvent', {
                 title: myTitle,
                 start: finalDate
-            });
+            }, true);
+            
+            
+            
 
 
-
-
+        }
+        
+        function requestAppointment(){
+            alert("hi");
+            addAppointment();
         }
     </script>
 </body>
