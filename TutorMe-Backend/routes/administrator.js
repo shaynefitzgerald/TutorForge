@@ -38,16 +38,17 @@ var express = require('express');
 
 var db_createTutor = function(db, data, callback){
   var TutorModel = db.model('TutorModel');
-  console.log(data);
   if(data.isStudentTutor){
     var StudentModel = db.model('StudentModel');
-    StudentModel.findOne({ID:data.ID}, function(err, result){
+    StudentModel.findOne({ID : Number(data.ID)}, function(err, result){
       if(err) callback(false, err);
       if(result === null) return callback(false, "No Such Student");
       var toAdd = {
         isStudentTutor : true,
-        ID : data.ID,
-        Email : data.Email,
+        ID : result.ID,
+        FirstName : result.FirstName,
+        LastName : result.LastName,
+        Email : result.Email,
         Subject : data.Subject,
         StudentRef : result._id,
         LifetimeSessionCount : 0,
@@ -70,6 +71,8 @@ var db_createTutor = function(db, data, callback){
       ID : data.ID,
       Email : data.Email,
       Subject : data.Subject,
+      FirstName : data.FirstName,
+      LastName : data.LastName,
       LifetimeSessionCount : 0,
       LastArchivedSession : new Date(0),
       Sessions : [],
@@ -120,7 +123,7 @@ exports.init = function(cas, db){
   router.post('/setAsTutor', function(req, res){
     res.type('application/json');
     var body = req.body;
-    if(!containsKeys(body, ['ID', 'Subject', 'isStudentTutor'])){
+    if(!containsKeys(body, ['ID','FirstName','LastName','Subject','isStudentTutor'])){
       return fn_error(res, "Missing or Malformed Parameters");
     }
     return db_createTutor(db, body, function(success, result){
