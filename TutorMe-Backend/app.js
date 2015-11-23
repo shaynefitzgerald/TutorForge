@@ -114,8 +114,8 @@ if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.end(JSON.stringify({
-      'error' : true ,
-      "result" : {
+      'success' : false ,
+      "error" : {
         message: err.message,
         error: err
       }
@@ -128,8 +128,8 @@ if (app.get('env') === 'development') {
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.end(JSON.stringify({
-    'error' : true ,
-    "result" : {
+    'success' : false ,
+    "error" : {
     }
   }));
 });

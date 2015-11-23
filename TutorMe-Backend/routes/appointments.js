@@ -24,6 +24,15 @@ var contains = function(v, arr){
       return true;
   } return false;
 };
+var fn_error = function(res, err){
+  return res.end(JSON.stringify({
+    success : false,
+    error : err,
+  }));
+};
+var fn_success = function(res, result){
+  res.end(JSON.stringify({ success : true, result : result }));
+};
 var toEmail = function(name){
   var concat = "@((?:[a-z][a-z\\.\\d\\-]+)\\.(?:[a-z][a-z\\-]+))(?![\\w\\.])";
   return new RegExp(name + concat);
