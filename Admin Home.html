@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 
 <head>
-    <title>Tutor Home</title>
+    <title>Admin Home</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
@@ -35,20 +35,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
     <!----End Calender -------->
 
-
-
     <meta charset="utf-8">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <!--    <script src="//code.jquery.com/jquery-1.10.2.js"></script>-->
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <link rel="stylesheet" href="/resources/demos/style.css">
+    <!--<link rel="stylesheet" href="/resources/demos/style.css">-->
 
-
-    <script>
-        $.getJSON('#', function (data) {
-            //data is the JSON string
-        });
-    </script>
 
     <script>
         $(function () {
@@ -59,6 +51,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 name = $("#name"),
                 email = $("#email"),
                 password = $("#password"),
+                subject = $("#subject"),
                 allFields = $([]).add(name).add(email).add(password),
                 tips = $(".validateTips");
 
@@ -93,23 +86,44 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             }
 
             function addUser() {
+                var allTutors;
+                $.getJSON('https://tutorme.stetson.edu/api/tutors/getAll', function (data) {
+                    sessionStorage.setItem('AllTutors', JSON.stringify(data));
+                    allTutors = JSON.parse(data);
+                });
+
+                if (Array.isArray(allTutors)) {
+                    for (i = 0; i < allTutors.length; i++) {
+
+                    }
+                }
+
                 var valid = true;
                 allFields.removeClass("ui-state-error");
 
                 valid = valid && checkLength(name, "username", 3, 16);
                 valid = valid && checkLength(email, "email", 6, 80);
                 valid = valid && checkLength(password, "password", 5, 16);
+                valid = valid && checkLength(subject, "subject", 3, 16);
 
                 valid = valid && checkRegexp(name, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter.");
                 valid = valid && checkRegexp(email, emailRegex, "eg. ui@jquery.com");
                 valid = valid && checkRegexp(password, /^([0-9])+$/, "#800 field only allow : 0-9");
+                valid = valid && checkRegexp(subject, /^[a-z]([0-9a-z_\s])+$/i, "Subject may consist of a-z, 0-9, underscores, spaces and must begin with a letter.");
 
                 if (valid) {
                     $("#users tbody").append("<tr>" +
-                        "<td>" + name.val() + "</td>" +
-                        "<td>" + email.val() + "</td>" +
-                        "<td>" + password.val() + "</td>" +
+                        "<td><a href=\"#!\">" + name.val() + "</a></td>" +
+                        "<td><a href=\"#!\">" + email.val() + "</a></td>" +
+                        "<td><a href=\"#!\">" + password.val() + "</a></td>" +
                         "</tr>");
+                    $.post("https://tutorme.stetson.edu/api/administrator/setAsTutor", {
+                        800: password.val(),
+                        Subject: subject.val(),
+                        isStudentTutor: true
+
+                    });
+
                     dialog.dialog("close");
                 }
                 return valid;
@@ -148,6 +162,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <body>
 
+    <script>
+        var username = "bedward1";
+        var usernameQuery;
+        $.getJSON('https://tutorme.stetson.edu/user', function (data) {
+            sessionStorage.setItem('User', JSON.stringify(data));
+            var UserNameJSON = JSON.parse(data);
+            username = UserNameJSON.username;
+        });
+        usernameQuery = "https://tutorme.stetson.edu/api/students/get?field=Username&value=" + username;
+        $.getJSON(usernameQuery, function (data) {
+            sessionStorage.setItem('User Info', JSON.stringify(data));
+        });
+    </script>
+
     <div class="wrap">
         <div class="header">
             <div class="header_top">
@@ -174,8 +202,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                                         <div class="col s4 center-align">&nbsp;</div>
                                         <div class="col s4 center-align">
-                                            <!--                                            <input type="date" class="datepicker center-align" placeholder="Date" id="date_box">-->
-                                            <div id="calendar"></div>
 
                                         </div>
                                         <div class="col s12 center-align">&nbsp;</div>
@@ -183,18 +209,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                                         <div class="col s4 center-align">&nbsp;</div>
                                         <div class="col s4 center-align">
-                                            <!--                                            <input type="text" class="timepicker center-align" placeholder="Time" id="time_box">-->
+
                                         </div>
                                         <div class="col s4 center-align">&nbsp;</div>
 
                                         <div class="col s12 center-align">
-                                            <!--                                            <input type="text" name="reason" placeholder="reason for appointment" id="reason_box">-->
+
                                         </div>
 
-
-
                                         <div class="col s12 center-align">
-                                            <!--                                            <button type="button" onclick="addAppointment()">Add Appointment</button>-->
+
                                         </div>
 
                                     </div>
@@ -220,9 +244,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <form id="loginForm">
                                 <fieldset id="body">
                                     <div class="user-info">
-                                        <h4>Hello,<a href="Admin%20Home.html"> Brandon Edwards</a></h4>
+                                        <h4>Hello,<a href="#"> Brandon Edwards</a></h4>
                                         <ul>
-                                            <li class="profile active"><a href="Student%20Home.html">Profile </a></li>
+                                            <li class="profile active"><a href="#">Profile </a></li>
                                             <li class="logout"><a href="index.html"> Logout</a></li>
                                             <div class="clear"></div>
                                         </ul>
@@ -414,6 +438,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <fieldset>
                                 <label for="name">Name</label>
                                 <input type="text" name="name" id="name" value="Jane Smith" class="text ui-widget-content ui-corner-all">
+                                <label for="name">Subject</label>
+                                <input type="text" name="name" id="subject" value="CSCI" class="text ui-widget-content ui-corner-all">
                                 <label for="email">Email</label>
                                 <input type="text" name="email" id="email" value="jane@smith.com" class="text ui-widget-content ui-corner-all">
                                 <label for="password">#800</label>
@@ -452,10 +478,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             </div>
 
             <div class="column_right">
-
-                <div class="column_right_grid calender" style="background-color: white">
-                    <div id="calendar_1"></div>
-                </div>
+                <!--
+<div class="column_right_grid calender" style="background-color: white">
+    <div id="calendar_1"></div>
+</div>
+-->
+                <div id="calendar_1" style="background-color: #4AB8AF"></div>
             </div>
             <div class="clear"></div>
         </div>
