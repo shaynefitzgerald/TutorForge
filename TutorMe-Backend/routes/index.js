@@ -14,6 +14,8 @@ exports.init = function(cas, db){
   var router = express.Router();
   /* GET home page. */
   router.get('/', cas.bounce, function(req, res) {
+    if(req.session.userPermissions === undefined)
+      return res.sendFile('Student Home.html', {'root' : __dirname + '/../public/'});
     if(req.session.userPermissions.indexOf('a') >= 0)
       return res.sendFile('Admin Home.html', {'root' : __dirname + '/../public/'});
     if(req.session.userPermissions.indexOf('t') >= 0)
