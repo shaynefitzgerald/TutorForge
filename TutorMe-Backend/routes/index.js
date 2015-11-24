@@ -15,10 +15,10 @@ exports.init = function(cas, db){
   /* GET home page. */
   router.get('/', cas.bounce, function(req, res) {
     if(req.session.userPermissions.indexOf('a') >= 0)
-      return res.sendFile('Admin Home.html', {'root' : __dirname + '/../../'});
+      return res.sendFile('Admin Home.html', {'root' : __dirname + '/../public/'});
     if(req.session.userPermissions.indexOf('t') >= 0)
-      return res.sendFile('Tutor Home.html', {'root' : __dirname + '/../../'});
-    return res.sendFile('Student Home.html', {'root' : __dirname + '/../../'});
+      return res.sendFile('Tutor Home.html', {'root' : __dirname + '/../public/'});
+    return res.sendFile('Student Home.html', {'root' : __dirname + '/../public/'});
 
   });
   router.get('/user', cas.block, function(req, res, next){
