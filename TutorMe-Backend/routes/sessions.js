@@ -38,22 +38,41 @@ var toEmail = function(name){
   return new RegExp(name + concat);
 };
 
-var db_getScheduledSessions = function(db, by, value,callback){
+var db_getScheduledSessions = function(db, by, value, callback){
   var AppointmentRequestModel = db.model('AppointmentRequestModel');
   var TutorModel = db.model('TutorModel');
   var query = {}; query[by] = value;
   TutorModel.findOne(query, function(err, result){
     if(err) return callback(false, err);
     if(result === undefined || result === null) return callback(false, 'No Such Tutor');
-    return AppointmentRequestModel.find({Tutor : result._id})
-    .populate('Student').populate('Tutor')
+    return AppointmentRequestModel.find({Tutor : result._id, Start : { $gte : new Date() }})
+    .populate('Student').populate('Tutor').populate('ForClass')
     .exec(function(err, appointments){
       if(err) return callback(false, err);
       return callback(true, appointments);
     });
   });
 };
-
+var db_getPreviousSessions = function(db, by, value, callback){
+  var AppointmentRequestModel = db.model('AppointmentRequestModel');
+  var TutorModel = db.model('TutorModel');
+  var query = {}; query[by] = value;
+  TutorModel.findOne(query, function(err, result){
+    if(err) return callback(false, err);
+    if(result === undefined || result === null) return callback(false, 'No Such Tutor');
+    return AppointmentRequestModel.find({Tutor : result._id, Start : { $lte : new Date() }})
+    .populate('Student').populate('Tutor').populate('ForClass')
+    .exec(function(err, appointments){
+      if(err) return callback(false, err);
+      return callback(true, appointments);
+    });
+  });
+};
+var db_endSession = function(db, sessionData, callback){
+  var SessionModel = db.model("SessionModel");
+  SessionModel.findOne({_id : sessionData._id}).populate('Student').populate('Tutor')
+  .exec();
+};
 exports.init = function(cas, db){
   var router = express.Router();
 
@@ -61,14 +80,27 @@ exports.init = function(cas, db){
     res.end();
   });
   router.get('/getPreviousSessions',  function(req, res){
-    res.end();
+    res.type('application/json');
+    var query = ( url.parse( req.url ).query !== null ) ?
+     querystring.parse( url.parse( req.url ).query ) : {};
+    if(containsKeys(query, ['by', 'value'])){
+      return db_getPreviousSessions(db, query.by, query.value, function(success, result) {
+        if(!success) return fn_error(res, result);
+        return fn_success(res, result);
+      });
+    } else {
+      return fn_error(res, "Invalid or Malformed Fields");
+    }
   });
   router.get('/getScheduledSessions', function(req, res){
     res.type('application/json');
     var query = ( url.parse( req.url ).query !== null ) ?
      querystring.parse( url.parse( req.url ).query ) : {};
-    if(containsKeys(query, ['By', 'Value'])){
-
+    if(containsKeys(query, ['by', 'value'])){
+      return db_getScheduledSessions(db, query.by, query.value, function(success, result) {
+        if(!success) return fn_error(res, result);
+        return fn_success(res, result);
+      });
     } else {
       return fn_error(res, "Invalid or Malformed Fields");
     }

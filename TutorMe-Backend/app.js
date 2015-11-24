@@ -15,16 +15,6 @@ var app = express();
 
 var database = require('./db/connect').applicationConnection;
 
-//XXX: We probably won't need views since data population occurs async
-//verify this with Brandon
-
-// // view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-
 var fs = require('fs');
 var config = fs.readFileSync(__dirname + '/config/development.json');
 

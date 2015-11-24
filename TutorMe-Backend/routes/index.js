@@ -13,11 +13,15 @@ var fn_success = function(res, result){
 exports.init = function(cas, db){
   var router = express.Router();
   /* GET home page. */
-  router.get('/', function(req, res, next) {
-    //TODO: serve index
-    res.end( JSON.stringify( req.session ) );
+  router.get('/', cas.bounce, function(req, res) {
+    if(req.session.userPermissions.indexOf('a') >= 0)
+      return res.sendFile('Admin Home.html', {'root' : __dirname + '/../public/'});
+    if(req.session.userPermissions.indexOf('t') >= 0)
+      return res.sendFile('Tutor Home.html', {'root' : __dirname + '/../public/'});
+    if(req.session.userPermissions.indexOf('s') >= 0)
+      return res.sendFile('Student Home.html', {'root' : __dirname + '/../public/'});
   });
-  router.get('/user', function(req, res, next){
+  router.get('/user', cas.block, function(req, res, next){
     return res.end(JSON.stringify({ username : req.session.cas_user }));
   });
   router.get('/docs', function(req, res, next){
@@ -30,7 +34,7 @@ exports.init = function(cas, db){
       return res.end(e.toString());
     }
   });
-  router.post('/setPermissionsFlags', function(req, res){
+  router.post('/setPermissionsFlags', cas.block , function(req, res){
     res.type('application/json');
     var body = req.body;
     if(body.flags === undefined) fn_error(res, "Missing Parameter: flags");

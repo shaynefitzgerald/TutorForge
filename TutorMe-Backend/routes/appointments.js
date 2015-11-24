@@ -166,7 +166,7 @@ var db_respondToRequest = function(db, reference, response, callback){
         result.ResponseRejected = true;
         return result.save(function(err){
           if(err) return callback(false, err);
-          return callback(true);
+          var SessionModel = db.model('SessionModel');
         });
       }
     }
@@ -192,24 +192,6 @@ exports.init = function(cas, db){
       return fn_error(res, "Invalid or Missing Fields");
     }
   });
-
-  /*
-    call
-    {
-      as : <"Student" or "Tutor">
-      Username : String
-    },
-
-    on success:
-    {
-      success : true,
-      result : [
-        {
-          AppointmentSchema
-        }
-      ]
-    }
-  */
   router.get('/getAppointmentRequests', function(req, res){
     res.type('application/json');
     var query = ( url.parse( req.url ).query !== null ) ?
