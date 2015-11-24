@@ -71,7 +71,7 @@ var administrator = require('./routes/administrator').init(CASInstance, database
 /*
   permissions definition middleware
 */
-//app.use(require('./security'));
+app.use(require('./security')(CASInstance, database));
 
 app.use('/', routes);
 app.use('/api/students', students);

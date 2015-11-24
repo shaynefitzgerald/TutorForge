@@ -1,4 +1,4 @@
-module.exports = function(cas, db){
+var init = function(cas, db){
   return function(req, res, next){
     if(req.session.cas_user === undefined)
       return next();
@@ -46,3 +46,4 @@ module.exports = function(cas, db){
     });
   };
 };
+exports.init = init;

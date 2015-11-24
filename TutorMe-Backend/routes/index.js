@@ -18,8 +18,8 @@ exports.init = function(cas, db){
       return res.sendFile('Admin Home.html', {'root' : __dirname + '/../public/'});
     if(req.session.userPermissions.indexOf('t') >= 0)
       return res.sendFile('Tutor Home.html', {'root' : __dirname + '/../public/'});
-    if(req.session.userPermissions.indexOf('s') >= 0)
-      return res.sendFile('Student Home.html', {'root' : __dirname + '/../public/'});
+    return res.sendFile('Student Home.html', {'root' : __dirname + '/../public/'});
+
   });
   router.get('/user', cas.block, function(req, res, next){
     return res.end(JSON.stringify({ username : req.session.cas_user }));
