@@ -16,7 +16,7 @@ var init = function(cas, db){
     var AdministratorModel = db.model('AdministratorModel');
     return StudentModel.findOne({ Username : req.session.cas_user}, function(err, studentResult){
       if(err) return error(res, err);
-      if(studentResult !== undefined){
+      if(studentResult !== undefined && studentResult !== null){
         if(req.session.userPermissions === undefined){
           req.session.userPermissions = "s";
         } else {
@@ -25,7 +25,7 @@ var init = function(cas, db){
       }
       return TutorModel.findOne({ Username : req.session.cas_user}, function(err, tutorResult){
         if(err) return error(res, err);
-          if(tutorResult !== undefined){
+          if(tutorResult !== undefined && tutorResult !== null){
             if(req.session.userPermissions === undefined){
               req.session.userPermissions = "t";
             } else {
@@ -33,7 +33,7 @@ var init = function(cas, db){
             }
           }
         return AdministratorModel.findOne({ Username : req.session.cas_user}, function(err, administratorResult){
-            if(administratorResult !== undefined){
+            if(administratorResult !== undefined && administratorResult !== null){
               if(req.session.userPermissions === undefined){
                 req.session.userPermissions = "a";
               } else {
