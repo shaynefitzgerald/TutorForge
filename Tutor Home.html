@@ -99,7 +99,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
                             </div>
                         </div>
 
@@ -531,7 +531,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <p>© 2013 Designed by <a href="http://graphicburger.com/flat-design-ui-components/" target="_blank">GraphicBurger</a> • Template by <a href="http://w3layouts.com" target="_blank">w3layouts</a> </p>
     </div>
     <script>
-        
         //Jquery Plugin Initilizations
         $(document).ready(function () {
             // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
@@ -612,7 +611,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
         function toggleProfessors() {
             // shows the list of professors
-            
+
             if (document.getElementById("professor_toggle").checked) {
                 document.getElementById("professor_box").innerHTML = "List of Professors";
 
@@ -653,10 +652,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             //add to the table
             if (document.getElementById("login_box").value != "") {
                 var table = document.getElementById("loggedInStudents");
-                
+
                 //append to table
                 var row = table.insertRow(-1);
-                
+
                 //first element
                 var cell1 = row.insertCell(0);
                 //second element
@@ -675,10 +674,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 //row.addEventListener('click',  function(){alert("hello")}); 
                 //// or attachEvent, depends on browser
                 //}
-                
+
                 //add click handlers to the rows
                 addRowHandlers();
-                
+
                 //shows active session
                 document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Resume Session"
 
@@ -699,7 +698,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             return function () {
                                 var cell = row.getElementsByTagName("td")[0];
                                 var id = cell.innerHTML;
-                                
+
                                 //on click, look for row with this id
                                 removeRow(id);
 
@@ -730,7 +729,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                     }
                 }
-                
+
                 //if no one is left, reset session button
                 if (rows.length == 0) {
                     document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Start Session"

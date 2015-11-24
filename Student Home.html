@@ -35,10 +35,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!----End Calender -------->
 </head>
 
-
-
-</script>
-
 <body>			       
 	    <div class="wrap">	 
 	      <div class="header">
@@ -48,18 +44,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<ul class="nav">
 <!--								<li><a href="#"><i><img src="images/settings.png" alt="" /></i>Settings</a></li>-->
 								<li class="active"><a href="#"><i><img src="images/user.png" alt="" /></i>Account</a></li>
-<!--                                <li><a class="dropdown-button" href="#" data-activates="requests_dropdown"><i><img src="images/mail.png" alt="" /></i>Requests <span class="messages">2</span></a></li>-->
-                                <li><a class="modal-trigger" id="scheduleButton" href="#schedule_modal"><i><img src="images/events.png" alt="" /></i>Schedule</a></li>
+                                <li><a class="dropdown-button" href="#" data-activates="requests_dropdown"><i><img src="images/mail.png" alt="" /></i>Requests <span class="messages">2</span></a></li>
+                                <li><a class="modal-trigger" href="#schedule_modal"><i><img src="images/events.png" alt="" /></i>Schedule</a></li>
                                 <li><a class="modal-trigger" href="#appointments_modal"><i><img src="images/follow_user.png" alt="" /></i>Request Appointment</a></li>
 
 
                         <!-- Dropdown Structure for requests button -->
-<!--
                         <ul id='requests_dropdown' class='dropdown-content'>
                             <li><a class="modal-trigger" href="#viewRequests_modal">View Requests</a></li>
                             <li><a class="modal-trigger" href="#makeRequests_modal">Make Request</a></li>
                         </ul>
--->
                                 
                                 <!-- Modal Structure  for viewing schedule-->
                         <div id="schedule_modal" class="modal">
@@ -67,45 +61,33 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 <div class="container">
                                     <div class="row">
 
-                                        <span class="col s12 center-align"><b>Schedule</b></span>
-                                        
-
-                                        
+                                        <span class="col s12 center-align"><b>Login Student</b></span>
+                                        <div class="col s12 center-align">
+                                            <input type="text" name="800Num" placeholder="800 #" id="login_box">
+                                        </div>
                                         <div class="col s12 center-align">&nbsp;</div>
-<!--
                                         <div class="col s12 center-align">
                                             <input type="checkbox" name="emailProf" value="Yes" id="professor_toggle" onclick="toggleProfessors()" />
                                             <label for="professor_toggle"> Email Professor</label>
 
 
                                         </div>
--->
-<!--
                                         <div id="professor_box" class="col s12 center-align"></div>
                                         <div class="col s12 center-align">&nbsp;</div>
--->
-<!--
                                         <div class="col s12 center-align">
                                             <button type="button" onclick="viewStudentSchedule()">Login Student</button>
 
                                         </div>
--->
-<!--
                                         <div class="col s12 center-align">&nbsp;</div>
                                         <div class="col s12 center-align">&nbsp;</div>
--->
-                                        <div class="col s12 center-align"><b>Upcoming Tutoring Sessions</b></div>
+                                        <div class="col s12 center-align"><b>Logged in Students</b></div>
                                         <div class="divider col s12"></div>
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <div class="col s12 center-align">&nbsp;</div> 
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <div class="col s12 center-align"><b>Requests awaiting confirmation</b></div>
-                                        <div class="divider col s12"></div>
+
+
 
                                         <div id="student_box" class="col s12 center-align">
                                             <table id="loggedInStudents" border="1" style="cursor: pointer;">
-                                                
+
                                             </table>
                                         </div>
 
@@ -127,70 +109,107 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     <div class="row">
 
                                         <span class="col s12 center-align"><b>Request Appointment</b></span>
-                                        
                                         <div class="col s12 center-align">&nbsp;</div>
+
+
                                         <div class="col s4 center-align">&nbsp;</div>
-                                        
                                         <div class="col s4 center-align">
                                             <input type="date" class="datepicker center-align" placeholder="Date" id="date_box">
                                         </div>
-                                        
                                         <div class="col s12 center-align">&nbsp;</div>
+
+
                                         <div class="col s4 center-align">&nbsp;</div>
-                                        
                                         <div class="col s4 center-align">
                                             <input type="text" class="timepicker center-align" placeholder="Time" id="time_box">
                                         </div>
-
-                                        <div class="col s12 center-align">&nbsp;</div>
                                         <div class="col s4 center-align">&nbsp;</div>
-                                        
+
                                         <div class="col s12 center-align">
-                                            <input type="text" class='dropdown-button center-align' data-activates='subject_dropdown' placeholder="Pick a Subject" id="login_box">
+                                            <input type="text" name="reason" placeholder="reason for appointment" id="reason_box">
                                         </div>
 
-                                            <!-- Dropdown Structure --> 
-                                            <ul id='subject_dropdown' class='dropdown-content'>
-                                                <li><a href="#!" onclick="pickSubject('Accounting', '0')">Accounting</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Business', '1')">Business</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Computer Science', '2')">Computer Science</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Ecocomics', '3')">Economics</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Finance', '4')">Finance</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Health & Medical Statistics', '5')">Health & Medical Statistics</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Math', 6)">Math</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Music', 7)">Music</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Physics', 8)">Physics</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Russian', 9)">Russian</a></li>
-                                                <li><a href="#!" onclick="pickSubject('Writing', 10)">Writing</a></li>
-                                                
-                                            </ul>
-                                        
-
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <div class="col s4 center-align">&nbsp;</div>
-                                        
                                         <div class="col s12 center-align">
-                                            <input type="text" class='dropdown-button center-align' data-activates='tutor_dropdown' placeholder="Pick a Tutor" id="chosen_tutor">
+                                            <button type="button" onclick="addAppointment()">Make Request</button>
                                         </div>
-                                            <!-- Dropdown Structure -->                                        
-                                            <ul id='tutor_dropdown' class='dropdown-content'>
-<!--
-                                                <li><a href="#!" onclick="pickTutor('Marisa Gomez')">Marisa Gomez</a></li>
-                                                <li><a href="#!" onclick="pickTutor('Jacob Hell')">Jacob Hell</a></li>
-                                                <li><a href="#!" onclick="pickTutor('CS Tutor #3')">CS Tutor #3</a></li>                                                
--->
-                                            </ul>
-
-                                        <div class="col s12 center-align">
-<!--                                          <button type="button" onclick="requestAppointment()">Make Request</button>-->
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="requestAppointment()">Make Request</a>
+                                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Enter</a>
                             </div>
                         </div>
-                            
+                                
+                                <!-- Modal Structure for viewing requests-->
+                        <div id="viewRequests_modal" class="modal">
+                            <div class="modal-content">
+                                <div class="container">
+                                    <div class="row">
+
+                                        <span class="col s12 center-align"><b>Requests</b></span>
+                                        <div class="col s12 center-align">&nbsp;</div>
+
+                                        <div class="col s8">
+                                            Matt Gerken has requested an appointment on <b>11/11/15</b> at <b>3:00 AM</b>
+                                        </div>
+                                        
+                                        <div class="col s2">
+                                            <button type="button" onclick="addAppointment()">Accept</button>
+                                        </div>
+                                        
+                                        <div class="col s2">
+                                            <button type="button" onclick="rejectAppointment()">Reject</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                            </div>
+                        </div>
+
+
+
+                        <!-- Modal Structure for making requests-->
+                        <div id="makeRequests_modal" class="modal">
+                            <div class="modal-content">
+                                <div class="container">
+                                    <div class="row">
+
+                                        <span class="col s12 center-align"><b>Request Appointment</b></span>
+                                        <div class="col s12 center-align">&nbsp;</div>
+                                        
+                                        <div class="col s4 center-align">&nbsp;</div>
+                                        <div class="col s4 center-align">
+                                            <input type="date" class="datepicker center-align" placeholder="Date" id="date_box2">
+                                        </div>
+                                        <div class="col s12 center-align">&nbsp;</div>
+
+
+                                        <div class="col s4 center-align">&nbsp;</div>
+                                        <div class="col s4 center-align">
+                                            <input type="text" class="timepicker center-align" placeholder="Time" id="time_box2">
+                                        </div>
+                                        <div class="col s4 center-align">&nbsp;</div>
+                                        <div class="col s12 center-align">&nbsp;</div>
+                                        
+                                        <div class="col s12 center-align">List of tutors available this day/time</div>
+                                        <div class="col s12 center-align">&nbsp;</div>
+                                        
+                                        <div class="col s12 center-align">
+                                            <button type="button" onclick="requestAppointment()">Request Appointment</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                            </div>
+                        </div>
+                                                            
+                                
 							<div class="clear"></div>
 						    </ul>
 							<script type="text/javascript" src="js/responsive-nav.js"></script>
@@ -239,22 +258,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				    		</ul>
 				      </div>
 	    		 </div>
-<!--
 	    		 <div class="chart">
 		               <h3>Find a time</h3>
                      
 
 		          </div>
--->
+               <div class="column_right_grid calender">
+                      <div class="cal1"> </div>
+				   </div>
                
 <!--
 		                 <div class="video_palyer">
 								<iframe src="//player.vimeo.com/video/24363983" width="100%" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe> 
 		                </div>        
 -->
-		          <div style="background-color: white">
-                	       <div id='calendar'> </div>
-                    </div>  
+		            
 		          
 		          		
 	  		</div> 
@@ -262,23 +280,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="column_middle">
               <div class="column_middle_grid1">
 		         <div class="profile_picture">
-		        	<a href=""><img src="images/Empty_profile.jpg" alt="" /></a>		         
+		        	<a href=""><img src="images/Empty_profile.jpg" alt="" />	</a>		         
 		            <div class="profile_picture_name">
-		            	<h2><div class="studentname"></div></h2> 
-                        <script>
-                                $(document).ready(function() {
-    
-                                    $.getJSON('sample.json', function(data) {  
-                                     
-//                                        var x1 = data.student[0];
-//                                        document.querySelector('.studentname').innerHTML = JSON.stringify(x1.username).replace(/"/g, '');
-                                        var x1 = data;
-                                        document.querySelector('.studentname').innerHTML = JSON.stringify(x1.username).replace(/"/g, '');
-                                                        
-                                    });                  
-                                });
-        
-                        </script>
+		            	<h2><div class="studentname"></div></h2>
 		            	<p>Student </p>
 		            </div>
                   </div>   
@@ -292,8 +296,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</div>
 					</div>
 						<div class="temp_list">
-<!--                            <ol id="studentAppointments"></ol> -->
-				      			<ol>
+				      			<ul>
 						  		    <li><a href="#"><span class="day_name">Mon</span>&nbsp; 10/26
 						  			<label class="digits">3:00pm </label><div class="clear"></div></a></li>
 						  			<li class="active"><a href="#"><span class="day_name">Tues</span>&nbsp; 10/27
@@ -306,14 +309,36 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						  			<label class="digits">3:30pm</label><div class="clear"></div></a></li>
 						  			<li><a href="#"><span class="day_name">Mon</span>&nbsp; 11/2----Awaiting Confirmation
 						  			<label class="digits">7:00pm</label><div class="clear"></div></a></li>
-				    		</ol>
+				    		</ul>
 				      </div>
 		          </div>	           
 
     	    </div>
     	    
             <div class="column_right">
-				   <div class="column_right_grid2 tutoring_subject">
+<!--
+            	<div class="column_right_grid">
+                    <div class="column_right_grid sign-in">
+				 	<div class="sign_in">
+				       <h3>Sign in to your Stetson account</h3>
+					    <form>
+					    	<span>
+					 	    <i><img src="images/mail.png" alt="" /></i><input type="text" value="Enter your email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter your email';}">
+					 	    </span>
+					 	    <span>
+					 	     <i><img src="images/lock.png" alt="" /></i>
+					 	     <input type="password" placeholder="password">
+					 	    </span>
+					 		<input type="submit" class="my-button" value="Sign In">
+					 	</form>
+					       <h4><a href="#">Forgot Password?</a></h4>				   
+          		       </div>
+          		 	  
+				   </div>
+                 
+			   </div>
+-->
+				   <div class="column_right_grid tutoring_subject">
 				     	  <h3><a href="#" id="slide_prev"><img src="images/arrow-left.png" alt="" /></a> Subject <a href="#" id="slide_next"><img src="images/arrow-right.png" alt="" /></a></h3>				            
 				     	 		<ul id="slide" class="subject">					            
                                     <li>Computer Science</li>
@@ -372,10 +397,37 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				    </div>
                 
                                     
-<!--
                     <div class="column_right_grid calender" style="background-color: white">
                 	       <div id='calendar'> </div>
                     </div>
+                
+                
+<!--
+                <div class="column_right_grid downloading_uploading">
+                      <ul>
+					      <li>                              
+<div class="profile_picture">
+		        	<a href=""><img src="images/profile_img150x151.jpg" alt="" />	</a>		         
+		            <div class="profile_picture_name">
+                        <h2>Matt Gerken</h2
+		            	<p>Tutor </p>
+		            </div>
+		            </div>
+                            <div class="clearfix">
+                                <div class="clear"></div>
+                                
+                            </div>
+                           </li>
+                           <li>                              
+                            
+                           </li>
+                        </ul>
+				   </div>
+-->
+<!--
+				   <div class="column_right_grid calender">
+                      <div class="cal1"> </div>
+				   </div>
 -->
              </div>
     	<div class="clear"></div>
@@ -384,21 +436,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script>
 
         
-//        var student = '{"studentinfo":[' +
-//        '{"ID":"800109710"},' +
-//        '{"OtherID":"null"},' +
-//        '{"LastName":"Rumsey"},' +
-//        '{"FirstName":"Jeremy"},' +
-//        '{"FullName":"Jeremy Rumsey"},' +
-//        '{"Gender":"M"},' +
-//        '{"Major":"CSCI"},' +
-//        '{"Email":"jrumsey@stetson.edu"}]}';
-//
-//        obj = JSON.parse(student);
-//        document.querySelector('.studentname').innerHTML = obj.studentinfo[4].FullName;
-//        $('.studentname').html(obj.studentinfo[4].FullName);
+        var student = '{"studentinfo":[' +
+        '{"ID":"800109710"},' +
+        '{"OtherID":"null"},' +
+        '{"LastName":"Rumsey"},' +
+        '{"FirstName":"Jeremy"},' +
+        '{"FullName":"Jeremy Rumsey"},' +
+        '{"Gender":"M"},' +
+        '{"Major":"CSCI"},' +
+        '{"Email":"jrumsey@stetson.edu"}]}';
 
-
+        obj = JSON.parse(student);
+        document.querySelector('.studentname').innerHTML = obj.studentinfo[4].FullName;
+        $('.studentname').html(obj.studentinfo[4].FullName);
+        
+        
+        
         
         
         $(document).ready(function () {
@@ -421,7 +474,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             inDuration: 300,
             outDuration: 225,
             //constrain_width: false, // Does not change width of dropdown to that of the activator
-            hover: false, // Activate on hover
+            hover: true, // Activate on hover
             gutter: 0, // Spacing from edge
             belowOrigin: false, // Displays dropdown below the button
             alignment: 'left' // Displays dropdown with edge aligned to the left of button
@@ -438,7 +491,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				center: 'title',
 				right: 'month,basicWeek,basicDay'
 			},
-//			eventLimit: 2,
+			eventLimit: 2,
 			prev: 'left-single-arrow',
         		events: [
         {
@@ -487,7 +540,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         
 
 
-        function requestAppointment() {
+        function viewStudentSchedule() {
             //if (document.getElementById("login_box").value != "") {
             //	//            document.getElementById("student_box").innerHTML += document.getElementById("login_box").value + "<br>";
             //
@@ -517,13 +570,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             if (document.getElementById("login_box").value != "") {
                 var table = document.getElementById("loggedInStudents");
                 var row = table.insertRow(-1);
-                var cell0 = row.insertCell(0);
-                var cell1 = row.insertCell(1);
-                var cell2 = row.insertCell(2);
-                cell0.innerHTML = document.getElementById("date_box").value + " at " + document.getElementById("time_box").value;
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
                 cell1.innerHTML = document.getElementById("login_box").value;
-                cell2.innerHTML = document.getElementById("chosen_tutor").value;
-
+                cell2.innerHTML = "NULL";
 
 
                 ////table.rows[rows.length - 1].onclick=function(){
@@ -538,16 +588,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 //}
                 addRowHandlers();
 
-                //document.getElementById("scheduleButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i>"
+                document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Resume Session"
 
-                document.getElementById("date_box").value = "";
-                document.getElementById("time_box").value = "";
+
                 document.getElementById("login_box").value = "";
-                document.getElementById("chosen_tutor").value = "";
-                
-                alert("Request sent!");
-               // document.getElementById("professor_toggle").checked = false;
-               // toggleProfessors();
+                document.getElementById("professor_toggle").checked = false;
+                toggleProfessors();
             }
 
             //from http://jsfiddle.net/oh16h7cj/ | http://stackoverflow.com/questions/1207939/adding-an-onclick-event-to-a-table-row, adapted to my situation
@@ -562,8 +608,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 var cell = row.getElementsByTagName("td")[0];
                                 var id = cell.innerHTML;
 
-                                //removeRow(id);
-                                resendRequest(id);
+                                removeRow(id);
+
                             };
                         };
 
@@ -592,93 +638,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     }
                 }
 
-//                if (rows.length == 0) {
-//                    document.getElementById("scheduleButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Start Session"
-//
-//                }
+                if (rows.length == 0) {
+                    document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Start Session"
+
+                }
 
 
             }
             
         }
-        
-function pickSubject(subject, tutors) {
-    var subjectArray = ["Accounting", "Business", "Computer Science", "Economics", "Finance", "Health & Medical Statistics", "Math", "Music", "Physics", "Russian", "Writing"];
-    var accountingTutors = ["Bob", "Tim", "Lesz"];
-    var businessTutors = ["Hamlet", "George"];
-    var computerScienceTutors = ["Marisa", "Jacob"];
-    var economicsTutors = ["Hope", "Dameon", "Larkin"];
-    var financeTutors = ["Rose", "Daisy", "Penelope"];
-    var healthTutors =  ["James", "Neil", "Eric"];
-    var mathTutors = ["Matt", "Gerken"];
-    var musicTutors = ["Jazmin", "Neil", "Chris"];
-    var physicsTutors = ["Tyler", "Ari", "Jamontee"];
-    var russianTutors = ["Poop", "Peter", "Gerogia"];
-    var writingTutors = ["Melaina", "Vanessa", "Erica"];
-    
-     document.getElementById("login_box").value = subject;
-     var subjectTutors;
- 
-        if(subjectArray[tutors] == "Accounting") {
-            subjectTutors = accountingTutors;
-        }
-        else if(subjectArray[tutors] == "Business") {
-            subjectTutors = businessTutors;   
-        }
-        else if(subjectArray[tutors] == "Computer Science") {
-            subjectTutors = computerScienceTutors;     
-        }
-        else if(subjectArray[tutors] == "Economics") {
-            subjectTutors = economicsTutors;
-        }
-        else if(subjectArray[tutors] == "Finance") {
-            subjectTutors = financeTutors;
-        }
-        else if(subjectArray[tutors] == "Health & Medical Statistics") {
-            subjectTutors = healthTutors;
-        }
-        else if(subjectArray[tutors] == "Math") {
-            subjectTutors = mathTutors;
-        }
-        else if(subjectArray[tutors] == "Music") {
-            subjectTutors = musicTutors;
-        }
-        else if(subjectArray[tutors] == "Physics") {
-            subjectTutors = physicsTutors;
-        }
-        else if(subjectArray[tutors] == "Russian") {
-            subjectTutors = russianTutors;
-        }
-        else if(subjectArray[tutors] == "Writing") {
-            subjectTutors = writingTutors;
-        }
-
-    var ul = document.getElementById("tutor_dropdown");
-    while( ul.firstChild ){
-        ul.removeChild(ul.firstChild);
-    }
-    
-     for (i = 0; i < subjectTutors.length; i++) {
-         var ul = document.getElementById("tutor_dropdown");
-         var li = document.createElement("li");
-         li.appendChild(document.createTextNode(subjectTutors[i]));
-         //alert(subjectTutors[i]);
-         li.onclick = function() {document.getElementById("chosen_tutor").value = this.innerHTML};
-         ul.appendChild(li);
-
-     }
-    
-} 
-
-function pickTutor(poop) {
-    document.getElementById("chosen_tutor").value = poop;  
-}
-        
-function resendRequest(id) {
-    var table = document.getElementById("loggedInStudents");
-    alert("Resend Request?")
-    
-}
               
 function addAppointment() {
         	var date = document.getElementById("date_box").value;
@@ -706,13 +674,12 @@ function addAppointment() {
             document.getElementById("reason_box").value = "";
             
             
+            
             $('#calendar').fullCalendar('renderEvent', {
             title  : myTitle,
             start  : finalDate
         });
         }
-        
-        
     </script>
 </body>
 </html>
