@@ -20,17 +20,17 @@ var toEmail = function(name){
 var db_getTutor = function(db, query, callback){
   var TutorModel = db.model('TutorModel');
   var queryObject = {};
-  if(field !== "Username"){
-    queryObject[field] = value;
+  if(query.field !== "Username"){
+    queryObject[query.field] = query.value;
   } else {
-    Tutor.find({Email : { $regex : toEmail(value) }})
+    return Tutor.find({Email : { $regex : toEmail(value) }})
       .populate('Sessions')
       .exec(function(err, res){
       if(err) return callback(false, err);
       return callback(true, res);
     });
   }
-  TutorModel.find(queryObject).populate('Sessions').exec(function(err, result){
+  return TutorModel.find(queryObject).populate('Sessions').exec(function(err, result){
     if(err) return callback(false, err);
     return callback(true, result);
   });
@@ -57,9 +57,7 @@ exports.init = function(cas, db){
   });
   router.get('/get', function(req, res){
     res.type('application/json');
-    var validFields = [
-      "ID","Email","Subject","Username"
-    ];
+    var validFields = ["ID","Email","Subject","Username"];
     var queryRequirements = [ 'field', 'value' ];
     var query = ( url.parse( req.url ).query !== null ) ?
      querystring.parse( url.parse( req.url ).query ) : {};

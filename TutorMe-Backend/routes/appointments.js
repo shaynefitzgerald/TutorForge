@@ -1,7 +1,38 @@
 var express = require('express');
 
-
-
+var containsKeys = function ( a, b ) {
+  var ret = true;
+  for ( var x = 0; x < b.length; x++ ) {
+    if ( !( a.hasOwnProperty( b[ x ] ) ) ) {
+      ret = false;
+    }
+  }
+  return ret;
+};
+var containsAtLeastOne = function ( a, b ) {
+  var ret = false;
+  for ( var x = 0; x < b.length; x++ ) {
+    if ( ( a.hasOwnProperty( b[ x ] ) ) ) {
+      ret = true;
+    }
+  }
+  return ret;
+};
+var contains = function(v, arr){
+  for(var x = 0; x < arr.length; x++){
+    if(arr[x] === v)
+      return true;
+  } return false;
+};
+var fn_error = function(res, err){
+  return res.end(JSON.stringify({
+    success : false,
+    error : err,
+  }));
+};
+var fn_success = function(res, result){
+  res.end(JSON.stringify({ success : true, result : result }));
+};
 var toEmail = function(name){
   var concat = "@((?:[a-z][a-z\\.\\d\\-]+)\\.(?:[a-z][a-z\\-]+))(?![\\w\\.])";
   return new RegExp(name + concat);
@@ -123,7 +154,21 @@ var db_respondToRequest = function(db, reference, response, callback){
     if(result === undefined || result === null){
       return callback(false, "No such Request by reference: " + reference);
     } else {
-
+      if(response === true){
+        result.Responded = true;
+        result.ResponseRejected = false;
+        return result.save(function(err){
+          if(err) return callback(false, err);
+          return callback(true);
+        });
+      } else {
+        result.Responded = true;
+        result.ResponseRejected = true;
+        return result.save(function(err){
+          if(err) return callback(false, err);
+          var SessionModel = db.model('SessionModel');
+        });
+      }
     }
   });
 };
@@ -147,24 +192,6 @@ exports.init = function(cas, db){
       return fn_error(res, "Invalid or Missing Fields");
     }
   });
-
-  /*
-    call
-    {
-      as : <"Student" or "Tutor">
-      Username : String
-    },
-
-    on success:
-    {
-      success : true,
-      result : [
-        {
-          AppointmentSchema
-        }
-      ]
-    }
-  */
   router.get('/getAppointmentRequests', function(req, res){
     res.type('application/json');
     var query = ( url.parse( req.url ).query !== null ) ?

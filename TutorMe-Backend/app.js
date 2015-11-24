@@ -15,16 +15,6 @@ var app = express();
 
 var database = require('./db/connect').applicationConnection;
 
-//XXX: We probably won't need views since data population occurs async
-//verify this with Brandon
-
-// // view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-
 var fs = require('fs');
 var config = fs.readFileSync(__dirname + '/config/development.json');
 
@@ -81,7 +71,7 @@ var administrator = require('./routes/administrator').init(CASInstance, database
 /*
   permissions definition middleware
 */
-//app.use(require('./security'));
+app.use(require('./security').init(CASInstance, database));
 
 app.use('/', routes);
 app.use('/api/students', students);
@@ -114,8 +104,8 @@ if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.end(JSON.stringify({
-      'error' : true ,
-      "result" : {
+      'success' : false ,
+      "error" : {
         message: err.message,
         error: err
       }
@@ -128,8 +118,8 @@ if (app.get('env') === 'development') {
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.end(JSON.stringify({
-    'error' : true ,
-    "result" : {
+    'success' : false ,
+    "error" : {
     }
   }));
 });
