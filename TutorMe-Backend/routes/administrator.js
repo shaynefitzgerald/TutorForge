@@ -123,6 +123,16 @@ exports.init = function(cas, db){
   router.post('/setAsTutor', function(req, res){
     res.type('application/json');
     var body = req.body;
+    if(!containsKeys(body, ['ID','Subject','isStudentTutor'])){
+      return fn_error(res, "Missing or Malformed Parameters");
+    }
+    return db_createTutor(db, body, function(success, result){
+      if(!success) return fn_error(res, result);
+      return fn_success(res,result);
+    });
+  });
+  router.post('/createNonStudentTutor', function(req, res){
+    res.type('application/json');
     if(!containsKeys(body, ['ID','FirstName','LastName','Subject','isStudentTutor'])){
       return fn_error(res, "Missing or Malformed Parameters");
     }

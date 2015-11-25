@@ -50,8 +50,8 @@ exports.init = function(cas, db){
     var query = ( url.parse( req.url ).query !== null ) ?
      querystring.parse( url.parse( req.url ).query ) : {};
     var subject = query.subject;
-    return db_getAllTutors(db, subject, function(err, result){
-      if(err) return fn_error(res, err);
+    return db_getAllTutors(db, subject, function(success, result){
+      if(!success) return fn_error(res, result);
       return fn_success(res, result);
     });
   });
@@ -69,7 +69,7 @@ exports.init = function(cas, db){
        return fn_error(res, "Invalid Field");
      }
      return db_getTutor(db, query, function(success, result){
-       if(!success) return fn_error(res, err);
+       if(!success) return fn_error(res, result);
        return fn_success(res, result);
      });
 

@@ -71,7 +71,7 @@ var db_getPreviousSessions = function(db, by, value, callback){
 var db_endSession = function(db, sessionData, callback){
   var SessionModel = db.model("SessionModel");
   SessionModel.findOne({_id : sessionData._id}).populate('Student').populate('Tutor')
-  .exec();
+  .exec(); 
 };
 exports.init = function(cas, db){
   var router = express.Router();

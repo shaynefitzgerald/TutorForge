@@ -24,7 +24,7 @@ var init = function(cas, db){
         }
       }
       return TutorModel.findOne({ Username : req.session.cas_user}, function(err, tutorResult){
-        if(err) return error(res, err); 
+        if(err) return error(res, err);
           if(tutorResult !== undefined && tutorResult !== null){
             if(req.session.userPermissions === undefined){
               req.session.userPermissions = "t";
