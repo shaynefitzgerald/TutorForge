@@ -24,6 +24,7 @@ exports.init = function(cas, db){
 
   });
   router.get('/user', cas.block, function(req, res, next){
+    res.type('application/json');
     return res.end(JSON.stringify({ username : req.session.cas_user }));
   });
   router.get('/docs', function(req, res, next){
@@ -37,6 +38,7 @@ exports.init = function(cas, db){
     }
   });
   router.get('/resetFlags', cas.block, function(req, res){
+    res.type('application/json');
     req.session.userPermissions = "";
     return fn_success(res, req.session);
   });

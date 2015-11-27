@@ -195,7 +195,6 @@
 <pre><code>/api/administrator/removeTutor
 </code></pre>
 <p>Used to remove tutors from the database.</p>
-<p><em>TODO: remove <code>isStudentTutor</code> field from request requirements.</em></p>
 <p><strong>Permissions</strong></p>
 <ul>
 <li>Only Administrators are allowed to access and POST to this handle.</li>
@@ -206,7 +205,6 @@
 <p><em>POST Body</em></p>
 <pre><code class="language-json">{
     "<span class="hljs-attribute">ID</span>" : <span class="hljs-value"><span class="hljs-number">800999999</span></span>,
-    "<span class="hljs-attribute">isStudentTutor</span>" : <span class="hljs-value"><span class="hljs-literal">false</span></span>,
 }
 </code></pre>
 <p><strong>Expected Response</strong></p>
@@ -221,8 +219,8 @@
     "<span class="hljs-attribute">error</span>" : <span class="hljs-value">{}</span>,
 }
 </code></pre>
-<h2><a id="Tutors_262"></a>Tutors</h2>
-<h3><a id="getAll_httpsget_264"></a>/getAll <code>[https/get]</code></h3>
+<h2><a id="Tutors_259"></a>Tutors</h2>
+<h3><a id="getAll_httpsget_261"></a>/getAll <code>[https/get]</code></h3>
 <p>Returns an array of tutors from the database. If passed a Subject, will narrow the search to those subjects.</p>
 <p><strong>Permissions:</strong></p>
 <ul>
@@ -256,7 +254,7 @@
     "<span class="hljs-attribute">error</span>" : <span class="hljs-value">{}</span>,
 }
 </code></pre>
-<h3><a id="get_httpsget_303"></a>/get <code>[https/get]</code></h3>
+<h3><a id="get_httpsget_300"></a>/get <code>[https/get]</code></h3>
 <p>Returns a tutor from the database matching the field provided. Note that sessions are also populated by reference, so this is recommended when pulling a given tutor’s information on login.</p>
 <p>Accepted fields are <code>ID Email Subject Username</code></p>
 <p><strong>Permissions:</strong></p>
@@ -264,7 +262,7 @@
 <li>Anyone can call this function.</li>
 </ul>
 <p><strong>Example Query</strong></p>
-<pre><code>/api/tutors/get?ID=800999999
+<pre><code>/api/tutors/get?field=ID&amp;value=800999999
 </code></pre>
 <p><em><strong>On Success</strong></em></p>
 <pre><code class="language-json">{
@@ -291,6 +289,119 @@
     "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">false</span></span>,
     "<span class="hljs-attribute">error</span>" : <span class="hljs-value">{}</span>,
 }
+</code></pre>
+<h2><a id="Appointment_Requests_344"></a>Appointment Requests</h2>
+<p>Appointments are handled separately from sessions due to their validation requirements from the tutor.</p>
+<p>The appointment lifecycle is as follows:</p>
+<ol>
+<li>A Student/Tutor makes a request for an appointment using <code>/api/appointments/makeRequest</code></li>
+<li>The corresponding Tutor can poll their active appointment requests by using <code>/api/appointments/getAppointmentRequests</code></li>
+<li>The corresponding Tutor will accept/reject the request by using <code>/api/appointments/respondToRequest</code></li>
+<li>If the appointment is accepted, the appointment will be deleted in the database, and will spawn a Session corresponding to the information provided.</li>
+<li>If the appointment is rejected, the appointment will be marked as rejected. The appointment wont be deleted from the database until the Student who made the request withdraws it using <code>/api/appointments/withdrawRequest</code></li>
+</ol>
+<p>Appointments may be withdrawn at any time by their creator using <code>/api/appointments/withdraWRequest</code></p>
+<h3><a id="makeRequest_httpspost_358"></a>/makeRequest <code>[https/post]</code></h3>
+<p>Creates an Appointment Request. Requires the following fields:</p>
+<ul>
+<li><code>StudentField</code>: The field in which to search by for the corresponding student. Recommended fields are <code>Email</code>,<code>ID</code>, <code>_id</code>, but can technically be any. Will select the first result alphabetically for any ambiguous field such as <code>FirstName</code>, <code>LastName</code>, etc. Do not use <code>Username</code> or <code>FullName</code>, as these are virtual fields that cannot be polled through this API URL at the moment. (If you need Username polling, please request it.)</li>
+<li><code>Student</code> : The value corresponding to <code>StudentField</code></li>
+<li><code>TutorField</code> : Same as above, but instead corresponding to the Tutor. Recommended fields are also the same as <code>StudentField</code></li>
+<li><code>Tutor</code> : The value corresponding to <code>TutorField</code></li>
+<li><code>RequestedStart</code> : The requested start time/date of the Appointment. Should follow Javascript Date String formatting (see <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">here</a>)</li>
+<li><code>Location</code>: A string representing the location for the session. Should be statically selected from the website for continuity, note that this is not currently validated on the backend.</li>
+<li><code>Subject</code> : The 4 Character subject string corresponding to the desired Subject of the appointment (ie: <code>CSCI</code>, <code>ACCT</code>, etc.)</li>
+</ul>
+<p><strong>Example Request</strong></p>
+<pre><code>/api/appointments/makeRequest
+</code></pre>
+<pre><code class="language-JSON">{
+ "<span class="hljs-attribute">StudentField</span>" : <span class="hljs-value"><span class="hljs-string">"ID"</span></span>,
+ "<span class="hljs-attribute">Student</span>" : <span class="hljs-value"><span class="hljs-number">800126185</span></span>,
+ "<span class="hljs-attribute">TutorField</span>" : <span class="hljs-value"><span class="hljs-string">"Email"</span></span>,
+ "<span class="hljs-attribute">Tutor</span>" : <span class="hljs-value"><span class="hljs-string">"someguy@stetson.edu"</span></span>,
+ "<span class="hljs-attribute">RequestedStart</span>" : <span class="hljs-value"><span class="hljs-string">"Fri Nov 27 2015 02:59:52 GMT-0500 (Eastern Standard Time)"</span></span>,
+ "<span class="hljs-attribute">Location</span>" : <span class="hljs-value"><span class="hljs-string">"Elizabeth 208"</span></span>,
+ "<span class="hljs-attribute">Subject</span>" : <span class="hljs-value"><span class="hljs-string">"CSCI"</span>
+</span>}
+</code></pre>
+<p><strong>Expected Response</strong></p>
+<p><em><strong>On Success</strong></em></p>
+<pre><code class="language-JSON">{
+    "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">true</span>
+</span>}
+</code></pre>
+<p><em><strong>On Failure</strong></em></p>
+<pre><code class="language-JSON">{
+    "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+    "<span class="hljs-attribute">error</span>" : <span class="hljs-value">{}</span>,
+}
+</code></pre>
+<h3><a id="getAppointmentRequests_httpsget_401"></a>/getAppointmentRequests <code>[https/get]</code></h3>
+<p>Returns the AppointmentRequests corresponding to the username specified. Note that the <code>as</code> parameter specifies Student/Tutor distinctions, so be aware of which you need.</p>
+<p><strong>Example Query</strong></p>
+<pre><code>/api/getAppointmentRequests?as=Tutor&amp;Username=someguy
+</code></pre>
+<p><strong>Expected Response</strong></p>
+<p><em><strong>On Success</strong></em></p>
+<pre><code class="language-JSON">    {
+        "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+        "<span class="hljs-attribute">result</span>" : <span class="hljs-value">{
+            "<span class="hljs-attribute">Student</span>" : <span class="hljs-value">{}</span>,
+            "<span class="hljs-attribute">Tutor</span>" : <span class="hljs-value">{}</span>,
+            "<span class="hljs-attribute">RequestedStart</span>" : <span class="hljs-value"><span class="hljs-string">"Fri Nov 27 2015 02:59:52 GMT-0500 (Eastern Standard Time)"</span></span>,
+            "<span class="hljs-attribute">Location</span>" : <span class="hljs-value"><span class="hljs-string">"Elizabeth 208"</span></span>,
+            "<span class="hljs-attribute">Subject</span>" : <span class="hljs-value"><span class="hljs-string">"CSCI"</span></span>,
+            "<span class="hljs-attribute">Responsed</span>" : <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+        }</span>,
+    }
+</code></pre>
+<p><em><strong>On failure</strong></em></p>
+<pre><code class="language-JSON">
+</code></pre>
+<h4><a id="Notes_430"></a>Notes:</h4>
+<ul>
+<li>Sesssions also have two other fields:
+<ul>
+<li><code>ResponseRejected</code> : Denotes if a request has been rejected by the corresponding tutor.</li>
+<li><code>SessionReference</code> : If this reference exists, assume the appointment request has been accepted. A session will have been created to reflect such.</li>
+</ul>
+</li>
+<li>Both <code>Student</code> and <code>Tutor</code> will be populated by their corresponding objects from the database.</li>
+</ul>
+<h2><a id="respondToRequest_httpspost_437"></a>/respondToRequest <code>[https/post]</code></h2>
+<pre><code>/api/appointments/respondToRequest
+</code></pre>
+<p>Responds to a request by ObjectId Reference. (where the reference looks like <code>507f1f77bcf86cd799439011</code>)</p>
+<p><strong>Example Request</strong></p>
+<pre><code>/api/appointments/respondToRequest
+</code></pre>
+<pre><code class="language-JSON">{
+    "<span class="hljs-attribute">Reference</span>" : <span class="hljs-value"><span class="hljs-string">"507f1f77bcf86cd799439011"</span></span>,
+    "<span class="hljs-attribute">Response</span>": <span class="hljs-value"><span class="hljs-literal">true</span>
+</span>}
+</code></pre>
+<p><em><strong>On Success</strong></em></p>
+<pre><code class="language-JSON">{
+    "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+    "<span class="hljs-attribute">result</span>" : <span class="hljs-value"><span class="hljs-string">"507f1f77bcf86cd799439011"</span>
+</span>}
+</code></pre>
+<p><em>note the result here is the <code>_id</code> of the resulting Session</em></p>
+<h3><a id="withdrawRequest_httpspost_463"></a>/withdrawRequest <code>[https/post]</code></h3>
+<p>Withraws an AppointmentRequest by reference.</p>
+<p><strong>Example Request</strong></p>
+<pre><code>/api/appointments/withdrawRequest
+</code></pre>
+<pre><code class="language-JSON">{
+    "<span class="hljs-attribute">Reference</span>" : <span class="hljs-value"><span class="hljs-string">"507f1f77bcf86cd799439011"</span>
+</span>}
+</code></pre>
+<p><strong>Expected Response</strong></p>
+<p><em><strong>On Success</strong></em></p>
+<pre><code class="language-JSON">{
+    "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">true</span>
+</span>}
 </code></pre>
 
 </body></html>

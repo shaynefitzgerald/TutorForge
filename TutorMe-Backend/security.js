@@ -2,7 +2,7 @@ var init = function(cas, db){
   return function(req, res, next){
     if(req.session.cas_user === undefined)
       return next();
-    if(req.session.userPermissions !== undefined)
+    if(req.session.userPermissions !== undefined || req.session.userPermissions !== "")
       return next();
 
     var error = function(res, err){

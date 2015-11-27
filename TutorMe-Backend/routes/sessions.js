@@ -70,9 +70,8 @@ var db_getPreviousSessions = function(db, by, value, callback){
 };
 var db_endSession = function(db, sessionData, callback){
   var SessionModel = db.model("SessionModel");
-  SessionModel.findOne({_id : sessionData._id}).populate('Student').populate('Tutor')
-  .exec(); 
 };
+
 exports.init = function(cas, db){
   var router = express.Router();
 
@@ -83,27 +82,35 @@ exports.init = function(cas, db){
     res.type('application/json');
     var query = ( url.parse( req.url ).query !== null ) ?
      querystring.parse( url.parse( req.url ).query ) : {};
-    if(containsKeys(query, ['by', 'value'])){
-      return db_getPreviousSessions(db, query.by, query.value, function(success, result) {
-        if(!success) return fn_error(res, result);
-        return fn_success(res, result);
-      });
-    } else {
-      return fn_error(res, "Invalid or Malformed Fields");
+
+    if(req.session.cas_user === undefined)
+      return fn_error(res, "Unauthorized, please authenticate.");
+    else if(query.by === undefined || query.value === undefined){
+      if(req.session.userPermissions.indexOf('t') < 0){
+        return fn_error(res, "You are not a Tutor. Please specify a tutor to get sessions for.");
+      } else {
+        query.by = "Username"; query.value = req.session.cas_user;
+      }
     }
+    return db_getPreviousSessions(db, query.by, query.value, function(success, result) {
+      if(!success) return fn_error(res, result);
+      return fn_success(res, result);
+    });
   });
   router.get('/getScheduledSessions', function(req, res){
     res.type('application/json');
     var query = ( url.parse( req.url ).query !== null ) ?
      querystring.parse( url.parse( req.url ).query ) : {};
-    if(containsKeys(query, ['by', 'value'])){
-      return db_getScheduledSessions(db, query.by, query.value, function(success, result) {
-        if(!success) return fn_error(res, result);
-        return fn_success(res, result);
-      });
-    } else {
-      return fn_error(res, "Invalid or Malformed Fields");
+
+    if(req.session.cas_user === undefined)
+      return fn_error(res, "Unauthorized, please authenticate.");
+    else if(query.by === undefined || query.value === undefined){
+        query.by = "Username"; query.value = req.session.cas_user;
     }
+    return db_getPreviousSessions(db, query.by, query.value, function(success, result) {
+      if(!success) return fn_error(res, result);
+      return fn_success(res, result);
+    });
   });
 
   return router;

@@ -46,9 +46,10 @@ var db_getAppointmentRequests_Students = function(db, query, callback){
     if(student === undefined){
       return callback(false, "No Such User");
     } else {
-      return AppointmentRequestModel.find({ Student : student._id }, function(err, appointments){
+      return AppointmentRequestModel.find({ Student : student._id })
+      .populate('Tutor').populate('Student')
+      .exec(function(err, appointments){
         if(err) return callback(false, err);
-
         return callback(true, appointments);
       });
     }
@@ -60,16 +61,16 @@ var db_getAppointmentRequests_Tutors = function(db, query, callback){
   TutorModel.findOne({'Username' : query}, function(err, tutor){
     if(err) return callback(false, err);
     if(tutor === undefined || tutor === null){
-      return callback(false, "No Such User");
+      return callback(false, "No Such Tutor");
     }
-    return AppointmentRequestModel.find({Tutor : tutor._id}, function(err, appointments){
+    return AppointmentRequestModel.find({Tutor : tutor._id})
+    .populate('Tutor').populate('Student')
+    .exec(function(err, appointments){
       if(err) return callback(false, err);
-
       return callback(true, appointments);
     });
   });
 };
-
 var db_makeRequest = function(db, query, callback){
   var ToAdd = {};
   var StudentModel = db.model('StudentModel');
@@ -104,7 +105,6 @@ var db_makeRequest = function(db, query, callback){
     }
   });
 };
-
 var db_validateTutor = function(db, username, reference, callback){
   var TutorModel = db.model('TutorModel');
   var AppointmentRequestModel = db.model('AppointmentRequestModel');
@@ -120,7 +120,7 @@ var db_validateTutor = function(db, username, reference, callback){
         if(appointment === undefined || appointment === null){
           return callback(true, false);
         } else {
-          return callback(true, appointment.Tutor = result._id);
+          return callback(true, appointment.Tutor === result._id);
         }
       });
     }
@@ -154,19 +154,30 @@ var db_respondToRequest = function(db, reference, response, callback){
     if(result === undefined || result === null){
       return callback(false, "No such Request by reference: " + reference);
     } else {
-      if(response === true){
+      if(response !== true){
         result.Responded = true;
-        result.ResponseRejected = false;
+        result.ResponseRejected = true;
         return result.save(function(err){
           if(err) return callback(false, err);
           return callback(true);
         });
       } else {
         result.Responded = true;
-        result.ResponseRejected = true;
+        result.ResponseRejected = false;
         return result.save(function(err){
           if(err) return callback(false, err);
           var SessionModel = db.model('SessionModel');
+          var toAdd = new SessionModel({
+            Start : result.RequestedStart,
+            Subject : result.Subject,
+            Location : result.Location,
+            Student : result.Student,
+            Tutor : result.Tutor,
+          });
+          return toAdd.save(function(err){
+            if(err) return callback(false, err);
+            return callback(true, toAdd._id);
+          });
         });
       }
     }
@@ -220,7 +231,7 @@ exports.init = function(cas, db){
     res.type('application/json');
     var query = ( url.parse( req.url ).query !== null ) ?
      querystring.parse( url.parse( req.url ).query ) : {};
-     if(query.Reference === undefined){
+     if(query.Reference === undefined || query.Response === undefined){
        return fn_error(res, "Invalid or Missing Fields");
      } else {
        if(req.session.cas_user === undefined || req.session.cas_user === ""){

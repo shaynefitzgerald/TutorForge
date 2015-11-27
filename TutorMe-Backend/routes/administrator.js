@@ -38,8 +38,8 @@ var express = require('express');
 
 var db_createTutor = function(db, data, callback){
   var TutorModel = db.model('TutorModel');
+  var StudentModel = db.model('StudentModel');
   if(data.isStudentTutor){
-    var StudentModel = db.model('StudentModel');
     StudentModel.findOne({ID : Number(data.ID)}, function(err, result){
       if(err) callback(false, err);
       if(result === null) return callback(false, "No Such Student");
@@ -66,32 +66,40 @@ var db_createTutor = function(db, data, callback){
       });
     });
   } else {
-    var toAdd = {
-      isStudentTutor : false,
-      ID : data.ID,
-      Email : data.Email,
-      Subject : data.Subject,
-      FirstName : data.FirstName,
-      LastName : data.LastName,
-      LifetimeSessionCount : 0,
-      LastArchivedSession : new Date(0),
-      Sessions : [],
-    };
-    return (new TutorModel(toAdd)).save(function(err, Tutor){
-      if(err) return callback(false, err);
-      return callback(true, Tutor);
+    StudentModel.findOne({ID : Number(data.ID)}, function(err, result){
+      if(result !== null){
+        data.isStudentTutor = true;
+        return db_createTutor(db, data, callback);
+      }
+      var toAdd = {
+        isStudentTutor : false,
+        ID : data.ID,
+        Email : data.Email,
+        Subject : data.Subject,
+        FirstName : data.FirstName,
+        LastName : data.LastName,
+        LifetimeSessionCount : 0,
+        LastArchivedSession : new Date(0),
+        Sessions : [],
+      };
+      return (new TutorModel(toAdd)).save(function(err, Tutor){
+        if(err) return callback(false, err);
+        return callback(true, Tutor);
+      });
     });
   }
 };
 var db_removeTutor = function(db, query, callback){
   var TutorModel = db.model('TutorModel');
-  if(query.isStudentTutor){
     return TutorModel.findOne({ID : Number(query.ID)}, function(err, result){
       if(err) return callback(false, err);
       if(result === null) callback(false, "No Such Tutor");
       var StudentRef = result.StudentRef;
       return result.remove(function(err){
         if(err) callback(false, err);
+        if(StudentRef === undefined){
+          return callback(true);
+        }
         var StudentModel = db.model('StudentModel');
         return StudentModel.findOne({_id : StudentRef}, function(err, result){
           result.IsTutor = false;
@@ -103,18 +111,6 @@ var db_removeTutor = function(db, query, callback){
         });
       });
     });
-  } else {
-    return TutorModel.findOne({ID : Number(query.ID)}, function(err, result){
-      if(err) return callback(false, err);
-      console.log(result);
-      if(result === null)
-        return callback(false, "No Such Tutor");
-      return result.remove(function(err){
-        if(err) return callback(false, err);
-        return callback(true);
-      });
-    });
-  }
 };
 
 exports.init = function(cas, db){

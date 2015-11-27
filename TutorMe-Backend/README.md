@@ -226,8 +226,6 @@ Used to setup tutors within the database. May turn a student into a tutor, or cr
 
 Used to remove tutors from the database.
 
-*TODO: remove `isStudentTutor` field from request requirements.*
-
 **Permissions**
 - Only Administrators are allowed to access and POST to this handle.
 
@@ -239,7 +237,6 @@ Used to remove tutors from the database.
 ```json
 {
     "ID" : 800999999,
-    "isStudentTutor" : false,
 }
 ```
 
@@ -312,7 +309,7 @@ Accepted fields are `ID Email Subject Username`
 
 **Example Query**
 
-    /api/tutors/get?ID=800999999
+    /api/tutors/get?field=ID&value=800999999
 
 
 *__On Success__*
@@ -342,5 +339,148 @@ Accepted fields are `ID Email Subject Username`
 {
     "success" : false,
     "error" : {},
+}
+```
+
+## Appointment Requests
+
+Appointments are handled separately from sessions due to their validation requirements from the tutor. 
+
+The appointment lifecycle is as follows:
+
+1. A Student/Tutor makes a request for an appointment using `/api/appointments/makeRequest`
+2. The corresponding Tutor can poll their active appointment requests by using `/api/appointments/getAppointmentRequests`
+3. The corresponding Tutor will accept/reject the request by using `/api/appointments/respondToRequest`
+4. If the appointment is accepted, the appointment will be deleted in the database, and will spawn a Session corresponding to the information provided.
+5. If the appointment is rejected, the appointment will be marked as rejected. The appointment wont be deleted from the database until the Student who made the request withdraws it using `/api/appointments/withdrawRequest`
+
+Appointments may be withdrawn at any time by their creator using `/api/appointments/withdraWRequest`
+
+### /makeRequest `[https/post]`
+
+Creates an Appointment Request. Requires the following fields:
+
+- `StudentField `: The field in which to search by for the corresponding student. Recommended fields are `Email`,`ID`, `_id`, but can technically be any. Will select the first result alphabetically for any ambiguous field such as `FirstName`, `LastName`, etc. Do not use `Username` or `FullName`, as these are virtual fields that cannot be polled through this API URL at the moment. (If you need Username polling, please request it.)
+- `Student` : The value corresponding to `StudentField`
+- `TutorField` : Same as above, but instead corresponding to the Tutor. Recommended fields are also the same as `StudentField`
+- `Tutor` : The value corresponding to `TutorField`
+- `RequestedStart` : The requested start time/date of the Appointment. Should follow Javascript Date String formatting (see [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date))
+- `Location`: A string representing the location for the session. Should be statically selected from the website for continuity, note that this is not currently validated on the backend.
+- `Subject` : The 4 Character subject string corresponding to the desired Subject of the appointment (ie: `CSCI`, `ACCT`, etc.)
+
+**Example Request**
+        
+    /api/appointments/makeRequest
+    
+```JSON
+{
+ "StudentField" : "ID",
+ "Student" : 800126185,
+ "TutorField" : "Email",
+ "Tutor" : "someguy@stetson.edu",
+ "RequestedStart" : "Fri Nov 27 2015 02:59:52 GMT-0500 (Eastern Standard Time)",
+ "Location" : "Elizabeth 208",
+ "Subject" : "CSCI"
+}
+```
+**Expected Response**
+
+*__On Success__*
+```JSON
+{
+    "success" : true
+}
+```
+*__On Failure__*
+```JSON
+{
+    "success" : false,
+    "error" : {},
+}
+```
+
+### /getAppointmentRequests `[https/get]`
+
+Returns the AppointmentRequests corresponding to the username specified. Note that the `as` parameter specifies Student/Tutor distinctions, so be aware of which you need.
+
+**Example Query**
+
+    /api/getAppointmentRequests?as=Tutor&Username=someguy
+
+**Expected Response**
+
+*__On Success__*
+```JSON
+    {
+        "success" : true,
+        "result" : {
+            "Student" : {},
+            "Tutor" : {},
+            "RequestedStart" : "Fri Nov 27 2015 02:59:52 GMT-0500 (Eastern Standard Time)",
+            "Location" : "Elizabeth 208",
+            "Subject" : "CSCI",
+            "Responsed" : false,
+        },
+    }
+```
+*__On failure__*
+```JSON
+
+```
+
+#### Notes:
+- Sesssions also have two other fields:
+    - `ResponseRejected` : Denotes if a request has been rejected by the corresponding tutor.
+    - `SessionReference` : If this reference exists, assume the appointment request has been accepted. A session will have been created to reflect such.
+- Both `Student` and `Tutor` will be populated by their corresponding objects from the database.
+
+
+## /respondToRequest `[https/post]`
+
+    /api/appointments/respondToRequest
+
+Responds to a request by ObjectId Reference. (where the reference looks like `507f1f77bcf86cd799439011`)
+
+**Example Request**
+    
+    /api/appointments/respondToRequest
+    
+```JSON
+{
+    "Reference" : "507f1f77bcf86cd799439011",
+    "Response": true
+}
+```
+
+*__On Success__*
+```JSON
+{
+    "success" : true,
+    "result" : "507f1f77bcf86cd799439011"
+}
+```
+*note the result here is the `_id` of the resulting Session*
+
+### /withdrawRequest `[https/post]`
+
+Withraws an AppointmentRequest by reference.
+
+**Example Request**
+
+    /api/appointments/withdrawRequest
+    
+```JSON
+{
+    "Reference" : "507f1f77bcf86cd799439011"
+}
+```
+
+**Expected Response**
+
+*__On Success__*
+
+```JSON
+{
+    "success" : true
 }
 ```

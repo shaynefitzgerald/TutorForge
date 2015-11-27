@@ -87,7 +87,6 @@ var db_getStudentProfessors = function(db, studentID, callback){
   });
 };
 
-var permissions = 'st';
 
 exports.init = function(cas, db){
     /*
