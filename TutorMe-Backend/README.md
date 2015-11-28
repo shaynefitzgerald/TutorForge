@@ -344,7 +344,7 @@ Accepted fields are `ID Email Subject Username`
 
 ## Appointment Requests
 
-Appointments are handled separately from sessions due to their validation requirements from the tutor. 
+Appointments are handled separately from sessions due to their validation requirements from the tutor.
 
 The appointment lifecycle is as follows:
 
@@ -369,9 +369,9 @@ Creates an Appointment Request. Requires the following fields:
 - `Subject` : The 4 Character subject string corresponding to the desired Subject of the appointment (ie: `CSCI`, `ACCT`, etc.)
 
 **Example Request**
-        
+
     /api/appointments/makeRequest
-    
+
 ```JSON
 {
  "StudentField" : "ID",
@@ -442,9 +442,9 @@ Returns the AppointmentRequests corresponding to the username specified. Note th
 Responds to a request by ObjectId Reference. (where the reference looks like `507f1f77bcf86cd799439011`)
 
 **Example Request**
-    
+
     /api/appointments/respondToRequest
-    
+
 ```JSON
 {
     "Reference" : "507f1f77bcf86cd799439011",
@@ -468,7 +468,7 @@ Withraws an AppointmentRequest by reference.
 **Example Request**
 
     /api/appointments/withdrawRequest
-    
+
 ```JSON
 {
     "Reference" : "507f1f77bcf86cd799439011"
