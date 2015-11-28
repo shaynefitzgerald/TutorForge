@@ -69,7 +69,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         <div class="col s12 center-align">
                                             <input type="text" name="800Num" placeholder="800 #" id="login_box">
                                         </div>
-                                        <div class="col s12 center-align">&nbsp;</div>
+                                        <div class="col s12 center-align" id=studentError>&nbsp;</div>
                                         <div class="col s12 center-align">
                                             <input type="checkbox" name="emailProf" value="Yes" id="professor_toggle" onclick="toggleProfessors()" />
                                             <label for="professor_toggle"> Email Professor</label>
@@ -192,7 +192,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <form id="loginForm">
                                 <fieldset id="body">
                                     <div class="user-info">
-                                        <h4>Hello,<a href="Admin%20Home.html"> Brandon Edwards</a></h4>
+                                        <h4 id=userName1>Hello,<a href="Admin%20Home.html"></a></h4>
                                         <ul>
                                             <li class="profile active"><a href="Student%20Home.html">Profile </a></li>
                                             <li class="logout"><a href="index.html"> Logout</a></li>
@@ -204,7 +204,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </div>
                     </div>
                     <div class="profile_img">
-                        <a href="#"><img src="images/GetPersonaPhoto.jpg" alt="" /> </a>
+                        <a href="#"><img src="images/user.png" alt="" /> </a>
 
                     </div>
                     <div class="clear"></div>
@@ -332,9 +332,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="column_middle">
                 <div class="column_middle_grid1">
                     <div class="profile_picture">
-                        <a href=""><img src="images/GetPersonaPhoto.jpg" alt="" /> </a>
+                        <a href=""><img src="images/user.png" alt="" /> </a>
                         <div class="profile_picture_name">
-                            <h2>Brandon Edwards</h2>
+                            <h2 id="userName2"></h2>
                             <!--		            	<p>Lorem ipsum dolor sit amet consectetur adipisicing </p>-->
                         </div>
                         <!--		             <span><a href="#"> <img src="images/follow_user.png" alt="" /> </a></span>-->
@@ -605,6 +605,54 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
         });
 
+        //restrict student session box to numbers only, from http://stackoverflow.com/questions/18156824/restricting-an-input-box-to-only-numbers-0-9
+        document.getElementById('login_box').onkeydown = function (e) {
+            var key = e.keyCode ? e.keyCode : e.which;
+            if (isNaN(String.fromCharCode(key)) && key != 8) return false;
+        }
+
+
+        //init username
+        var userName = "";
+        var firstName = "";
+        var lastName = "";
+
+        //setTimeout(function(){ initUserData(); }, 1000);
+
+        initUserData();
+
+
+
+        function initUserData() {
+            $.getJSON('https://tutorme.stetson.edu/user', function (data) {
+                //sessionStorage.setItem('User', JSON.stringify(data));
+                //var userNameJSON = JSON.parse(data);
+                userName = data.username;
+
+                var selfQuery = "https://tutorme.stetson.edu/api/students/get?field=Username&value=" + userName;
+
+                //grab info about self
+                $.getJSON(selfQuery, function (data) {
+                    //sessionStorage.setItem('User', JSON.stringify(data));
+                    //var selfJSON = JSON.parse(data);
+
+                    //console.log(data.result[0].Email);
+                    firstName = data.result[0].FirstName;
+                    lastName = data.result[0].LastName;
+
+                    //set name
+                    document.getElementById("userName1").innerHTML = "Hello,<a href=\"Admin%20Home.html\">" + " " + userName + "</a>";
+                    document.getElementById("userName2").innerHTML = firstName + " " + lastName;
+
+                    //userName = UserNameJSON.username;
+                });
+            });
+        };
+
+
+
+
+
 
 
 
@@ -649,42 +697,78 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             //	toggleProfessors();
             //}
 
-            //add to the table
-            if (document.getElementById("login_box").value != "") {
-                var table = document.getElementById("loggedInStudents");
+            if (checkIfLoggedIn() == false) {
+                if (document.getElementById("login_box").value.length == 9) {
 
-                //append to table
-                var row = table.insertRow(-1);
+                    var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + document.getElementById("login_box").value;
 
-                //first element
-                var cell1 = row.insertCell(0);
-                //second element
-                var cell2 = row.insertCell(1);
-                cell1.innerHTML = document.getElementById("login_box").value;
-                cell2.innerHTML = "NULL";
+                    $.getJSON(studentQuery, function (data) {
+
+                        if (data.result[0] != undefined) {
+                            //add to the table
+                            var table = document.getElementById("loggedInStudents");
+
+                            //append to table
+                            var row = table.insertRow(-1);
+
+                            //first element
+                            var cell1 = row.insertCell(0);
+                            //second element
+                            var cell2 = row.insertCell(1);
+                            cell1.innerHTML = document.getElementById("login_box").value;
+                            cell2.innerHTML = data.result[0].FirstName + " " + data.result[0].LastName;
 
 
-                ////table.rows[rows.length - 1].onclick=function(){
-                ////	alert(this.innerHTML)
-                ////}
-                //
-                ////table.addEventListener('click',new function(){alert(table.rows.length)},false);
-                //var rows = document.getElementsByTagName('tr');
-                //for (var row in rows) {
-                //row.addEventListener('click',  function(){alert("hello")}); 
-                //// or attachEvent, depends on browser
-                //}
+                            ////table.rows[rows.length - 1].onclick=function(){
+                            ////	alert(this.innerHTML)
+                            ////}
+                            //
+                            ////table.addEventListener('click',new function(){alert(table.rows.length)},false);
+                            //var rows = document.getElementsByTagName('tr');
+                            //for (var row in rows) {
+                            //row.addEventListener('click',  function(){alert("hello")}); 
+                            //// or attachEvent, depends on browser
+                            //}
 
-                //add click handlers to the rows
-                addRowHandlers();
+                            //add click handlers to the rows
+                            addRowHandlers();
 
-                //shows active session
-                document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Resume Session"
+                            //shows active session
+                            document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Resume Session"
 
-                //resets fields
-                document.getElementById("login_box").value = "";
-                document.getElementById("professor_toggle").checked = false;
-                toggleProfessors();
+                            //resets fields
+                            document.getElementById("login_box").value = "";
+                            document.getElementById("professor_toggle").checked = false;
+                            toggleProfessors();
+                        } else {
+                            //invalid ID
+                            document.getElementById("studentError").innerHTML = "<font color=\"red\">Invalid Student ID</font>";
+                            setTimeout(function () {
+                                document.getElementById("studentError").innerHTML = "&nbsp;";
+                            }, 1500);
+
+
+                        }
+
+                    });
+                } else {
+                    //dont need to check, ID isnt the right size
+                    document.getElementById("studentError").innerHTML = "<font color=\"red\">Invalid Student ID</font>";
+                    setTimeout(function () {
+                        document.getElementById("studentError").innerHTML = "&nbsp;";
+                    }, 1500);
+
+                }
+
+
+            } else {
+
+                //student is already logged in
+                document.getElementById("studentError").innerHTML = "<font color=\"red\">Student Already Logged In</font>";
+                setTimeout(function () {
+                    document.getElementById("studentError").innerHTML = "&nbsp;";
+                }, 1500);
+
             }
 
             //from http://jsfiddle.net/oh16h7cj/ | http://stackoverflow.com/questions/1207939/adding-an-onclick-event-to-a-table-row, adapted to my situation
@@ -698,9 +782,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             return function () {
                                 var cell = row.getElementsByTagName("td")[0];
                                 var id = cell.innerHTML;
+                                cell = row.getElementsByTagName("td")[1];
+                                var name = cell.innerHTML;
+
+                                var conf = confirm("Logout " + name + "?");
+
 
                                 //on click, look for row with this id
-                                removeRow(id);
+                                if (conf == true) {
+                                    removeRow(id);
+                                };
 
                             };
                         };
@@ -741,14 +832,37 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
         }
 
+        function checkIfLoggedIn() {
+            var table = document.getElementById("loggedInStudents");
+            var rows = table.getElementsByTagName("tr");
+
+
+            //go through rows looking for one with id
+            for (i = 0; i < rows.length; i++) {
+                //alert(document.getElementById("loggedInStudents").getElementsByTagName("tr")[0].innerHTML);
+
+                var currentRow = table.rows[i];
+                var cell = currentRow.getElementsByTagName("td")[0];
+                var tID = cell.innerHTML;
+                //alert(currentRow.row.getElementsByTagName("td")[0])
+                //alert(table.rows[i].cells[0].innerhtml);
+                if (tID == document.getElementById("login_box").value) {
+                    return true;
+
+
+                }
+            }
+            return false;
+        }
+
         function addAppointment() {
             var date = document.getElementById("date_box").value;
-			var time = document.getElementById("time_box").value;
+            var time = document.getElementById("time_box").value;
             var myDate = new Date(date);
             //var myTitle = document.getElementById("reason_box").value;
             var myTitle = "Null"
-			
-			
+
+
             var year = myDate.getFullYear();
 
             var month = myDate.getMonth() + 1;
@@ -762,16 +876,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             if (month < 10) {
                 month = "0" + month;
             }
-			
-			myTime = time.split(":");
-			
-			var hour = parseInt(myTime[0]);
-			
-			if (myTime[1].indexOf("PM") != -1){
-				hour += 12;
-			}
-			
-			time = "T" + hour + ":" + myTime[1].substring(0,2) + ":00";
+
+            myTime = time.split(":");
+
+            var hour = parseInt(myTime[0]);
+
+            if (myTime[1].indexOf("PM") != -1) {
+                hour += 12;
+            }
+
+            time = "T" + hour + ":" + myTime[1].substring(0, 2) + ":00";
 
             var finalDate = year + "-" + month + "-" + day + time;
 
@@ -788,14 +902,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 title: myTitle,
                 start: finalDate
             }, true);
-            
-            
-            
+
+
+
 
 
         }
-        
-        function requestAppointment(){
+
+        function requestAppointment() {
             alert("hi");
             addAppointment();
         }
