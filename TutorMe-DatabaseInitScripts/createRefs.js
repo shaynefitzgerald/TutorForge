@@ -22,7 +22,7 @@ return CourseModel.find({}, function(err, courses){
           student.Courses = [];
         }
         student.Courses.push(course._id);
-        var index = findElemIndex(course.Courses , "StudentID" , student.ID);
+        var index = findElemIndex(course.Students , "StudentID" , student.ID);
         courses.Courses[index].StudentRef = student._id;
         return student.save(function(err){
           if(err) {
