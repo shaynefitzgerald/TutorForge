@@ -3,7 +3,7 @@ var db = require('/app/TutorMe/TutorMe-Backend/db/connect.js').applicationConnec
 var fs = require('fs');
 var Majors = fs.readFileSync('./courses.txt');
 
-Majors.split('\n').forEach(function(e){
+Majors.toString().split('\n').forEach(function(e){
   (new (db.model('MajorModel'))({
     MajorSubject : e
   })).save(function(err){
