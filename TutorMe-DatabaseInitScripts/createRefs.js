@@ -13,28 +13,28 @@ var findElemIndex = function(arr, field, value){
   } return -1;
 };
 
-CourseModel.find({}, function(err, courses){
+return CourseModel.find({}, function(err, courses){
   if(err) return callback(false, err);
-  courses.forEach(function(course, courseIndex){
-    course.Students.forEach(function(student, studentIndex){
-      StudentModel.findOne({ID : student.StudentID },function(err, student){
+  return courses.forEach(function(course, courseIndex){
+    return course.Students.forEach(function(student, studentIndex){
+      return StudentModel.findOne({ID : student.StudentID },function(err, student){
         if(!Array.isArray(student.Courses)){
           student.Courses = [];
         }
         student.Courses.push(course._id);
         var index = findElemIndex(course.Courses , StudentID ,ID);
         courses.Courses[index].StudentRef = student._id;
-        student.save(function(err){
+        return student.save(function(err){
           if(err) {
             console.log(err);
             process.exit(-1);
           }
-          course.save(function(err){
+          return course.save(function(err){
             if(err) {
               console.log(err);
               process.exit(-1);
             }
-            console.log("linked " + student.ID + " with course" + " CourseTitle successfully.");
+            return console.log("linked " + student.ID + " with course" + " CourseTitle successfully.");
           });
         });
       });
