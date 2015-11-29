@@ -12,5 +12,6 @@ Majors.toString().split('\n').forEach(function(e){
       process.exit(-1);
     }
     console.log(e);
+    process.exit(0);
   });
 });
