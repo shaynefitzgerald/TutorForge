@@ -71,7 +71,7 @@ var db_getStudentCourses = function(db, studentID, callback){
 var db_getStudentProfessors = function(db, studentID, callback){
   var Courses = db.model('CourseModel');
 
-  return Courses.find({'Students' : { $elemMatch : { ID : studentID } }},
+  return Courses.find({'Students' : { $elemMatch : { ID : Number(studentID) } }},
   function(err, result){
     if(err) return callback(false, err);
     var ret = [];
@@ -143,7 +143,7 @@ exports.init = function(cas, db){
       var query = ( url.parse( req.url ).query !== null ) ?
        querystring.parse( url.parse( req.url ).query ) : {};
       try {
-        StudentID = Number(query.ID);
+        StudentID = Number(query.StudentID);
         if(Number.isNaN(StudentID))
           throw new Error();
       } catch (e){
@@ -216,7 +216,7 @@ exports.init = function(cas, db){
         result : [Object],
       }
     */
-    router.get('/get', function(req, res, next){
+  router.get('/get', function(req, res, next){
     res.type('application/json');
     var validFields = [
       "ID","OtherID","FirstName","LastName","FullName","Email", "Username","IsTutor"
