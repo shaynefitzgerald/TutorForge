@@ -7,8 +7,8 @@ var SchemaObject = {
 };
 
 exports.init = function(db){
-  exports.tutor_Course = db.model('MajorModel', new mongoose.Schema(SchemaObject));
-  exports.tutor_Course_FieldValidator = function(dat){
+  exports.tutor_Major = db.model('MajorModel', new mongoose.Schema(SchemaObject));
+  exports.tutor_Major_FieldValidator = function(dat){
     return true;
   };
   exports.exportedFields = ['tutor_Major', 'tutor_Major_FieldValidator'];

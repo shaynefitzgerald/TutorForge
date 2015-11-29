@@ -5,7 +5,7 @@ var MajorSchema = require('/app/TutorMe/TutorMe-Backend/db/schema/MajorSchema.js
 var Majors = fs.readFileSync('./courses.txt');
 
 Majors.forEach(function(e){
-  (new MajorSchema({
+  (new (db.model('MajorModel'))({
     MajorSubject : e
   })).save(function(err){
     if(err){
