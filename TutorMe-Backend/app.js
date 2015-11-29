@@ -68,7 +68,8 @@ var students = require('./routes/students').init(CASInstance, database);
 var tutors = require('./routes/tutors').init(CASInstance, database);
 var sessionRoutes = require('./routes/sessions').init(CASInstance, database);
 var appointments = require('./routes/appointments').init(CASInstance, database);
-var administrator = require('./routes/administrator').init(CASInstance, database);  
+var administrator = require('./routes/administrator').init(CASInstance, database);
+var courses = require('./routes/courses').init(CASInstance, database);
 
 app.use('/', routes);
 app.use('/api/students', students);
@@ -76,6 +77,7 @@ app.use('/api/tutors', tutors);
 app.use('/api/sessions', sessionRoutes);
 app.use('/api/appointments', appointments);
 app.use('/api/administrator', administrator);
+app.use('/api/courses', courses);
 
 app.get('/api/authenticate', CASInstance.bounce_redirect);
 app.get('/api/logout', CASInstance.logout);

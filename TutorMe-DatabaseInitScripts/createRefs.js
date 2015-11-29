@@ -3,7 +3,7 @@ var db = require('/app/TutorMe/TutorMe-Backend/db/connect.js').applicationConnec
 var fs = require('fs');
 
 var CourseModel = db.model('CourseModel');
-var Students = db.model("StudentModel");
+var StudentModel = db.model("StudentModel");
 
 var findElemIndex = function(arr, field, value){
   for(var x = 0; x < arr.length; x++){
@@ -15,11 +15,29 @@ var findElemIndex = function(arr, field, value){
 
 CourseModel.find({}, function(err, courses){
   if(err) return callback(false, err);
-  courses.forEach(function(e, i){
-    Students.findOne({ID : e.StudentID}, function(err, student){
-      student.Courses.push(e._id);
-      var index = findElemIndex(e.Courses,StudentID,ID);
-      e.Courses[index].StudentRef = student._id;
+  courses.forEach(function(course, courseIndex){
+    course.Students.forEach(function(student, studentIndex){
+      StudentModel.findOne({ID : student.StudentID },function(err, student){
+        if(!Array.isArray(student.Courses)){
+          student.Courses = [];
+        }
+        student.Courses.push(course._id);
+        var index = findElemIndex(course.Courses , StudentID ,ID);
+        courses.Courses[index].StudentRef = student._id;
+        student.save(function(err){
+          if(err) {
+            console.log(err);
+            process.exit(-1);
+          }
+          course.save(function(err){
+            if(err) {
+              console.log(err);
+              process.exit(-1);
+            }
+            console.log("linked " + student.ID + " with course" + " CourseTitle successfully.");
+          });
+        });
+      });
     });
   });
 });
