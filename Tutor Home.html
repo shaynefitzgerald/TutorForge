@@ -73,10 +73,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         <div class="col s12 center-align">
                                             <input type="checkbox" name="emailProf" value="Yes" id="professor_toggle" onclick="toggleProfessors()" />
                                             <label for="professor_toggle"> Email Professor</label>
-
-
                                         </div>
-                                        <div id="professor_box" class="col s12 center-align"></div>
+
+
+                                       
+                                        <!-- style from http://stackoverflow.com/questions/7280389/scrollable-box-containing-list-of-checkboxes-in-html -->
+                                        <div id="professor_box" class="col s12 center-align" style = "border:2px solid #ccc;  height: 50px; overflow-y: scroll; visibility: hidden"></div>
                                         <div class="col s12 center-align">&nbsp;</div>
                                         <div class="col s12 center-align">
                                             <button type="button" onclick="loginStudent()">Login Student</button>
@@ -119,7 +121,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         </div>
 
                                         <div class="col s2">
-                                            <button type="button" onclick="addAppointment()">Accept</button>
+                                            <button type="button" onclick="acceptAppointment()">Accept</button>
                                         </div>
 
                                         <div class="col s2">
@@ -195,7 +197,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         <h4 id=userName1>Hello,<a href="Admin%20Home.html"></a></h4>
                                         <ul>
                                             <li class="profile active"><a href="Student%20Home.html">Profile </a></li>
-                                            <li class="logout"><a href="index.html"> Logout</a></li>
+                                            <li class="logout"><a href="https://tutorme.stetson.edu/api/logout"> Logout</a></li>
                                             <div class="clear"></div>
                                         </ul>
                                     </div>
@@ -608,8 +610,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         //restrict student session box to numbers only, from http://stackoverflow.com/questions/18156824/restricting-an-input-box-to-only-numbers-0-9
         document.getElementById('login_box').onkeydown = function (e) {
             var key = e.keyCode ? e.keyCode : e.which;
+            //8 = backspace
             if (isNaN(String.fromCharCode(key)) && key != 8) return false;
         }
+
+        //make sure that we don't check for professors and then change student ID
+        $('#login_box').bind('input', function () {
+            document.getElementById("professor_toggle").checked = false;
+            toggleProfessors();
+        });
 
 
         //init username
@@ -628,6 +637,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 //sessionStorage.setItem('User', JSON.stringify(data));
                 //var userNameJSON = JSON.parse(data);
                 userName = data.username;
+                
+                initPendingAppointments();
+                initSessionButton();
+                initCalanderEvents();
 
                 var selfQuery = "https://tutorme.stetson.edu/api/students/get?field=Username&value=" + userName;
 
@@ -648,6 +661,25 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 });
             });
         };
+        
+        
+        function initPendingAppointments(){
+            var appointmentsQuery = "https://tutorme.stetson.edu/api/getAppointmentRequests?as=Tutor&Username=" + userName;
+            $.getJSON(appointmentsQuery, function (data) {
+                console.log(data)
+            });
+                        
+        }
+        
+        function initSessionButton(){
+            
+            
+        }
+        
+        function initCalanderEvents(){
+            
+            
+        }
 
 
 
@@ -660,12 +692,59 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         function toggleProfessors() {
             // shows the list of professors
 
+            //if button is checked
             if (document.getElementById("professor_toggle").checked) {
-                document.getElementById("professor_box").innerHTML = "List of Professors";
+                if (document.getElementById("login_box").value.length == 9) {
+
+                    //need to check if student is valid
+                    var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + document.getElementById("login_box").value;
+                    $.getJSON(studentQuery, function (data) {
+                        if (data.result[0] != undefined) {
+
+                            //student is valid, grab professors
+                            var professorQuery = 'https://tutorme.stetson.edu/api/students/getStudentProfessors?StudentID=' + document.getElementById("login_box").value;
+
+                            //document.getElementById("professor_box").innerHTML = ""
+                            $.getJSON(professorQuery, function (data) {
+                                //sessionStorage.setItem('User', JSON.stringify(data));
+                                //var userNameJSON = JSON.parse(data);
+                                console.log(data);
+                                //document.getElementById("professor_box").innerHTML = "List of Professors";
+                                document.getElementById("professor_box").style.visibility = "visible";
+                                document.getElementById("professor_box").innerHTML += "<input type=\"checkbox\" name=\"emailProf1\" value=\"Yes\" id=\"jeckeroth@\" /><label for=\"jeckeroth@\">professor1</label><br/>";
+                                document.getElementById("professor_box").innerHTML += "<input type=\"checkbox\" name=\"emailProf2\" value=\"Yes\" id=\"jeckeroth2@\" /><label for=\"jeckeroth2@\">professor2</label<br/>";
+                            })
+
+                        } else {
+                            //invaild student   
+                            document.getElementById("professor_box").innerHTML = ""
+                            document.getElementById("studentError").innerHTML = "<font color=\"red\">Invalid Student ID</font>";
+                            setTimeout(function () {
+                                document.getElementById("studentError").innerHTML = "&nbsp;";
+                            }, 1500);
+                            document.getElementById("professor_toggle").checked = false;
+
+
+                        }
+                    })
+
+                } else {
+                    //student id not right length
+                    document.getElementById("professor_box").innerHTML = ""
+                    document.getElementById("professor_box").style.visibility = "hidden";
+                    document.getElementById("studentError").innerHTML = "<font color=\"red\">Invalid Student ID</font>";
+                    setTimeout(function () {
+                        document.getElementById("studentError").innerHTML = "&nbsp;";
+                    }, 1500);
+                    document.getElementById("professor_toggle").checked = false;
+
+                }
 
             } else {
 
                 document.getElementById("professor_box").innerHTML = "";
+                document.getElementById("professor_box").style.visibility = "hidden";
+
             }
         }
 
@@ -913,6 +992,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             alert("hi");
             addAppointment();
         }
+        
+        function acceptAppointment(){
+            
+            
+        }
+        
+        function rejectAppointment(){
+            
+            
+        }
+        
+        
     </script>
 </body>
 
