@@ -56,7 +56,12 @@ var db_getScheduledSessions = function(db, by, value, callback){
 var db_getPreviousSessions = function(db, by, value, callback){
   var AppointmentRequestModel = db.model('AppointmentRequestModel');
   var TutorModel = db.model('TutorModel');
-  var query = {}; query[by] = value;
+  var query = {};
+  if(by === "Username"){
+    query.Email = toEmail(value);
+  } else {
+    query[by] = value;
+  }
   TutorModel.findOne(query, function(err, result){
     if(err) return callback(false, err);
     if(result === undefined || result === null) return callback(false, 'No Such Tutor');

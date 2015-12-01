@@ -425,7 +425,10 @@ Returns the AppointmentRequests corresponding to the username specified. Note th
 ```
 *__On failure__*
 ```JSON
-
+{
+ "success" : false,
+ "error" : {}
+}
 ```
 
 #### Notes:
@@ -482,5 +485,132 @@ Withraws an AppointmentRequest by reference.
 ```JSON
 {
     "success" : true
+}
+```
+
+## Sessions
+
+**Session Schema**
+```JSON
+{
+    "Start" : Date,
+    "End" : Date,
+    "Subject" : String,
+    "Location" : String,
+    "Student" : {
+        "type" : mongoose.Schema.Types.ObjectId,
+        "ref" : "StudentModel"
+    },
+    "Tutor" : {
+        "type" : mongoose.Schema.Types.ObjectId,
+        "ref" : "TutorModel"
+    },
+    "ForClass" : {
+        "type" : mongoose.Schema.Types.ObjectId,
+        "ref" : "CourseModel"
+    },
+    "RequestedProfessorNotification" : Boolean,
+}
+```
+
+(Note that `Student`, `Tutor`, and `ForClass` are all ObjectId Strings.)
+
+### /endSession `[https/post]`
+
+The meat and potatoes of the application. Sessions are divided by this function into two categories: Impromptu, and Scheduled.
+
+- Impromptu: Sessions that aren't pre-scheduled and require a new Session to be created are desiginated this way. All the fields from the Schema above are required for this version.
+- Scheduled: Sessions that are pre-scheduled are more permissive. Any fields that can be inherited from the AppointmentRequest will be if not provided in the original request.
+
+**Example Query**
+
+    /api/sessions/endSession
+
+```JSON
+    {
+        "Impromptu" : true,
+        "Start" : "Tue Dec 01 2015 02:52:42 GMT-0500 (Eastern Standard Time)",
+        "End" : "Tue Dec 01 2015 03:52:42 GMT-0500 (Eastern Standard Time)",
+        "Subject" : "CSCI",
+        "Location" : "Hollis Center",
+        "Student" : "565d53042712989c2a6dd66b",
+        "Tutor" : "565d53192712989c2a6dd66c",
+        "ForClass" : "565d53292712989c2a6dd66d",
+        "RequestedProfessorNotification" : true
+    }
+```
+
+**Expected Response**
+
+*__On Success__*
+```JSON
+{
+    "success" : true
+}
+```
+*(Note: If you want this to return a reference, please let me know and I can update it.)*
+
+*__On Failure__*
+```JSON
+{
+    "success" : false,
+    "error" : {},
+}
+```
+
+### /getPreviousSessions `[https/get]`
+
+Works two different ways. If you're authenticated as a tutor, simply call this URI without arguments to get your previous sessions. Otherwise, use any of the query-able fields to find a tutor to get the previous sessions of.
+
+
+**Example Query**
+
+    /api/sessions/getPreviousSessions?by=Username&value=someguy
+
+*__On Success__*
+
+```JSON
+{
+    "success" : true,
+    "result" : [
+        { SessionObject }
+    ]
+}
+```
+
+*__On Failure__*
+
+```JSON
+{
+    "success" : false,
+    "error" : {}
+}
+```
+
+## /getScheduledSessions `[https/get]`
+
+Same as above, but with upcoming sessions, scheduled or otherwise where the start date is further on from today.
+
+**Example Query**
+
+    /api/sessions/getPreviousSessions?by=Username&value=someguy
+
+*__On Success__*
+
+```JSON
+{
+    "success" : true,
+    "result" : [
+        { SessionObject }
+    ]
+}
+```
+
+*__On Failure__*
+
+```JSON
+{
+    "success" : false,
+    "error" : {}
 }
 ```
