@@ -93,9 +93,10 @@ var db_endSession = function(db, sessionData, callback){
       session.ForClass = sessionData.ForClass;
       return SessionModel.findOne({_id : result.Session._id})
       .exec(function(err, sessionResult){
-        for(var key of Object.keys(session)){
-          if(sessionResult[key] === undefined){
-            sessionResult[key] = session[key];
+        var keys = Object.keys(session);
+        for(var x = 0; x < keys.length; x++){
+          if(sessionResult[keys[x]] === undefined){
+            sessionResult[key[x]] = session[key[x]];
           }
         }
         return sessionResult.save(function(err){
