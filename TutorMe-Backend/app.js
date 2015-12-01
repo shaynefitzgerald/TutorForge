@@ -20,33 +20,35 @@ var config = fs.readFileSync(__dirname + '/config/development.json');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-var loadSecret = function(path){
+var loadSecret = function(path) {
   // try{
   //   return require('fs').readFileSync(path).toString();
   // } catch (e){
-    return "GENERATE-A-SESSION-KEY";
+  return "GENERATE-A-SESSION-KEY";
   //}
 };
 
 app.use(session({
-  secret : loadSecret(__dirname + '.sessionKey'),
-  resave : false,
-  saveUninitialized : true,
+  secret: loadSecret(__dirname + '.sessionKey'),
+  resave: false,
+  saveUninitialized: true,
 }));
 
 var CASInstance = new CASAuthentication({
-  cas_url : 'https://casdev.ad.stetson.edu/cas',
-  service_url : 'https://tutorme.stetson.edu',
-  cas_version :'2.0',
-  renew : false,
-  is_dev_mode : false,
-  dev_mode_user : 'TestUser',
-  session_name : 'cas_user',
-  destroy_session : true,
+  cas_url: 'https://casdev.ad.stetson.edu/cas',
+  service_url: 'https://tutorme.stetson.edu',
+  cas_version: '2.0',
+  renew: false,
+  is_dev_mode: false,
+  dev_mode_user: 'TestUser',
+  session_name: 'cas_user',
+  destroy_session: true,
 });
 
 app.use(forceSSL);
@@ -83,7 +85,7 @@ app.get('/api/authenticate', CASInstance.bounce_redirect);
 app.get('/api/logout', CASInstance.logout);
 
 
-app.get('/api/docs/routes', CASInstance.bounce, function(req, res){
+app.get('/api/docs/routes', CASInstance.bounce, function(req, res) {
   res.type('application/json');
   res.end(JSON.stringify(app._router.stack, null, 2));
 });
@@ -103,8 +105,8 @@ if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.end(JSON.stringify({
-      'success' : false ,
-      "error" : {
+      'success': false,
+      "error": {
         message: err.message,
         error: err
       }
@@ -117,9 +119,8 @@ if (app.get('env') === 'development') {
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.end(JSON.stringify({
-    'success' : false ,
-    "error" : {
-    }
+    'success': false,
+    "error": {}
   }));
 });
 

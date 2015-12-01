@@ -5,10 +5,10 @@ var db_Connection = mongoose.createConnection(config.ApplicationURI);
 var db_ArchiveConnection = mongoose.createConnection(config.ArchiveURI);
 exports.schema = {};
 exports.schema.exportedFields = [];
-schema.forEach(function(e){
+schema.forEach(function(e) {
   e.init(db_Connection);
   e.init(db_ArchiveConnection);
-  e.exportedFields.forEach(function(d){
+  e.exportedFields.forEach(function(d) {
     exports.schema[d] = e[d];
     exports.schema.exportedFields.push(d);
   });

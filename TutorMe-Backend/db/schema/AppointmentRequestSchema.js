@@ -3,19 +3,28 @@ var mongoose = require('mongoose');
 require('../mongoose-types/email.js').loadType(mongoose);
 
 var SchemaObject = {
-  Student : { type : mongoose.Schema.Types.ObjectId, ref : 'StudentModel' },
-  Tutor : { type : mongoose.Schema.Types.ObjectId, ref : 'TutorModel' },
-  RequestedStart : Date,
-  Location : String,
-  Subject : String,
-  Responded : Boolean,
-  ResponseRejected : Boolean,
-  SessionReference : { type : mongoose.Schema.Types.ObjectId, ref : 'SessionModel' },
+  Student: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'StudentModel'
+  },
+  Tutor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'TutorModel'
+  },
+  RequestedStart: Date,
+  Location: String,
+  Subject: String,
+  Responded: Boolean,
+  ResponseRejected: Boolean,
+  SessionReference: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'SessionModel'
+  },
 };
 
-exports.init = function(db){
+exports.init = function(db) {
   exports.tutor_AppointmentRequest = db.model('AppointmentRequestModel', new mongoose.Schema(SchemaObject));
-  exports.tutor_AppointmentRequest_FieldValidator = function(dat){
+  exports.tutor_AppointmentRequest_FieldValidator = function(dat) {
     return true;
   };
   exports.exportedFields = ['tutor_AppointmentRequest', 'tutor_AppointmentRequest_FieldValidator'];

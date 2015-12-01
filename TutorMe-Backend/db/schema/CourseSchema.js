@@ -3,22 +3,25 @@ var mongoose = require('mongoose');
 require('../mongoose-types/email.js').loadType(mongoose);
 
 var SchemaObject = {
-  Students : [{
-    StudentRef : { type : mongoose.Schema.Types.ObjectId, ref : 'StudentModel' },
-    StudentID : String,
+  Students: [{
+    StudentRef: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'StudentModel'
+    },
+    StudentID: String,
   }],
-  InstructorLastName : String,
-  InstructorFirstName : String,
-  InstructorEmail : mongoose.Schema.Types.Email,
-  CourseSubject : String,
-  CourseSection : String,
-  CourseTitle : String,
-  Term : String,
+  InstructorLastName: String,
+  InstructorFirstName: String,
+  InstructorEmail: mongoose.Schema.Types.Email,
+  CourseSubject: String,
+  CourseSection: String,
+  CourseTitle: String,
+  Term: String,
 };
 
-exports.init = function(db){
+exports.init = function(db) {
   exports.tutor_Course = db.model('CourseModel', new mongoose.Schema(SchemaObject));
-  exports.tutor_Course_FieldValidator = function(dat){
+  exports.tutor_Course_FieldValidator = function(dat) {
     return true;
   };
   exports.exportedFields = ['tutor_Course', 'tutor_Course_FieldValidator'];

@@ -3,12 +3,15 @@ var mongoose = require('mongoose');
 require('../mongoose-types/email.js').loadType(mongoose);
 
 var SchemaObject = {
-  MajorSubject : { unique : true, type : String },
+  MajorSubject: {
+    unique: true,
+    type: String
+  },
 };
 
-exports.init = function(db){
+exports.init = function(db) {
   exports.tutor_Major = db.model('MajorModel', new mongoose.Schema(SchemaObject));
-  exports.tutor_Major_FieldValidator = function(dat){
+  exports.tutor_Major_FieldValidator = function(dat) {
     return true;
   };
   exports.exportedFields = ['tutor_Major', 'tutor_Major_FieldValidator'];
