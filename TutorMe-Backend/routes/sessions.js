@@ -76,7 +76,9 @@ exports.init = function(cas, db){
   var router = express.Router();
 
   router.post('/endSession',  function(req, res){
-    res.end();
+    res.type('application/json');
+    var body = req.body;
+    
   });
   router.get('/getPreviousSessions',  function(req, res){
     res.type('application/json');

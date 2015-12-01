@@ -98,7 +98,7 @@ var db_makeRequest = function(db, query, callback){
           var ToSave = new AppointmentRequestModel(ToAdd);
           ToSave.save(function(err){
             if(err) return callback(false, err);
-            return callback(true);
+            return callback(true, ToSave);
           });
         }
       });
@@ -197,7 +197,7 @@ exports.init = function(cas, db){
     if(containsKeys(query, validKeys)){
       return db_makeRequest(db, query, function(err, result){
         if(err) return fn_error(res, result);
-        return fn_success(res);
+        return fn_success(res, result);
       });
     } else {
       return fn_error(res, "Invalid or Missing Fields");
