@@ -67,18 +67,16 @@ var db_getStudent = function(db, field, value, callback) {
   });
 };
 var db_getStudentCourses = function(db, studentID, callback) {
-  var Courses = db.model('CourseModel');
+  var Student = db.model('StudentModel');
 
-  return Courses.find({
+  return Student.findOne({
       'Students': {
-        $elemMatch: {
-          ID: studentID
-        }
+        ID : Student,
       }
-    },
-    function(err, result) {
+    }).populate('Courses')
+    .exec(function(err, result) {
       if (err) return callback(false, err);
-      return callback(true, result);
+      return callback(true, result.Courses);
     });
 };
 var db_getStudentProfessors = function(db, studentID, callback) {
@@ -94,14 +92,14 @@ var db_getStudentProfessors = function(db, studentID, callback) {
     function(err, result) {
       if (err) return callback(false, err);
       var ret = [];
-      result.forEach(function(e) {
+      for(var i = 0; i < result.length; i++){
         if (containsKeys(e, ['InstructorFirstName', "InstructorLastName", "InstructorEmail"]))
           ret.push({
             "InstructorFirstName": e.InstructorFirstName,
             "InstructorLastName": e.InstructorLastName,
             "InstructorEmail": e.InstructorEmail,
           });
-      });
+      }
       return callback(true, ret);
     });
 };
