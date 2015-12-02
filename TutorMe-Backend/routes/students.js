@@ -68,36 +68,28 @@ var db_getStudent = function(db, field, value, callback) {
 };
 var db_getStudentCourses = function(db, studentID, callback) {
   var Student = db.model('StudentModel');
-
   return Student.findOne({
-      'Students': {
-        ID : Student,
-      }
+        ID : studentID
     }).populate('Courses')
     .exec(function(err, result) {
       if (err) return callback(false, err);
-      return callback(true, result.Courses);
+      return callback(true, result ? result.Courses : undefined);
     });
 };
 var db_getStudentProfessors = function(db, studentID, callback) {
-  var Courses = db.model('CourseModel');
-
-  return Courses.find({
-      'Students': {
-        $elemMatch: {
-          ID: Number(studentID)
-        }
-      }
-    },
-    function(err, result) {
+  var Student = db.model('StudentModel');
+  return Student.findOne({
+      ID : studentID
+    }).populate('Courses')
+    .exec(function(err, result) {
       if (err) return callback(false, err);
       var ret = [];
-      for(var i = 0; i < result.length; i++){
-        if (containsKeys(e, ['InstructorFirstName', "InstructorLastName", "InstructorEmail"]))
+      for(var i = 0; i < result.Courses.length; i++){
+        if (containsKeys(result.Courses[i], ['InstructorFirstName', "InstructorLastName", "InstructorEmail"]))
           ret.push({
-            "InstructorFirstName": e.InstructorFirstName,
-            "InstructorLastName": e.InstructorLastName,
-            "InstructorEmail": e.InstructorEmail,
+            "InstructorFirstName": result.Courses[i].InstructorFirstName,
+            "InstructorLastName": result.Courses[i].InstructorLastName,
+            "InstructorEmail": result.Courses[i].InstructorEmail,
           });
       }
       return callback(true, ret);
