@@ -19,7 +19,10 @@ var operation = function(err, student){
   }
 
   //Find all courses student is in
-  var unlinkedCourses = CourseModel.find( {Students : student.ID} );
+  var unlinkedCourses = return CourseModel.find({}).exec(function(err, courses){
+    if(err) return callback(false, err);
+    return callback(true,courses);
+  });
   console.log(unlinkedCourses);
 
   //Loop through unlinkedCourses to link Student to courses and visa verca
