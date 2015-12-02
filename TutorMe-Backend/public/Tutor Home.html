@@ -318,11 +318,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <div id="loginBox">
                                 <form id="loginForm">
                                     <fieldset id="body">
-                                        <div class="user-info">
+                                        <div class="user-info center-align">
                                             <h4 id=userName1>Hello,<a href="Admin%20Home.html"></a></h4>
                                             <ul>
-                                                <li class="profile active"><a href="Student%20Home.html">Profile </a></li>
-                                                <li class="logout"><a href="https://tutorme.stetson.edu/api/logout"> Logout</a></li>
+                                                <li class=""><a href="https://tutorme.stetson.edu/api/logout"> Logout</a></li>
                                                 <div class="clear"></div>
                                             </ul>
                                         </div>
@@ -342,170 +341,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         </div>
         <div class="main">
             <div class="wrap">
-                <div class="column_left">
-                    <div class="menu_box">
-                        <h3>Menu Box</h3>
-                        <div class="menu_box_list">
-                            <ul>
-                                <li><a href="#" class="messages"><span>Requests</span><label class="digits">5</label><div class="clear"></div></a></li>
-                                <!--						  		<li class="active"><a href="#" class="invites"><span>Invites</span><label class="digits active">3</label><div class="clear"></div></a></li>-->
-                                <li><a href="#" class="events"><span>Appointments</span><label class="digits">8</label><div class="clear"></div></a></li>
-                                <li><a href="#" class="account_settings"><span>Account Settings</span></a></li>
-                                <li><a href="#" class="statistics"><span>Statistics</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="chart">
-                        <h3>My Rankings and FeedBack</h3>
-                        <div class="diagram">
-                            <canvas id="canvas" height="220" width="220"> </canvas>
-                            <h4><span>June</span><br />2013</h4>
-                        </div>
 
-
-                        <div class="chart_list">
-                            <ul>
-                                <li><a href="#" class="red">1 Star<p class="percentage">21<em>%</em></p></a></li>
-                                <li><a href="#" class="blue">2 Star<p class="percentage">48<em>%</em></p></a></li>
-                                <li><a href="#" class="yellow">3 Star<p class="percentage">9<em>%</em></p></a></li>
-                                <li><a href="#" class="purple">4 Star<p class="percentage">32<em>%</em></p></a></li>
-                                <div class="clear"></div>
-                            </ul>
-                        </div>
-                        <script>
-                            var doughnutData = [
-                                {
-                                    value: 21,
-                                    color: "#E64C65"
-								},
-                                {
-                                    value: 48,
-                                    color: "#11A8AB"
-								},
-                                {
-                                    value: 32,
-                                    color: "#4FC4F6"
-								},
-                                {
-                                    value: 9,
-                                    color: "#FCB150"
-								},
-
-							];
-                            var myDoughnut = new Chart(document.getElementById("canvas").getContext("2d")).Doughnut(doughnutData);
-                        </script>
-                    </div>
-                    <div class="graph">
-                        <canvas id="line-chart"> </canvas>
-                        <script>
-                            var lineChartData = {
-                                labels: ["Apr", "May", "Jun"],
-                                datasets: [
-                                    {
-                                        fillColor: "rgba(255, 255, 255, 0)",
-                                        strokeColor: "#FFF",
-                                        pointColor: "#11a8ab",
-                                        pointStrokeColor: "#FFF",
-                                        data: [21, 48, 35]
-									}
-								]
-
-                            }
-
-                            var myLine = new Chart(document.getElementById("line-chart").getContext("2d")).Line(lineChartData);
-                        </script>
-
-                        <div class="graph_list">
-                            <div class="week-month-year">
-                                <p><a href="#">Week</a></p>
-                                <p><a href="#" class="active">Month</a></p>
-                                <p><a href="#">year</a></p>
-                                <div class="clear"></div>
-                            </div>
-                            <ul>
-                                <li><a href="#"><span class="day_name">Apr</span> 2013 
-						  			<label class="digits"><span>+</span>21<em>%</em></label><div class="clear"></div></a></li>
-                                <li class="active"><a href="#"><span class="day_name">May</span> 2013 
-						  			<label class="digits"><span>+</span>48<em>%</em></label><div class="clear"></div></a></li>
-                                <li><a href="#"><span class="day_name">Jun</span> 2013 
-						  			<label class="digits"><span>+</span>35<em>%</em> </label><div class="clear"></div></a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="column_middle">
-                    <div class="column_middle_grid1">
-                        <div class="profile_picture">
-                            <a href=""><img src="images/user.png" alt="" /> </a>
-                            <div class="profile_picture_name">
-                                <h2 id="userName2"></h2>
-
-                            </div>
+                <div class="column_middle_grid1">
+                    <div class="profile_picture">
+                        <a href=""><img src="images/user.png" alt="" /> </a>
+                        <div class="profile_picture_name">
+                            <h2 id="userName2"></h2>
 
                         </div>
 
                     </div>
 
-                </div>
-
-                <div class="column_right">
-
-                    <div class="column_right_grid1 date_events">
-                        <h3><a href="#" id="slide_prev"><img src="images/arrow-left.png" alt="" /></a> Monday <a href="#" id="slide_next"><img src="images/arrow-right.png" alt="" /></a></h3>
-                        <ul id="slide" class="event_dates">
-                            <li>26</li>
-                            <li>25</li>
-                            <li>24</li>
-                            <li>23</li>
-                            <li>22</li>
-                            <li>21</li>
-                            <li>20</li>
-                            <li>19</li>
-                            <li>18</li>
-                            <li>17</li>
-                            <li>16</li>
-                            <li>15</li>
-                            <li>14</li>
-                            <li>13</li>
-                            <li>12</li>
-                            <li>11</li>
-                            <li>10</li>
-                            <li>9</li>
-                            <li>8</li>
-                            <li>7</li>
-                            <li>6</li>
-                            <li>5</li>
-                            <li>4</li>
-                            <li>3</li>
-                            <li>2</li>
-                            <li>1</li>
-                            <li>31</li>
-                            <li>30</li>
-                            <li>29</li>
-                            <li>28</li>
-                            <li>27</li>
-                        </ul>
-                        <div class="button"><a href="#">Add Event</a></div>
-                        <script type="text/javascript">
-                            $(function () {
-                                $('#slide').ulslide({
-
-                                    effect: {
-                                        type: 'carousel', // slide or fade
-                                        axis: 'x', // x, y
-                                        showCount: 1
-                                    },
-                                    nextButton: '#slide_next',
-                                    prevButton: '#slide_prev',
-                                    duration: 800,
-                                    /*autoslide: 2000,*/
-                                    easing: 'easeOutBounce'
-                                });
-                            });
-                        </script>
-                    </div>
                     <div class="column_right_grid calender" style="background-color: white">
                         <div id='calendar'> </div>
                     </div>
@@ -1014,12 +860,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                                     //need to call end session
                                     var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + id;
-                                    
+
                                     //need to grab student ref
                                     $.getJSON(studentQuery, function (data) {
                                         var studentRefID = data.result[0].id;
-                                        
-                                        
+
+
                                     });
 
 
@@ -1029,35 +875,35 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         var index = localStorage.getItem("loggedInStudents").split(":").indexOf(id);
                                         var newLoggedList = "";
                                         //remove from storage
-                                        for(var i = 0; i < localStorage.getItem("loggedInStudents").split(":").length; i++ ){
-                                            if(i != index){
+                                        for (var i = 0; i < localStorage.getItem("loggedInStudents").split(":").length; i++) {
+                                            if (i != index) {
                                                 newLoggedList += localStorage.getItem("loggedInStudents").split(":")[i] + ":";
-                                                
+
                                             }
-                                            
+
                                         }
-                                        
+
                                         //remove last :
-                                        
+
                                         newLoggedList = newLoggedList.slice(0, -1);
                                         localStorage.setItem("loggedInStudents", newLoggedList);
-                                        
+
                                         //now for date
                                         var newDateList = "";
-                                       
-                                        for(var i = 0; i < localStorage.getItem("studentStartTime").split("|").length; i++ ){
-                                            if(i != index){
+
+                                        for (var i = 0; i < localStorage.getItem("studentStartTime").split("|").length; i++) {
+                                            if (i != index) {
                                                 newDateList += localStorage.getItem("studentStartTime").split("|")[i] + "|";
-                                                
+
                                             }
-                                            
+
                                         }
-                                        
+
                                         //remove last |
                                         newDateList = newDateList.slice(0, -1);
-                                        
+
                                         localStorage.setItem("studentStartTime", newDateList);
-                                        
+
 
 
 
