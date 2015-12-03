@@ -43,12 +43,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="header_top">
                 <div class="menu">
                     <a class="toggleMenu" href="#"><img src="images/nav.png" alt="" /></a>
-                    <ul class="nav">
+                    <ul class="nav" style="z-index: 10">
                         <li class="active"><a href="#"><i><img src="images/user.png" alt="" /></i>Home</a></li>
                         <!--								<li><a href="#"><i><img src="images/settings.png" alt="" /></i>Settings</a></li>-->
                         <li><a class="modal-trigger" href="#schedule_modal"><i><img src="images/events.png" alt="" /></i>Schedule</a></li>
                         <li><a class="modal-trigger" href="#appointments_modal"><i><img src="images/follow_user.png" alt="" /></i>Request Appointment</a></li>
-                        <li><a class="modal-trigger" href="#viewRequests_modal"><i><img src="images/mail.png" alt="" /></i>View Requests<span class="messages">0</span></a></li>
+                        <li><a class="modal-trigger" href="#viewRequests_modal"><i><img src="images/mail.png" alt="" /></i>View Requests</a></li>
+                        <!-- with message indicater <li><a class="modal-trigger" href="#viewRequests_modal"><i><img src="images/mail.png" alt="" /></i>View Requests<span class="messages">0</span></a></li> -->
                         <li><a class="modal-trigger" id="sessionButton" href="#session_modal"><i><img src="images/loginArrow.png" alt="" /></i>Start Session</a></li>
 
                         <!-- Dropdown Structure for requests button -->
@@ -60,140 +61,210 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 
 
-                        <!-- Modal Structure  for tutor session-->
-                        <div id="session_modal" class="modal">
-                            <div class="modal-content">
-                                <div class="container">
-                                    <div class="row">
-
-                                        <span class="col s12 center-align"><b>Login Student</b></span>
-                                        <div class="col s12 center-align">
-                                            <input type="text" name="800Num" placeholder="800 #" id="login_box">
-                                        </div>
-                                        <div class="col s12 center-align" id=studentError>&nbsp;</div>
-                                        <div class="col s12 center-align">
-                                            <input type="checkbox" name="emailProf" value="Yes" id="professor_toggle" onclick="toggleProfessors()" />
-                                            <label for="professor_toggle"> Email Professor</label>
-                                        </div>
 
 
+                        <div class="clear"></div>
+                    </ul>
 
-                                        <!-- style from http://stackoverflow.com/questions/7280389/scrollable-box-containing-list-of-checkboxes-in-html -->
-                                        <div id="professor_box" class="col s12 center-align" style="border:2px solid #ccc;  height: 50px; overflow-y: scroll; visibility: hidden"></div>
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <div class="col s12 center-align">
-                                            <button type="button" onclick="loginStudent()">Login Student</button>
-
-                                        </div>
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <div class="col s12 center-align"><b>Logged in Students</b></div>
-                                        <div class="divider col s12"></div>
-
-
-
-                                        <div id="student_box" class="col s12 center-align">
-                                            <table id="loggedInStudents" border="1" style="cursor: pointer;">
-
-                                            </table>
-                                        </div>
-
+                    <script type="text/javascript" src="js/responsive-nav.js"></script>
+                </div>
+                <div class="profile_details">
+                    <div id="loginContainer">
+                        <a id="loginButton" class=""><span>Me</span></a>
+                        <div id="loginBox">
+                            <form id="loginForm">
+                                <fieldset id="body">
+                                    <div class="user-info center-align">
+                                        <h4 id=userName1>Hello,<a href="Admin%20Home.html"></a></h4>
+                                        <ul>
+                                            <li class=""><a href="https://tutorme.stetson.edu/api/logout"> Logout</a></li>
+                                            <div class="clear"></div>
+                                        </ul>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-                            </div>
+                                </fieldset>
+                            </form>
                         </div>
+                    </div>
+                    <div class="profile_img">
+                        <a href="#"><img src="images/user.png" alt="" /> </a>
 
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="wrap">
 
+            <div class="column_middle_grid1">
+                <div class="profile_picture">
+                    <a href=""><img src="images/user.png" alt="" /> </a>
+                    <div class="profile_picture_name">
+                        <h2 id="userName2"></h2>
 
-                        <!-- Modal Structure for viewing requests-->
-                        <div id="viewRequests_modal" class="modal">
-                            <div class="modal-content">
-                                <div class="container">
-                                    <div class="row">
+                    </div>
 
-                                        <span class="col s12 center-align"><b>Requests</b></span>
-                                        <div class="col s12 center-align">&nbsp;</div>
+                </div>
 
-                                        <div class="col s8">
-                                            Student1 Wants an appointment on <b>10/27/15</b> at <b>6:00 PM</b>
-                                        </div>
+                <div class="column_right_grid calender" style="background-color: white">
+                    <div id='calendar'> </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="copy-right">
+        <p>© 2013 Designed by <a href="http://graphicburger.com/flat-design-ui-components/" target="_blank">GraphicBurger</a> • Template by <a href="http://w3layouts.com" target="_blank">w3layouts</a> </p>
+    </div>
 
-                                        <div class="col s2">
-                                            <button type="button" onclick="acceptAppointment()">Accept</button>
-                                        </div>
+    <!-- Modal Structure  for tutor session-->
+    <div id="session_modal" class="modal">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
 
-                                        <div class="col s2">
-                                            <button type="button" onclick="rejectAppointment()">Reject</button>
-                                        </div>
+                    <span class="col s12 center-align"><b>Login Student</b></span>
+                    <div class="col s12 center-align">
+                        <input type="text" name="800Num" placeholder="800 #" id="login_box">
+                    </div>
+                    <div class="col s12 center-align" id=studentError>&nbsp;</div>
+                    <div class="col s12 center-align">Select a Course</div>
+                    <div class="col s3 center-align">&nbsp;</div>
+                    <!-- style from http://stackoverflow.com/questions/7280389/scrollable-box-containing-list-of-checkboxes-in-html -->
+                    <div id="courses_box" class="col s6 center-align" style="border:2px solid #ccc;  height: 100px; overflow-y: scroll">
+                        <form action="#" id="courses_form"></form>
+                    </div>
+                    <div class="col s3 center-align">&nbsp;</div>
+                    <div class="col s12 center-align">&nbsp;</div>
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-                            </div>
-                        </div>
-
-
-
-                        <!-- Modal Structure for making requests-->
-                        <div id="makeRequests_modal" class="modal">
-                            <div class="modal-content">
-                                <div class="container">
-                                    <div class="row">
-
-                                        <span class="col s12 center-align"><b>Request Appointment</b></span>
-                                        <div class="col s12 center-align">&nbsp;</div>
-
-                                        <div class="col s4 center-align">&nbsp;</div>
-                                        <div class="col s4 center-align">
-                                            <input type="date" class="datepicker center-align" placeholder="Date" id="date_box">
-                                        </div>
-                                        <div class="col s12 center-align">&nbsp;</div>
-
-
-                                        <div class="col s4 center-align">&nbsp;</div>
-                                        <div class="col s4 center-align">
-                                            <input type="text" class="timepicker center-align" placeholder="Time" id="time_box">
-                                        </div>
-                                        <div class="col s4 center-align">&nbsp;</div>
-                                        <div class="col s12 center-align">&nbsp;</div>
-
-                                        <div class="col s12 center-align">List of tutors available this day/time</div>
-                                        <div class="col s12 center-align">&nbsp;</div>
-
-                                        <div class="col s12 center-align">
-                                            <button type="button" onclick="requestAppointment()">Request Appointment</button>
-                                        </div>
+                    <div class="col s12 center-align">
+                        <input type="checkbox" name="emailProf" value="Yes" id="professor_toggle" onclick="toggleProfessors()" />
+                        <label for="professor_toggle"> Email Professor</label>
+                    </div>
 
 
 
 
+                    <div class="col s3 center-align">&nbsp;</div>
+                    <!-- style from http://stackoverflow.com/questions/7280389/scrollable-box-containing-list-of-checkboxes-in-html -->
+                    <div id="professor_box" class="col s6 center-align" style="border:2px solid #ccc;  height: 50px; overflow-y: scroll; visibility: hidden"></div>
+                    <div class="col s3 center-align">&nbsp;</div>
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s12 center-align">
+                        <button type="button" onclick="loginStudent()">Login Student</button>
 
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-                            </div>
-                        </div>
-
-                        <!-- Modal Structure  for viewing schedule-->
-                        <div id="schedule_modal" class="modal">
-                            <div class="modal-content">
-                                <div class="container">
-                                    <div class="row">
-
-                                        <span class="col s12 center-align"><b>Schedule</b></span>
+                    </div>
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s12 center-align"><b>Logged in Students</b></div>
+                    <div class="divider col s12"></div>
 
 
 
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <!--
+                    <div id="student_box" class="col s12 center-align">
+                        <table id="loggedInStudents" border="1" style="cursor: pointer;">
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+
+
+
+    <!-- Modal Structure for viewing requests-->
+    <div id="viewRequests_modal" class="modal">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
+
+                    <span class="col s12 center-align"><b>Requests</b></span>
+                    <div class="col s12 center-align">&nbsp;</div>
+
+                    <div class="col s8">
+                        Student1 Wants an appointment on <b>10/27/15</b> at <b>6:00 PM</b>
+                    </div>
+
+                    <div class="col s2">
+                        <button type="button" onclick="acceptAppointment()">Accept</button>
+                    </div>
+
+                    <div class="col s2">
+                        <button type="button" onclick="rejectAppointment()">Reject</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+
+
+
+    <!-- Modal Structure for making requests-->
+    <div id="makeRequests_modal" class="modal">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
+
+                    <span class="col s12 center-align"><b>Request Appointment</b></span>
+                    <div class="col s12 center-align">&nbsp;</div>
+
+                    <div class="col s4 center-align">&nbsp;</div>
+                    <div class="col s4 center-align">
+                        <input type="date" class="datepicker center-align" placeholder="Date" id="date_box">
+                    </div>
+                    <div class="col s12 center-align">&nbsp;</div>
+
+
+                    <div class="col s4 center-align">&nbsp;</div>
+                    <div class="col s4 center-align">
+                        <input type="text" class="timepicker center-align" placeholder="Time" id="time_box">
+                    </div>
+                    <div class="col s4 center-align">&nbsp;</div>
+                    <div class="col s12 center-align">&nbsp;</div>
+
+                    <div class="col s12 center-align">List of tutors available this day/time</div>
+                    <div class="col s12 center-align">&nbsp;</div>
+
+                    <div class="col s12 center-align">
+                        <button type="button" onclick="requestAppointment()">Request Appointment</button>
+                    </div>
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+
+    <!-- Modal Structure  for viewing schedule-->
+    <div id="schedule_modal" class="modal">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
+
+                    <span class="col s12 center-align"><b>Schedule</b></span>
+
+
+
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <!--
                                         <div class="col s12 center-align">
                                             <input type="checkbox" name="emailProf" value="Yes" id="professor_toggle" onclick="toggleProfessors()" />
                                             <label for="professor_toggle"> Email Professor</label>
@@ -201,166 +272,110 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                                         </div>
 -->
-                                        <!--
+                    <!--
                                         <div id="professor_box" class="col s12 center-align"></div>
                                         <div class="col s12 center-align">&nbsp;</div>
 -->
-                                        <!--
+                    <!--
                                         <div class="col s12 center-align">
                                             <button type="button" onclick="viewStudentSchedule()">Login Student</button>
 
                                         </div>
 -->
-                                        <!--
+                    <!--
                                         <div class="col s12 center-align">&nbsp;</div>
                                         <div class="col s12 center-align">&nbsp;</div>
 -->
-                                        <div class="col s12 center-align"><b>Upcoming Tutoring Sessions(As Student)</b></div>
-                                        <div class="divider col s12"></div>
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <div class="col s12 center-align"><b>Requests awaiting confirmation</b></div>
-                                        <div class="divider col s12"></div>
+                    <div class="col s12 center-align"><b>Upcoming Tutoring Sessions(As Student)</b></div>
+                    <div class="divider col s12"></div>
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s12 center-align"><b>Requests awaiting confirmation</b></div>
+                    <div class="divider col s12"></div>
 
-                                        <div id="student_box" class="col s12 center-align">
-                                            <table id="loggedInStudents" border="1" style="cursor: pointer;">
+                    <div id="student_box" class="col s12 center-align">
+                        <table id="loggedInStudents" border="1" style="cursor: pointer;">
 
-                                            </table>
-                                        </div>
+                        </table>
+                    </div>
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-                            </div>
-                        </div>
-
-
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
 
 
-                        <!-- Modal Structure for appointments-->
-                        <div id="appointments_modal" class="modal">
-                            <div class="modal-content">
-                                <div class="container">
-                                    <div class="row">
-
-                                        <span class="col s12 center-align"><b>Request Appointment</b></span>
-
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <div class="col s4 center-align">&nbsp;</div>
-
-                                        <div class="col s4 center-align">
-                                            <input type="date" class="datepicker center-align" placeholder="Date" id="date_box">
-                                        </div>
-
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <div class="col s4 center-align">&nbsp;</div>
-
-                                        <div class="col s4 center-align">
-                                            <input type="text" class="timepicker center-align" placeholder="Time" id="time_box">
-                                        </div>
-
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <div class="col s4 center-align">&nbsp;</div>
-
-                                        <div class="col s12 center-align">
-                                            <input type="text" class='dropdown-button center-align' data-activates='subject_dropdown' placeholder="Pick a Subject" id="login_box">
-                                        </div>
-
-                                        <!-- Dropdown Structure -->
-                                        <ul id='subject_dropdown' class='dropdown-content'>
-                                            <li><a href="#!" onclick="pickSubject('Accounting', '0')">Accounting</a></li>
-                                            <li><a href="#!" onclick="pickSubject('Business', '1')">Business</a></li>
-                                            <li><a href="#!" onclick="pickSubject('Computer Science', '2')">Computer Science</a></li>
-                                            <li><a href="#!" onclick="pickSubject('Ecocomics', '3')">Economics</a></li>
-                                            <li><a href="#!" onclick="pickSubject('Finance', '4')">Finance</a></li>
-                                            <li><a href="#!" onclick="pickSubject('Health & Medical', '5')">Health & Medical</a></li>
-                                            <li><a href="#!" onclick="pickSubject('Math', 6)">Math</a></li>
-                                            <li><a href="#!" onclick="pickSubject('Music', 7)">Music</a></li>
-                                            <li><a href="#!" onclick="pickSubject('Physics', 8)">Physics</a></li>
-                                            <li><a href="#!" onclick="pickSubject('Russian', 9)">Russian</a></li>
-                                            <li><a href="#!" onclick="pickSubject('Writing', 10)">Writing</a></li>
-
-                                        </ul>
 
 
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <div class="col s4 center-align">&nbsp;</div>
+    <!-- Modal Structure for appointments-->
+    <div id="appointments_modal" class="modal">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
 
-                                        <div class="col s12 center-align">
-                                            <input type="text" class='dropdown-button center-align' data-activates='tutor_dropdown' placeholder="Pick a Tutor" id="chosen_tutor">
-                                        </div>
-                                        <!-- Dropdown Structure -->
-                                        <ul id='tutor_dropdown' class='dropdown-content'>
-                                        </ul>
+                    <span class="col s12 center-align"><b>Request Appointment</b></span>
 
-                                        <div class="col s12 center-align">
-                                            <!--                                          <button type="button" onclick="requestAppointment()">Make Request</button>-->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="requestAppointment()">Make Request</a>
-                                </div>
-                            </div>
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s4 center-align">&nbsp;</div>
 
-                            <div class="clear"></div>
+                    <div class="col s4 center-align">
+                        <input type="date" class="datepicker center-align" placeholder="Date" id="date_box">
+                    </div>
+
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s4 center-align">&nbsp;</div>
+
+                    <div class="col s4 center-align">
+                        <input type="text" class="timepicker center-align" placeholder="Time" id="time_box">
+                    </div>
+
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s4 center-align">&nbsp;</div>
+
+                    <div class="col s12 center-align">
+                        <input type="text" class='dropdown-button center-align' data-activates='subject_dropdown' placeholder="Pick a Subject" id="login_box">
+                    </div>
+
+                    <!-- Dropdown Structure -->
+                    <ul id='subject_dropdown' class='dropdown-content'>
+                        <li><a href="#!" onclick="pickSubject('Accounting', '0')">Accounting</a></li>
+                        <li><a href="#!" onclick="pickSubject('Business', '1')">Business</a></li>
+                        <li><a href="#!" onclick="pickSubject('Computer Science', '2')">Computer Science</a></li>
+                        <li><a href="#!" onclick="pickSubject('Ecocomics', '3')">Economics</a></li>
+                        <li><a href="#!" onclick="pickSubject('Finance', '4')">Finance</a></li>
+                        <li><a href="#!" onclick="pickSubject('Health & Medical', '5')">Health & Medical</a></li>
+                        <li><a href="#!" onclick="pickSubject('Math', 6)">Math</a></li>
+                        <li><a href="#!" onclick="pickSubject('Music', 7)">Music</a></li>
+                        <li><a href="#!" onclick="pickSubject('Physics', 8)">Physics</a></li>
+                        <li><a href="#!" onclick="pickSubject('Russian', 9)">Russian</a></li>
+                        <li><a href="#!" onclick="pickSubject('Writing', 10)">Writing</a></li>
+
                     </ul>
 
-                    <script type="text/javascript" src="js/responsive-nav.js"></script>
+
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s4 center-align">&nbsp;</div>
+
+                    <div class="col s12 center-align">
+                        <input type="text" class='dropdown-button center-align' data-activates='tutor_dropdown' placeholder="Pick a Tutor" id="chosen_tutor">
                     </div>
-                    <div class="profile_details">
-                        <div id="loginContainer">
-                            <a id="loginButton" class=""><span>Me</span></a>
-                            <div id="loginBox">
-                                <form id="loginForm">
-                                    <fieldset id="body">
-                                        <div class="user-info center-align">
-                                            <h4 id=userName1>Hello,<a href="Admin%20Home.html"></a></h4>
-                                            <ul>
-                                                <li class=""><a href="https://tutorme.stetson.edu/api/logout"> Logout</a></li>
-                                                <div class="clear"></div>
-                                            </ul>
-                                        </div>
-                                    </fieldset>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="profile_img">
-                            <a href="#"><img src="images/user.png" alt="" /> </a>
+                    <!-- Dropdown Structure -->
+                    <ul id='tutor_dropdown' class='dropdown-content'>
+                    </ul>
 
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-            </div>
-        </div>
-        <div class="main">
-            <div class="wrap">
-
-                <div class="column_middle_grid1">
-                    <div class="profile_picture">
-                        <a href=""><img src="images/user.png" alt="" /> </a>
-                        <div class="profile_picture_name">
-                            <h2 id="userName2"></h2>
-
-                        </div>
-
-                    </div>
-
-                    <div class="column_right_grid calender" style="background-color: white">
-                        <div id='calendar'> </div>
+                    <div class="col s12 center-align">
+                        <!--                                          <button type="button" onclick="requestAppointment()">Make Request</button>-->
                     </div>
                 </div>
-                <div class="clear"></div>
             </div>
-        </div>
-        <div class="copy-right">
-            <p>© 2013 Designed by <a href="http://graphicburger.com/flat-design-ui-components/" target="_blank">GraphicBurger</a> • Template by <a href="http://w3layouts.com" target="_blank">w3layouts</a> </p>
+            <div class="modal-footer">
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="requestAppointment()">Make Request</a>
+            </div>
         </div>
         <script>
             //Jquery Plugin Initilizations
@@ -448,6 +463,39 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             $('#login_box').bind('input', function () {
                 document.getElementById("professor_toggle").checked = false;
                 toggleProfessors();
+            });
+
+
+            //from http://stackoverflow.com/questions/4220126/run-javascript-function-when-user-finishes-typing-instead-of-on-key-up
+            //setup before functions
+            var typingTimer; //timer identifier
+            var doneTypingInterval = 1500; //time in ms, 3 second for example
+
+            //on keyup, start the countdown
+            $('#login_box').keyup(function () {
+                clearTimeout(typingTimer);
+                if ($('#login_box').val) {
+                    typingTimer = setTimeout(doneTyping, doneTypingInterval);
+                }
+            });
+
+            //user is "finished typing," do something
+            function doneTyping() {
+                //call for getting courses in box
+                var studentQuery = "https://tutorme.stetson.edu/api/students/getStudentCourses?StudentID=" + document.getElementById("login_box").value;
+
+                $.getJSON(studentQuery, function (data) {
+                    console.log(data);
+                    document.getElementById("courses_form").innerHTML = "";
+                    document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test1\" /><label for=\"test1\">Course 1</label></p>";
+                    document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test2\" /><label for=\"test2\">Course 2</label></p>";
+                });
+            }
+
+            var courseIDForSession = "";
+            $("#courses_form").on("change", function () {
+                //alert("p");
+                courseIDForSession = $("input[name=group1]:checked").attr("id");
             });
 
 
@@ -625,8 +673,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     console.log(data);
                                     //document.getElementById("professor_box").innerHTML = "List of Professors";
                                     document.getElementById("professor_box").style.visibility = "visible";
-                                    document.getElementById("professor_box").innerHTML += "<input type=\"checkbox\" name=\"emailProf1\" value=\"Yes\" id=\"jeckeroth@\" /><label for=\"jeckeroth@\">professor1</label><br/>";
-                                    document.getElementById("professor_box").innerHTML += "<input type=\"checkbox\" name=\"emailProf2\" value=\"Yes\" id=\"jeckeroth2@\" /><label for=\"jeckeroth2@\">professor2</label<br/>";
+                                    document.getElementById("professor_box").innerHTML += "<input type=\"checkbox\" name=\"emailProf1\" value=\"Yes\" id=\"jeckeroth@\" /><label for=\"jeckeroth@\">Joshua Eckeroth</label><br/>";
+                                    document.getElementById("professor_box").innerHTML += "<input type=\"checkbox\" name=\"emailProf2\" value=\"Yes\" id=\"jeckeroth2@\" /><label for=\"jeckeroth2@\">Danial Provost</label<br/>";
                                 })
 
                             } else {
@@ -670,57 +718,72 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 if (checkIfLoggedIn() == false) {
                     //make sure length = 9
                     if (document.getElementById("login_box").value.length == 9) {
+                        if (courseIDForSession.length > 1) {
 
-                        var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + document.getElementById("login_box").value;
+                            var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + document.getElementById("login_box").value;
 
-                        $.getJSON(studentQuery, function (data) {
+                            $.getJSON(studentQuery, function (data) {
 
-                            if (data.result[0] != undefined) {
-                                //add to the table
-                                var table = document.getElementById("loggedInStudents");
+                                if (data.result[0] != undefined) {
+                                    //add to the table
+                                    var table = document.getElementById("loggedInStudents");
 
-                                //append to table
-                                var row = table.insertRow(-1);
+                                    //append to table
+                                    var row = table.insertRow(-1);
 
-                                //first element
-                                var cell1 = row.insertCell(0);
-                                //second element
-                                var cell2 = row.insertCell(1);
-                                cell1.innerHTML = document.getElementById("login_box").value;
-                                cell2.innerHTML = data.result[0].FirstName + " " + data.result[0].LastName;
+                                    //first element
+                                    var cell1 = row.insertCell(0);
+                                    //second element
+                                    var cell2 = row.insertCell(1);
+                                    cell1.innerHTML = document.getElementById("login_box").value;
+                                    cell2.innerHTML = data.result[0].FirstName + " " + data.result[0].LastName;
 
 
 
-                                //add click handlers to the rows
-                                addRowHandlers();
+                                    //add click handlers to the rows
+                                    addRowHandlers();
 
-                                //add logged in students to browser storage and stores date
-                                if (localStorage.getItem('loggedInStudents') != undefined) {
-                                    localStorage.setItem('loggedInStudents', localStorage.getItem('loggedInStudents') + ":" + document.getElementById("login_box").value);
-                                    localStorage.setItem('studentStartTime', localStorage.getItem('studentStartTime') + "|" + Date());
+                                    //add logged in students to browser storage and stores date
+                                    if (localStorage.getItem('loggedInStudents') != undefined) {
+                                        localStorage.setItem('loggedInStudents', localStorage.getItem('loggedInStudents') + ":" + document.getElementById("login_box").value);
+                                        localStorage.setItem('studentStartTime', localStorage.getItem('studentStartTime') + "|" + Date())
+                                        localStorage.setItem('studentCourseRef', localStorage.getItem('studentCourseRef') + ":" + courseIDForSession);
+                                    } else {
+                                        localStorage.setItem('loggedInStudents', document.getElementById("login_box").value);
+                                        localStorage.setItem('studentStartTime', Date());
+                                        localStorage.setItem('studentCourseRef', courseIDForSession);
+                                    }
+
+                                    //shows active session
+                                    document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Resume Session"
+
+                                    //resets fields
+                                    document.getElementById("login_box").value = "";
+                                    document.getElementById("professor_toggle").checked = false;
+                                    document.getElementById("courses_form").innerHTML = "";
+                                    courseIDForSession = "";
+                                    toggleProfessors();
                                 } else {
-                                    localStorage.setItem('loggedInStudents', document.getElementById("login_box").value);
-                                    localStorage.setItem('studentStartTime', Date());
+                                    //invalid ID
+                                    document.getElementById("studentError").innerHTML = "<font color=\"red\">Invalid Student ID</font>";
+                                    setTimeout(function () {
+                                        document.getElementById("studentError").innerHTML = "&nbsp;";
+                                    }, 1500);
+
+
                                 }
 
-                                //shows active session
-                                document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Resume Session"
-
-                                //resets fields
-                                document.getElementById("login_box").value = "";
-                                document.getElementById("professor_toggle").checked = false;
-                                toggleProfessors();
-                            } else {
-                                //invalid ID
-                                document.getElementById("studentError").innerHTML = "<font color=\"red\">Invalid Student ID</font>";
-                                setTimeout(function () {
-                                    document.getElementById("studentError").innerHTML = "&nbsp;";
-                                }, 1500);
+                            });
+                        } else {
+                            //course not selected
+                            document.getElementById("studentError").innerHTML = "<font color=\"red\">Must Select A Course</font>";
+                            alert(courseIDForSession);
+                            setTimeout(function () {
+                                document.getElementById("studentError").innerHTML = "&nbsp;";
+                            }, 1500);
 
 
-                            }
-
-                        });
+                        }
                     } else {
                         //dont need to check, ID isnt the right size
                         document.getElementById("studentError").innerHTML = "<font color=\"red\">Invalid Student ID</font>";
@@ -903,7 +966,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         newDateList = newDateList.slice(0, -1);
 
                                         localStorage.setItem("studentStartTime", newDateList);
+                                        
+                                        //now for course ref
+                                        var newCourseRefList = "";
 
+                                        for (var i = 0; i < localStorage.getItem("studentCourseRef").split(":").length; i++) {
+                                            if (i != index) {
+                                                newCourseRefList += localStorage.getItem("studentCourseRef").split(":")[i] + ":";
+
+                                            }
+
+                                        }
+                                        
+                                        //remove last :
+                                        newCourseRefList = newCourseRefList.slice(0, -1);
+
+                                        localStorage.setItem("studentCourseRef", newCourseRefList);
 
 
 
