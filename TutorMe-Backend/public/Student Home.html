@@ -6,7 +6,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <!DOCTYPE HTML>
 <head>
-<title>Ui kits Website Template | Home :: w3layouts</title>
+<title>Student Home</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="css/StyleStudent.css" rel="stylesheet" type="text/css" media="all" />
@@ -29,7 +29,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script src="js/site.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.min.js"></script>
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.min.css">
     
     <!----End Calender -------->
@@ -47,19 +47,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						  <a class="toggleMenu" href="#"><img src="images/nav.png" alt="" /></a>
 							<ul class="nav">
 <!--								<li><a href="#"><i><img src="images/settings.png" alt="" /></i>Settings</a></li>-->
-								<li class="active"><a href="#"><i><img src="images/user.png" alt="" /></i>Account</a></li>
+								<li class="active"><a href="#"><i><img src="images/user.png" alt="" /></i>Student</a></li>
 <!--                                <li><a class="dropdown-button" href="#" data-activates="requests_dropdown"><i><img src="images/mail.png" alt="" /></i>Requests <span class="messages">2</span></a></li>-->
                                 <li><a class="modal-trigger" id="scheduleButton" href="#schedule_modal"><i><img src="images/events.png" alt="" /></i>Schedule</a></li>
                                 <li><a class="modal-trigger" href="#appointments_modal"><i><img src="images/follow_user.png" alt="" /></i>Request Appointment</a></li>
-
-
-                        <!-- Dropdown Structure for requests button -->
-<!--
-                        <ul id='requests_dropdown' class='dropdown-content'>
-                            <li><a class="modal-trigger" href="#viewRequests_modal">View Requests</a></li>
-                            <li><a class="modal-trigger" href="#makeRequests_modal">Make Request</a></li>
-                        </ul>
--->
                                 
                                 <!-- Modal Structure  for viewing schedule-->
                         <div id="schedule_modal" class="modal">
@@ -94,7 +85,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         <div class="col s12 center-align">&nbsp;</div>
                                         <div class="col s12 center-align">&nbsp;</div>
 -->
-                                        <div class="col s12 center-align"><b>Upcoming Tutoring Sessions</b></div>
+                                        <div class="col s12 center-align"><b> </b></div>
                                         <div class="divider col s12"></div>
                                         <div class="col s12 center-align">&nbsp;</div>
                                         <div class="col s12 center-align">&nbsp;</div> 
@@ -196,7 +187,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				                    <div id="loginBox">                
 				                      <form id="loginForm">
 				                        <fieldset id="body">
-				                            <div class="user-info">
+				                            <div class="user-info center-align">
 							        			<h4>Hello,<a href="#"> Username</a></h4>
 							        			<ul>
 							        				<li class="profile active"><a href="#">Profile </a></li>
@@ -208,9 +199,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				                    </form>
 				                </div>
 				            </div>
+<!--
 				             <div class="profile_img">	
 				             	<a href="#"><img src="images/Empty_profile_small.jpg" alt="" />	</a>
 				             </div>		
+-->
 				             <div class="clear"></div>		  	
 					    </div>	
 		 		      <div class="clear"></div>				 
@@ -218,212 +211,26 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>	  					     
 	</div>
 	  <div class="main">  
-	    <div class="wrap">  		 
-	       <div class="column_left">	          
-	    		 <div class="menu_box">
-	    		 	 <h3>Menu Box</h3>
-	    		 	   <div class="menu_box_list">
-				      		<ul>
-<!--
-						  		<li><a href="#" class="messages"><span>Messages</span><label class="digits">3</label><div class="clear"></div></a></li>
-						  		  
-						  		<li><a href="#" class="events"><span>Events</span><label class="digits">5</label><div class="clear"></div></a></li>
-						  		<li><a href="#" class="account_settings"><span>Account Settings</span></a></li>
--->
-						  		<li><a href="#" class="statistics"><span>Tutor Schedule</span></a></li>						  	
-				    		</ul>
-				      </div>
-	    		 </div>
-<!--
-	    		 <div class="chart">
-		               <h3>Find a time</h3>
-                     
+	    <div class="wrap">  		  
 
-		          </div>
--->
-               
-<!--
-		                 <div class="video_palyer">
-								<iframe src="//player.vimeo.com/video/24363983" width="100%" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe> 
-		                </div>        
--->
-		          <div style="background-color: white">
-                	       <div id='calendar'> </div>
-                    </div>  
-		          
-		          		
-	  		</div> 
-	  		
-            <div class="column_middle">
+<!--            <div class="column_middle">-->
               <div class="column_middle_grid1">
 		         <div class="profile_picture">
-		        	<a href=""><img src="images/Empty_profile.jpg" alt="" /></a>		         
+<!--		        	<a href=""><img src="images/Empty_profile.jpg" alt="" /></a>		         -->
 		            <div class="profile_picture_name">
-		            	<h2><div class="studentname"></div></h2> 
-                        <script>
-                                $(document).ready(function() {
-    
-                                    $.getJSON('sample.json', function(data) {  
-                                     
-//                                    sessionStorage.setItem('User', JSON.stringify(data));
-//                                    var UserNameJSON = JSON.parse(data);
-//                                    username = UserNameJSON.username;
-                                        var x1 = data;
-                                        document.querySelector('.studentname').innerHTML = JSON.stringify(x1.result[0].FullName).replace(/"/g, '');
-                                                        
-                                    });                  
-                                });
-//                                var username = "jrumsey";
-//                                var usernameQuery;
-//                                $.getJSON('https://tutorme.stetson.edu/user', function (data) {
-//                                    sessionStorage.setItem('User', JSON.stringify(data));
-//                                    var UserNameJSON = JSON.parse(data);
-//                                    username = UserNameJSON.username;
-//                                });
-//                                usernameQuery = "https://tutorme.stetson.edu/api/students/get?field=Username&value=" + username;
-//                                document.querySelector('.studentname').innerHTML = JSON.stringify(usernameQuery.FullName);//.replace(/"/g, '');
-//        //        $.getJSON(usernameQuery, function (data) {
-//        //            sessionStorage.setItem('User Info', JSON.stringify(data));
-//        //        });
-                        </script>
+		              <h2 id="userName2"></h2>
 		            	<p>Student </p>
 		            </div>
                   </div>   
 		       </div>
-                
-		         <div class="student_schedule">
-		               <h3> Upcoming Tutoring Sessions</h3>
-		              <div class="today_temp">
-		                <div class="next_session">
-							<figure>Mon 10/26<span>1:30pm</span>with Matt Gerken</figure>
-						</div>
-					</div>
-						<div class="temp_list">
-<!--                            <ol id="studentAppointments"></ol> -->
-				      			<ol>
-						  		    <li><a href="#"><span class="day_name">Mon</span>&nbsp; 10/26
-						  			<label class="digits">3:00pm </label><div class="clear"></div></a></li>
-						  			<li class="active"><a href="#"><span class="day_name">Tues</span>&nbsp; 10/27
-						  			<label class="digits">4:00pm</label><div class="clear"></div></a></li>
-						  			<li><a href="#"><span class="day_name">Wed</span>&nbsp; 10/28
-						  			<label class="digits">5:00pm</label><div class="clear"></div></a></li>
-						  			<li><a href="#"><span class="day_name">Fri</span>&nbsp; 10/30 
-						  			<label class="digits">6:00pm </label><div class="clear"></div></a></li>
-						  			<li><a href="#"><span class="day_name">Sat</span>&nbsp; 10/31----Awaiting Confirmation
-						  			<label class="digits">3:30pm</label><div class="clear"></div></a></li>
-						  			<li><a href="#"><span class="day_name">Mon</span>&nbsp; 11/2----Awaiting Confirmation
-						  			<label class="digits">7:00pm</label><div class="clear"></div></a></li>
-				    		</ol>
-				      </div>
-		          </div>	           
-
-    	    </div>
-    	    
-            <div class="column_right">
-				   <div class="column_right_grid2 tutoring_subject">
-				     	  <h3><a href="#" id="slide_prev"><img src="images/arrow-left.png" alt="" /></a> Subject <a href="#" id="slide_next"><img src="images/arrow-right.png" alt="" /></a></h3>
-                                <ol id='slide' class='subject'>
-                                    <li>Accounting</li>
-                                    <li>Business</li>
-                                    <li>Computer Science</li>
-                                    <li>Ecocomics</li>
-                                    <li>Finance</li>
-                                    <li>Health & Medical</li>
-                                    <li>Math</li>
-                                    <li>Music</li>
-                                    <li>Physics</li>
-                                    <li>Russian</li>
-                                    <li>Writing</li>          
-                                </ol>
-<!--
-				     	 		<ul id="slide" class="subject">					            
-                                    <li>Computer Science</li>
-						            <li>Mathematics</li>
-						            <li>Music</li>
-						        </ul>
--->
-						         <div id='findTutor' class="findTutorButton"><a href="#" onclick="pickSubject2('Accounting', '0')">Find a Tutor</a></div>	
-                
-				           <script type="text/javascript">
-				            $(function() {						
-				                $('#slide').ulslide({
-				                   
-									effect: {
-										type: 'carousel', // slide or fade
-				                        axis: 'x',        // x, y
-										showCount:1
-									},
-				                    nextButton: '#slide_next',
-				                    prevButton: '#slide_prev',
-				                    duration: 800,
-				                    /*autoslide: 2000,*/
-									easing: 'easeOutBounce'
-				                });
-				            });
-				        </script>
-				    </div>
-                
-                
-                <div class="column_right_griid testing">
-				     	  <h3><a href="#" id="slide_prev2"><img src="images/arrow-left.png" alt="" /></a> Tutor <a href="#" id="slide_next2"><img src="images/arrow-right.png" alt="" /></a></h3>
-				     	 		<ul id="slide2" class="blah">					            
-<!--
-						            <li>Matt Gerken</li>
-						            <li>Jazmin Skipper</li>
-						            <li>Neil Bonduraunt</li>
--->
-						        </ul>
-						         <div id=viewTutorSchedule class="viewScheduleButton"><a href="#">View Schedule</a></div>		
-                    
-				           <script type="text/javascript">
-				            $(function() {						
-				                $('#slide2').ulslide({
-				                   
-									effect: {
-										type: 'carousel', // slide or fade
-				                        axis: 'x',        // x, y
-										showCount:1
-									},
-				                    nextButton: '#slide_next2',
-				                    prevButton: '#slide_prev2',
-				                    duration: 800,
-				                    /*autoslide: 2000,*/
-									easing: 'easeOutBounce'
-				                });
-				            });
-                               
-                               
-				        </script>               
-				    </div>
-                
-                                    
-<!--
-                    <div class="column_right_grid calender" style="background-color: white">
-                	       <div id='calendar'> </div>
-                    </div>
--->
-             </div>
+                <div class="column_right_grid calender" style="background-color: white">
+                         <div id='calendar'> </div>
+                     </div>
+<!--    	    </div>-->
     	<div class="clear"></div>
  	 </div>
    </div>
     <script>
-
-        
-//        var student = '{"studentinfo":[' +
-//        '{"ID":"800109710"},' +
-//        '{"OtherID":"null"},' +
-//        '{"LastName":"Rumsey"},' +
-//        '{"FirstName":"Jeremy"},' +
-//        '{"FullName":"Jeremy Rumsey"},' +
-//        '{"Gender":"M"},' +
-//        '{"Major":"CSCI"},' +
-//        '{"Email":"jrumsey@stetson.edu"}]}';
-//
-//        obj = JSON.parse(student);
-//        document.querySelector('.studentname').innerHTML = obj.studentinfo[4].FullName;
-//        $('.studentname').html(obj.studentinfo[4].FullName);
-
-
         
         
         $(document).ready(function () {
@@ -513,32 +320,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 
         function requestAppointment() {
-            //if (document.getElementById("login_box").value != "") {
-            //	//            document.getElementById("student_box").innerHTML += document.getElementById("login_box").value + "<br>";
-            //
-            //	var textInput = document.getElementById("login_box"); //getting text input
-            //	var text = textInput.value; //getting value of text input element
-            //	var ul = document.getElementById("student_list"); //getting element <ul> to add element to
-            //	var li = document.createElement("li"); //creating li element to add
-            //	li.innerHTML = text; //inserting text into newly created <li> element
-            //	li.onclick = function () {
-            //		this.parentNode.removeChild(this);
-            //	}
-            //	if (ul.childElementCount == 0) { //using if/else statement to add items to top of list
-            //		ul.appendChild(li); // will add if count of ul children is 0 otherwise add before first item
-            //	} else {
-            //		ul.insertBefore(li, ul.firstChild);
-            //	}
-            //
-            //
-            //
-            //
-            //	document.getElementById("login_box").value = "";
-            //	document.getElementById("professor_toggle").checked = false;
-            //	toggleProfessors();
-            //}
 
-            //add to the table
             if (document.getElementById("login_box").value != "") {
                 var table = document.getElementById("loggedInStudents");
                 var row = table.insertRow(-1);
@@ -549,26 +331,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 cell1.innerHTML = document.getElementById("login_box").value;
                 cell2.innerHTML = document.getElementById("chosen_tutor").value;
 
-
-
-                ////table.rows[rows.length - 1].onclick=function(){
-                ////	alert(this.innerHTML)
-                ////}
-                //
-                ////table.addEventListener('click',new function(){alert(table.rows.length)},false);
-                //var rows = document.getElementsByTagName('tr');
-                //for (var row in rows) {
-                //row.addEventListener('click',  function(){alert("hello")}); 
-                //// or attachEvent, depends on browser
-                //}
                 addRowHandlers();
-
-                //document.getElementById("scheduleButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i>"
 
                 document.getElementById("date_box").value = "";
                 document.getElementById("time_box").value = "";
                 document.getElementById("login_box").value = "";
                 document.getElementById("chosen_tutor").value = "";
+                
+                var requestAppointmentQuery = "https://tutorme.stetson.edu/api/tutors/getAll?Subject=CSCI";
+                $.getJSON(requestAppointmentQuery, function (data) {
+                    console.log(data)
+                });
                 
                 alert("Request sent!");
                // document.getElementById("professor_toggle").checked = false;
@@ -631,7 +404,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     var subjectArray = ["Accounting", "Business", "Computer Science", "Economics", "Finance", "Health & Medical", "Math", "Music", "Physics", "Russian", "Writing"];
     var accountingTutors = ["Bob", "Tim", "Lesz"];
     var businessTutors = ["Hamlet", "George"];
-    var computerScienceTutors = ["Marisa", "Jacob"];
+    var computerScienceTutors;// = ["Marisa", "Jacob"];
     var economicsTutors = ["Hope", "Dameon", "Larkin"];
     var financeTutors = ["Rose", "Daisy", "Penelope"];
     var healthTutors =  ["James", "Neil", "Eric"];
@@ -651,7 +424,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             subjectTutors = businessTutors;   
         }
         else if(subjectArray[tutors] == "Computer Science") {
-            subjectTutors = computerScienceTutors;     
+            //subjectTutors = computerScienceTutors;
+            var requestAppointmentQuery = "https://tutorme.stetson.edu/api/tutors/getAll?Subject=CSCI";
+                $.getJSON(requestAppointmentQuery, function (data) {
+                    console.log(data)
+                });
+            for(i = 0; i < data.result.length; i++)
+                {
+                    computerScienceTutors.push(data.result[9]);
+                }
         }
         else if(subjectArray[tutors] == "Economics") {
             subjectTutors = economicsTutors;
@@ -770,21 +551,60 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 if (month < 10) {
                     month = "0" + month;
                 }
+        
+                myTime = time.split(":");
 
-                var finalDate = year + "-" + month + "-" + day;
+                var hour = parseInt(myTime[0]);
+
+                if (myTime[1].indexOf("PM") != -1) {
+                    hour += 12;
+                }
+
+                time = "T" + hour + ":" + myTime[1].substring(0, 2) + ":00";
+
+                var finalDate = year + "-" + month + "-" + day + time;
 
                 document.getElementById("date_box").value = "";
                 document.getElementById("time_box").value = "";
                 document.getElementById("reason_box").value = "";
 
 
+                  //add formated date to calendar
                 $('#calendar').fullCalendar('renderEvent', {
-                title  : myTitle,
-                start  : finalDate
-            });
+                    title: myTitle,
+                    start: finalDate
+                }, true);
             }
         
+                initUserData();
         
+                function initUserData() {
+                    $.getJSON('https://tutorme.stetson.edu/user', function (data) {
+                    //localStorage.setItem('User', JSON.stringify(data));
+                    //var userNameJSON = JSON.parse(data);
+                    userName = data.username;
+
+//                    initPendingAppointments();
+//                    initSessionButton();
+//                    initCalanderEvents();
+
+                    var selfQuery = "https://tutorme.stetson.edu/api/students/get?field=Username&value=" + userName;
+
+                    //grab info about self as student
+                    $.getJSON(selfQuery, function (data) {
+
+                        //console.log(data.result[0].Email);
+                        firstName = data.result[0].FirstName;
+                        lastName = data.result[0].LastName;
+
+                        //set name
+                        document.getElementById("userName1").innerHTML = "Hello,<a href=\"Student%20Home.html\">" + " " + userName + "</a>";
+                        document.getElementById("userName2").innerHTML = firstName + " " + lastName;
+                    });
+
+
+                });
+            };
         
         
     </script>
