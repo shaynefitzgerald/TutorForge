@@ -12,6 +12,7 @@ var err_check = function(err){
 StudentModel.find({}, function(err, result){
   err_check(err);
   result.forEach(function(Student){
+    console.log("On Student "  + Student.ID);
     CourseModel.find({ Students : {
        $elemMatch : {
          StudentRef : {
@@ -24,6 +25,7 @@ StudentModel.find({}, function(err, result){
      }
    }, function(err, Courses){
      err_check(err);
+     console.log('found ' + Courses.length + ' courses.');
      var CourseIds = [];
      for (var x = 0; x < Courses.length; x++) {
        CourseIds.push(Courses[x]._id);
