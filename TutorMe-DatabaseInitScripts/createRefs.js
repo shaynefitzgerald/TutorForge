@@ -5,58 +5,20 @@ var fs = require('fs');
 var CourseModel = db.model('CourseModel');
 var StudentModel = db.model("StudentModel");
 
-var findElemIndex = function(arr, field, value){
-  for(var x = 0; x < arr.length; x++){
-    if((arr[x])[field] === value){
-      return x;
-    }
-  } return -1;
+var linkage = function(course){
+  return function(err, result){
+    result.Courses.push(course);
+    return result.save(function(err){
+      if(err){ console.error(err); return process.exit(-1); }
+    });
+  };
 };
 
-var operation = function(err, student){
-  if(!Array.isArray(student.Courses)){
-    student.Courses = [];
-  }
-
-  //Find all courses student is in
-  var unlinkedCourses = return CourseModel.find({}).exec(function(err, courses){
-    if(err) return callback(false, err);
-    return callback(true,courses);
-  });
-  console.log(unlinkedCourses);
-
-  //Loop through unlinkedCourses to link Student to courses and visa verca
-
-  // unlinkedCourses.forEach(function(course){
-  //   student.Courses.push(course._id);
-  //   var index = findElemIndex(course.Students , "StudentID" , student.ID);
-  //   if(index === -1){
-  //     return;
-  //   }
-  //   course.Students[index].StudentRef = student._id;
-  //   course.save(function(err){
-  //     if(err) {
-  //       console.log(err);
-  //       process.exit(-1);
-  //     }
-  //     console.log("linked " + student.ID + " with course successfully.");
-  //   });
-  // });
-  //
-  // return student.save(function(err){
-  //   if(err) {
-  //     console.log(err);
-  //     process.exit(-1);
-  //   }
-  // });
-
-};
-
-return CourseModel.find({}, function(err, courses){
-  if(err) return callback(false, err);
-  for(var ci = 0; ci < courses.length; ci++){
-    for(var si = 0; si < courses[ci].Students.length; si++){
-      StudentModel.findOne({ID : courses[ci].Students[si].StudentID }, operation);
+CourseModel.find({}, function(err, courses){
+  if(err){ console.error(err); return process.exit(-1); }
+  for(var x = 0; x < courses.length; x++){
+    for(var si = 0; si < courses[x].Students.length; si++){
+      StudentModel.find({ ID : courses[x].Students[si].StudentID }, linkage(courses[x]._id) );
     }
   }
 });
