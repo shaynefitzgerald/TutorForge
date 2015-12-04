@@ -7,6 +7,8 @@ var StudentModel = db.model("StudentModel");
 
 var linkage = function(course){
   return function(err, result){
+    if(result.Courses === undefined)
+      result.Courses = [];
     result.Courses.push(course);
     return result.save(function(err){
       if(err){ console.error(err); return process.exit(-1); }
