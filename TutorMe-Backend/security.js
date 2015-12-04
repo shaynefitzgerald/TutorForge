@@ -2,23 +2,27 @@ var init = function(cas, db) {
   return function(req, res, next) {
     if (req.session.cas_user === undefined)
       return next();
-    if (req.session.userPermissions !== undefined || req.session.userPermissions !== "")
-      return next();
-
     var error = function(res, err) {
       return res.end(JSON.stringify({
         success: false,
         error: err,
       }));
     };
+    var toEmail = function(name) {
+      var concat = "@((?:[a-z][a-z\\.\\d\\-]+)\\.(?:[a-z][a-z\\-]+))(?![\\w\\.])";
+      return new RegExp(name + concat);
+    };
+
+
+
     var StudentModel = db.model('StudentModel');
     var TutorModel = db.model('TutorModel');
     var AdministratorModel = db.model('AdministratorModel');
     return StudentModel.findOne({
-      Username: req.session.cas_user
+      Email : toEmail(req.session.cas_user)
     }, function(err, studentResult) {
+      //console.log(studentResult);
       if (err) return error(res, err);
-      console.log(studentResult);
       if (studentResult !== undefined && studentResult !== null) {
         if (req.session.userPermissions === undefined) {
           req.session.userPermissions = "s";
@@ -27,8 +31,9 @@ var init = function(cas, db) {
         }
       }
       return TutorModel.findOne({
-        Username: req.session.cas_user
+        Email : toEmail(req.session.cas_user)
       }, function(err, tutorResult) {
+        //console.log(tutorResult);
         if (err) return error(res, err);
         if (tutorResult !== undefined && tutorResult !== null) {
           if (req.session.userPermissions === undefined) {
@@ -38,8 +43,10 @@ var init = function(cas, db) {
           }
         }
         return AdministratorModel.findOne({
-          Username: req.session.cas_user
+          Email : toEmail(req.session.cas_user)
         }, function(err, administratorResult) {
+          //console.log(administratorResult);
+          if(err) return error(res, err);
           if (administratorResult !== undefined && administratorResult !== null) {
             if (req.session.userPermissions === undefined) {
               req.session.userPermissions = "a";
