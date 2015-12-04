@@ -70,7 +70,7 @@ var db_getStudentCourses = function(db, studentID, callback) {
   var Student = db.model('StudentModel');
   return Student.findOne({
         ID : studentID
-    }).populate('Courses')
+    }).populate('Courses', '-Students')
     .exec(function(err, result) {
       if (err) return callback(false, err);
       return callback(true, result ? result.Courses : undefined);
@@ -80,7 +80,7 @@ var db_getStudentProfessors = function(db, studentID, callback) {
   var Student = db.model('StudentModel');
   return Student.findOne({
       ID : studentID
-    }).populate('Courses')
+    }).populate('Courses', '-Students')
     .exec(function(err, result) {
       if (err) return callback(false, err);
       var ret = [];

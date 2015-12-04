@@ -405,7 +405,7 @@ Returns the AppointmentRequests corresponding to the username specified. Note th
 
 **Example Query**
 
-    /api/getAppointmentRequests?as=Tutor&Username=someguy
+    /api/appointments/getAppointmentRequests?as=Tutor&Username=someguy
 
 **Expected Response**
 
