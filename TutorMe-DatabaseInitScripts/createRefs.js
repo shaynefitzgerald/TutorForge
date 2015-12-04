@@ -30,6 +30,7 @@ StudentModel.find({}, function(err, result){
      }
      StudentModel.update({ID : Student.ID}, {'Courses' : CourseIds}, function(err){
        err_check(err);
+       console.log('updated ' + Student.ID + ' successfully');
      });
    });
   });
