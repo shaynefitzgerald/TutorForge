@@ -25,8 +25,8 @@ StudentModel.find({}, function(err, result){
    }, function(err, Courses){
      err_check(err);
      var CourseIds = [];
-     for (var Course of Courses) {
-       CourseIds.push(Course);
+     for (var x = 0; x < Courses.length; x++s) {
+       CourseIds.push(Course[x]._id);
      }
      StudentModel.update({ID : Student.ID}, {'Courses' : CourseIds}, function(err){
        err_check(err);
