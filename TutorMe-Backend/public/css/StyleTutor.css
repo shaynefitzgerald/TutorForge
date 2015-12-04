@@ -48,7 +48,7 @@ body{
 	-ms-transition:all .2s linear;
 }
 .header_top{
-	background:#4AB8AF;
+	background:#394264;
 	border-radius:5px;
 	-webkit-border-radius:5px;
 	-moz-border-radius:5px;
@@ -524,7 +524,7 @@ fieldset#body {
 }
 /********* Column Middle ***********/
 .column_middle_grid1{
-	background:#4AB8AF;
+	background:#394264;
 	border-radius:5px;
 	-webkit-border-radius:5px;
 	-moz-border-radius:5px;

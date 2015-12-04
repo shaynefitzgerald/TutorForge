@@ -10,6 +10,12 @@
     width: 100%;
 }
 
+.modalTutor-filler {
+    height: 380 !important;
+    width: inherit;
+    background-color: #394264;
+}
+
 .modalTutor-container {
     z-index: 105;
     content: "";
@@ -20,7 +26,7 @@
     left: 50%;
     bottom: 90%;
     width: 200%;
-    height: 45%;
+    height: 85%;
     opacity: 1;
     max-width: 1000px;
     background-color: #fff;
@@ -51,6 +57,7 @@
     border-color: #00796b;
     background-color: #4AB8AF;
     font-color: #ffffff;
+    word-wrap: normal;
 }
 
 .modalTutor-feedback {
@@ -65,6 +72,7 @@
     border-color: #00796b;
     background-color: #4AB8AF;
     font-color: #ffffff;
+    word-wrap: normal;
 }
 
 .modalTutor-stats {
@@ -79,11 +87,40 @@
     border-color: #00796b;
     background-color: #4AB8AF;
     font-color: #ffffff;
+    word-wrap: normal;
+}
+
+.myButton {
+    -moz-box-shadow: 0px 0px 0px 0px #71db53;
+    -webkit-box-shadow: 0px 0px 0px 0px #71db53;
+    box-shadow: 0px 0px 0px 0px #71db53;
+    background-color: #04ab8a;
+    -moz-border-radius: 28px;
+    -webkit-border-radius: 28px;
+    border-radius: 28px;
+    border: 1px solid #18ab29;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 17px;
+    padding: 10px 23px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #2f6627;
+}
+
+.myButton:hover {
+    background-color: #5cbf2a;
+}
+
+.myButton:active {
+    position: relative;
+    top: 1px;
 }
 
 .modalTutor-rmTutor {
-    right: 0;
-    top: 0;
+    right: 2%;
+    top: 2%;
     position: absolute;
 }
 
