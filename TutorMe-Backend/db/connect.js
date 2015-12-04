@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 var schema = require('./schema/index').dir;
 var config = JSON.parse(require('fs').readFileSync(__dirname + '/config.json'));
-var db_Connection = mongoose.createConnection(config.ApplicationURI);
-var db_ArchiveConnection = mongoose.createConnection(config.ArchiveURI);
+var db_Connection = mongoose.createConnection(config.ApplicationURI, { server : { poolSize : 20 }});
+var db_ArchiveConnection = mongoose.createConnection(config.ArchiveURI, { server : { poolSize : 20 }});
 exports.schema = {};
 exports.schema.exportedFields = [];
 schema.forEach(function(e) {
