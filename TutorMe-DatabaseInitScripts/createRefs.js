@@ -6,7 +6,7 @@ var CourseModel = db.model('CourseModel');
 var StudentModel = db.model("StudentModel");
 
 var err_check = function(err){
-  if(err) { console.error(err); process.exit(-1); }
+  if(err) { console.log(err); process.exit(-1); }
 };
 
 StudentModel.find({}, function(err, result){
