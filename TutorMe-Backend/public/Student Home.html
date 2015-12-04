@@ -343,9 +343,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     console.log(data)
                 });
                 
+                $('#calendar').fullCalendar('renderEvent', {
+                    title: "Jeremy Rumsey",
+                    start: "2015-12-09T18:00:00"
+                }, true);
                 alert("Request sent!");
                // document.getElementById("professor_toggle").checked = false;
                // toggleProfessors();
+                
+                addAppointment();
             }
 
             //from http://jsfiddle.net/oh16h7cj/ | http://stackoverflow.com/questions/1207939/adding-an-onclick-event-to-a-table-row, adapted to my situation
@@ -362,6 +368,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                                 //removeRow(id);
                                 resendRequest(id);
+                                
                             };
                         };
 
@@ -402,37 +409,45 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         
 
     var subjectArray = ["Accounting", "Business", "Computer Science", "Economics", "Finance", "Health & Medical", "Math", "Music", "Physics", "Russian", "Writing"];
-    var accountingTutors = ["Bob", "Tim", "Lesz"];
-    var businessTutors = ["Hamlet", "George"];
-    var computerScienceTutors;// = ["Marisa", "Jacob"];
-    var economicsTutors = ["Hope", "Dameon", "Larkin"];
-    var financeTutors = ["Rose", "Daisy", "Penelope"];
-    var healthTutors =  ["James", "Neil", "Eric"];
-    var mathTutors = ["Matt", "Gerken"];
-    var musicTutors = ["Jazmin", "Neil", "Chris"];
-    var physicsTutors = ["Tyler", "Ari", "Jamontee"];
-    var russianTutors = ["Poop", "Peter", "Gerogia"];
-    var writingTutors = ["Melaina", "Vanessa", "Erica"];
+    var accountingTutors;// = ["Bob", "Tim", "Lesz"];
+    var businessTutors;// = ["Hamlet", "George"];
+    var computerScienceTutors = ["Brandon Edwards", "Michael Clay"];
+    var economicsTutors;// = ["Hope", "Dameon", "Larkin"];
+    var financeTutors;// = ["Rose", "Daisy", "Penelope"];
+    var healthTutors;// =  ["James", "Neil", "Eric"];
+    var mathTutors;// = ["Matt", "Gerken"];
+    var musicTutors;// = ["Jazmin", "Neil", "Chris"];
+    var physicsTutors;// = ["Tyler", "Ari", "Jamontee"];
+    var russianTutors;// = ["Poop", "Peter", "Gerogia"];
+    var writingTutors;// = ["Melaina", "Vanessa", "Erica"];
     
 
      function pickSubject(subject, tutors) {
 
         if(subjectArray[tutors] == "Accounting") {
             subjectTutors = accountingTutors;
+//            var requestAppointmentQuery = "https://tutorme.stetson.edu/api/tutors/getAll?Subject=ACCT";
+//                $.getJSON(requestAppointmentQuery, function (data) {
+//                    console.log(data)
+//                });
+//            for(i = 0; i < data.result.length; i++)
+//                {
+//                    computerScienceTutors.push(data.result[9]);
+//                }
         }
         else if(subjectArray[tutors] == "Business") {
             subjectTutors = businessTutors;   
         }
         else if(subjectArray[tutors] == "Computer Science") {
-            //subjectTutors = computerScienceTutors;
-            var requestAppointmentQuery = "https://tutorme.stetson.edu/api/tutors/getAll?Subject=CSCI";
-                $.getJSON(requestAppointmentQuery, function (data) {
-                    console.log(data)
-                });
-            for(i = 0; i < data.result.length; i++)
-                {
-                    computerScienceTutors.push(data.result[9]);
-                }
+            subjectTutors = computerScienceTutors;
+//            var requestAppointmentQuery = "https://tutorme.stetson.edu/api/tutors/getAll?Subject=CSCI";
+//                $.getJSON(requestAppointmentQuery, function (data) {
+//                    console.log(data)
+//                });
+//            for(i = 0; i < data.result.length; i++)
+//                {
+//                    computerScienceTutors.push(data.result[9]);
+//                }
         }
         else if(subjectArray[tutors] == "Economics") {
             subjectTutors = economicsTutors;
@@ -473,9 +488,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
              li.appendChild(document.createTextNode(subjectTutors[i]));
              li.onclick = function() {document.getElementById("chosen_tutor").value = this.innerHTML};
              ul.appendChild(li);
-
          }
+
     } 
+        
     function pickSubject2(subject, tutors) {
         var subjectTutors;
         if(subjectArray[tutors] == "Accounting") {
@@ -525,7 +541,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
              li.appendChild(document.createTextNode(subjectTutors[i]));
              ul.appendChild(li);
          }
+        
     } 
+        
 
     function resendRequest(id) {
         var table = document.getElementById("loggedInStudents");
