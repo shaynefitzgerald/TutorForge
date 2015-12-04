@@ -242,16 +242,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <div class="main">
         <div class="wrap">
             <div class="column_left">
-                <div class="menu_box">
-                    <h3>Menu Box</h3>
-                    <div class="menu_box_list">
-                        <ul>
-                            <!--                            <li><a href="#" class="messages"><span>Requests</span><label class="digits">5</label><div class="clear"></div></a></li>-->
-                            <!--						  		<li class="active"><a href="#" class="invites"><span>Invites</span><label class="digits active">3</label><div class="clear"></div></a></li>-->
-                            <li><a href="#" class="events"><span>Calendar</span><label class="digits">8</label><div class="clear"></div></a></li>
-                            <!--                            <li><a href="#" class="account_settings"><span>Account Settings</span></a></li>-->
-                            <li><a href="#" class="statistics"><span>Statistics</span></a></li>
-                        </ul>
+                <div class="column_middle_grid1">
+                    <div class="modalTutor-filler">
+                        <p><strong><font size='5' color='white'>Analytics</font></strong></p>
                     </div>
                 </div>
             </div>
@@ -553,12 +546,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         });
 
         setTimeout(function () {
-
+            var dateTemp;
+            var dates
             if (checkGetSuccess) {
                 for (i = 0; i < allTutors.length; i++) {
+                    $.get('https://tutorme.stetson.edu/api/sessions/getPreviousSessions?by=Username&value=' + allTutors[i].Username, function (data) {
+                        sessionStorage.setItem('Prev_Appointments', JSON.stringify(data));
+
+
+
+                    });
 
                     console.log("Add Row");
-
+                    dateTemp = new Date(allTutors[i].LastArchivedSession);
 
                     $("#users tbody").append("<tr>" +
                         "<td><a href='#mTut" + i + "'>" + allTutors[i].FullName + "</a></td>" +
@@ -570,8 +570,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         "<div class='modalTutor-rmTutor'><a class = 'myButton' onclick='removeTutor(" + allTutors[i].ID + ")'>Remove Tutor</a></div></p>" +
                         "<div class= 'modalTutor-feedback'><p align= 'center'><font size= '7' color='white'><strong>Feedback</strong></font></p> " +
                         "</div> <div class= 'modalTutor-stats'><p align= 'center'><font size= '7' color='white'><strong>Statistics</strong></font></p> " +
-                        "<p><font size= '3' color='white'>Appointments:</font></p>" +
-                        "</div> <div class= 'modalTutor-schedule'><p align= 'center'><font size= '7' color='white'><strong>Schedule</strong></font></p></div>" +
+                        "<p><font size= '3' color='white'><strong>TBA</strong></font></p>" +
+                        "</div> <div class= 'modalTutor-schedule'><p align= 'center'><font size= '7' color='white'><strong>Schedule</strong></font></p>" +
+                        "<p><font size= '3' color='white'><strong>Work Schedule:</strong></font></p>" +
+                        "<p><font size= '2' color='white'>M: NA T: NA W: NA TH: NA F: NA S: NA SU: NA</font></p>" +
+                        "<p><font size= '3' color='white'><strong>Scheduled Appointments:</strong></font></p>" +
+                        "<p><font size= '2' color='white'>No Scheduled Appointments Set</font></p>" +
+                        "<p><font size= '3' color='white'><strong>Appointment History:</strong></font></p>" +
+                        "<p><font size= '2' color='white'>No Appointment History</font></p>" +
+                        "<p><font size= '3' color='white'><strong>Session History:</strong></font></p>" +
+                        "<p><font size= '2' color='white'>No Session History</font></p>" +
+                        "<p><font size= '3' color='white'><strong>Last Archived Session:</strong></font></p>" +
+                        "<p><font size= '2' color='white'>" + dateTemp.getMonth() + "/" + dateTemp.getDate() + "/" + dateTemp.getFullYear() + " At " + dateTemp.getTime() + "</font>" +
+
+                        "</p>" +
+
+                        "</div>" +
                         "<div class = 'modalTutor-close'><p align= 'right'><a href='#'><font size= '5' color='#66e0ff'>Close</font></a></p></div></div></div>");
 
                     console.log("Add Row End");

@@ -814,7 +814,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         -moz-border-radius: 5px;
         -o-border-radius: 5px;
         overflow-y: scroll;
-        max-height: 400px;
+        max-height: 380px;
     }
 ::-webkit-scrollbar
 {
