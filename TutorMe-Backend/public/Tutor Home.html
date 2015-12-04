@@ -43,11 +43,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="header_top">
                 <div class="menu">
                     <a class="toggleMenu" href="#"><img src="images/nav.png" alt="" /></a>
-                    <ul class="nav">
+                    <ul class="nav" style="z-index: 10">
                         <li class="active"><a href="#"><i><img src="images/user.png" alt="" /></i>Home</a></li>
                         <!--								<li><a href="#"><i><img src="images/settings.png" alt="" /></i>Settings</a></li>-->
-                        <li><a class="modal-trigger" href="#viewRequests_modal"><i><img src="images/mail.png" alt="" /></i>View Requests<span class="messages">1</span></a></li>
-                        <li><a class="modal-trigger" href="#makeRequests_modal"><i><img src="images/events.png" alt="" /></i>Make Request</a></li>
+                        <li><a class="modal-trigger" href="#schedule_modal"><i><img src="images/events.png" alt="" /></i>Schedule</a></li>
+                        <li><a class="modal-trigger" href="#appointments_modal"><i><img src="images/follow_user.png" alt="" /></i>Request Appointment</a></li>
+                        <!-- <li><a class="modal-trigger" href="#viewRequests_modal"><i><img src="images/mail.png" alt="" /></i>View Requests</a></li> -->
+                        <li><a class="modal-trigger" href="#viewRequests_modal" id=requests_tab><i><img src="images/mail.png" alt="" /></i>View Requests<span class="messages">1</span></a></li>
                         <li><a class="modal-trigger" id="sessionButton" href="#session_modal"><i><img src="images/loginArrow.png" alt="" /></i>Start Session</a></li>
 
                         <!-- Dropdown Structure for requests button -->
@@ -59,127 +61,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 
 
-                        <!-- Modal Structure  for tutor session-->
-                        <div id="session_modal" class="modal">
-                            <div class="modal-content">
-                                <div class="container">
-                                    <div class="row">
-
-                                        <span class="col s12 center-align"><b>Login Student</b></span>
-                                        <div class="col s12 center-align">
-                                            <input type="text" name="800Num" placeholder="800 #" id="login_box">
-                                        </div>
-                                        <div class="col s12 center-align" id=studentError>&nbsp;</div>
-                                        <div class="col s12 center-align">
-                                            <input type="checkbox" name="emailProf" value="Yes" id="professor_toggle" onclick="toggleProfessors()" />
-                                            <label for="professor_toggle"> Email Professor</label>
-                                        </div>
-
-
-                                       
-                                        <!-- style from http://stackoverflow.com/questions/7280389/scrollable-box-containing-list-of-checkboxes-in-html -->
-                                        <div id="professor_box" class="col s12 center-align" style = "border:2px solid #ccc;  height: 50px; overflow-y: scroll; visibility: hidden"></div>
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <div class="col s12 center-align">
-                                            <button type="button" onclick="loginStudent()">Login Student</button>
-
-                                        </div>
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <div class="col s12 center-align"><b>Logged in Students</b></div>
-                                        <div class="divider col s12"></div>
-
-
-
-                                        <div id="student_box" class="col s12 center-align">
-                                            <table id="loggedInStudents" border="1" style="cursor: pointer;">
-
-                                            </table>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-                            </div>
-                        </div>
-
-
-
-                        <!-- Modal Structure for viewing requests-->
-                        <div id="viewRequests_modal" class="modal">
-                            <div class="modal-content">
-                                <div class="container">
-                                    <div class="row">
-
-                                        <span class="col s12 center-align"><b>Requests</b></span>
-                                        <div class="col s12 center-align">&nbsp;</div>
-
-                                        <div class="col s8">
-                                            Student1 Wants an appointment on <b>10/27/15</b> at <b>6:00 PM</b>
-                                        </div>
-
-                                        <div class="col s2">
-                                            <button type="button" onclick="acceptAppointment()">Accept</button>
-                                        </div>
-
-                                        <div class="col s2">
-                                            <button type="button" onclick="rejectAppointment()">Reject</button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-                            </div>
-                        </div>
-
-
-
-                        <!-- Modal Structure for making requests-->
-                        <div id="makeRequests_modal" class="modal">
-                            <div class="modal-content">
-                                <div class="container">
-                                    <div class="row">
-
-                                        <span class="col s12 center-align"><b>Request Appointment</b></span>
-                                        <div class="col s12 center-align">&nbsp;</div>
-
-                                        <div class="col s4 center-align">&nbsp;</div>
-                                        <div class="col s4 center-align">
-                                            <input type="date" class="datepicker center-align" placeholder="Date" id="date_box">
-                                        </div>
-                                        <div class="col s12 center-align">&nbsp;</div>
-
-
-                                        <div class="col s4 center-align">&nbsp;</div>
-                                        <div class="col s4 center-align">
-                                            <input type="text" class="timepicker center-align" placeholder="Time" id="time_box">
-                                        </div>
-                                        <div class="col s4 center-align">&nbsp;</div>
-                                        <div class="col s12 center-align">&nbsp;</div>
-
-                                        <div class="col s12 center-align">List of tutors available this day/time</div>
-                                        <div class="col s12 center-align">&nbsp;</div>
-
-                                        <div class="col s12 center-align">
-                                            <button type="button" onclick="requestAppointment()">Request Appointment</button>
-                                        </div>
-
-
-
-
-
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-                            </div>
-                        </div>
 
 
                         <div class="clear"></div>
@@ -193,11 +74,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <div id="loginBox">
                             <form id="loginForm">
                                 <fieldset id="body">
-                                    <div class="user-info">
+                                    <div class="user-info center-align">
                                         <h4 id=userName1>Hello,<a href="Admin%20Home.html"></a></h4>
                                         <ul>
-                                            <li class="profile active"><a href="Student%20Home.html">Profile </a></li>
-                                            <li class="logout"><a href="https://tutorme.stetson.edu/api/logout"> Logout</a></li>
+                                            <li class=""><a href="https://tutorme.stetson.edu/api/logout"> Logout</a></li>
                                             <div class="clear"></div>
                                         </ul>
                                     </div>
@@ -217,311 +97,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     </div>
     <div class="main">
         <div class="wrap">
-            <div class="column_left">
-                <div class="menu_box">
-                    <h3>Menu Box</h3>
-                    <div class="menu_box_list">
-                        <ul>
-                            <li><a href="#" class="messages"><span>Requests</span><label class="digits">5</label><div class="clear"></div></a></li>
-                            <!--						  		<li class="active"><a href="#" class="invites"><span>Invites</span><label class="digits active">3</label><div class="clear"></div></a></li>-->
-                            <li><a href="#" class="events"><span>Appointments</span><label class="digits">8</label><div class="clear"></div></a></li>
-                            <li><a href="#" class="account_settings"><span>Account Settings</span></a></li>
-                            <li><a href="#" class="statistics"><span>Statistics</span></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="chart">
-                    <h3>My Rankings and FeedBack</h3>
-                    <div class="diagram">
-                        <canvas id="canvas" height="220" width="220"> </canvas>
-                        <h4><span>June</span><br />2013</h4>
+
+            <div class="column_middle_grid1">
+                <div class="profile_picture">
+                    <a href=""><img src="images/user.png" alt="" /> </a>
+                    <div class="profile_picture_name">
+                        <h2 id="userName2"></h2>
+
                     </div>
 
-                    <!----		              
-						<span><img src="images/chart.png" alt="" /></span>
-						----->
-                    <div class="chart_list">
-                        <ul>
-                            <li><a href="#" class="red">1 Star<p class="percentage">21<em>%</em></p></a></li>
-                            <li><a href="#" class="blue">2 Star<p class="percentage">48<em>%</em></p></a></li>
-                            <li><a href="#" class="yellow">3 Star<p class="percentage">9<em>%</em></p></a></li>
-                            <li><a href="#" class="purple">4 Star<p class="percentage">32<em>%</em></p></a></li>
-                            <div class="clear"></div>
-                        </ul>
-                    </div>
-                    <script>
-                        var doughnutData = [
-                            {
-                                value: 21,
-                                color: "#E64C65"
-								},
-                            {
-                                value: 48,
-                                color: "#11A8AB"
-								},
-                            {
-                                value: 32,
-                                color: "#4FC4F6"
-								},
-                            {
-                                value: 9,
-                                color: "#FCB150"
-								},
-
-							];
-                        var myDoughnut = new Chart(document.getElementById("canvas").getContext("2d")).Doughnut(doughnutData);
-                    </script>
                 </div>
-                <div class="graph">
-                    <canvas id="line-chart"> </canvas>
-                    <script>
-                        var lineChartData = {
-                            labels: ["Apr", "May", "Jun"],
-                            datasets: [
-                                {
-                                    fillColor: "rgba(255, 255, 255, 0)",
-                                    strokeColor: "#FFF",
-                                    pointColor: "#11a8ab",
-                                    pointStrokeColor: "#FFF",
-                                    data: [21, 48, 35]
-									}
-								]
 
-                        }
-
-                        var myLine = new Chart(document.getElementById("line-chart").getContext("2d")).Line(lineChartData);
-                    </script>
-                    <!---
-		             	<img src="images/graph.png" alt="" />
-		             	------->
-                    <div class="graph_list">
-                        <div class="week-month-year">
-                            <p><a href="#">Week</a></p>
-                            <p><a href="#" class="active">Month</a></p>
-                            <p><a href="#">year</a></p>
-                            <div class="clear"></div>
-                        </div>
-                        <ul>
-                            <li><a href="#"><span class="day_name">Apr</span> 2013 
-						  			<label class="digits"><span>+</span>21<em>%</em></label><div class="clear"></div></a></li>
-                            <li class="active"><a href="#"><span class="day_name">May</span> 2013 
-						  			<label class="digits"><span>+</span>48<em>%</em></label><div class="clear"></div></a></li>
-                            <li><a href="#"><span class="day_name">Jun</span> 2013 
-						  			<label class="digits"><span>+</span>35<em>%</em> </label><div class="clear"></div></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!--
-		                 <div class="video_palyer">
-								<iframe src="//player.vimeo.com/video/24363983" width="100%" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe> 
-		                </div>        
--->
-
-
-                <!--
-		          		<div class="social_network_likes">
-				      		<ul>
-				      			<li><a href="#" class="facebook"><i><img src="images/facebook_icon.png" alt=""></i> <span>248k</span></a></li>
-				      			<li><a href="#" class="twitter"><i><img src="images/tweets.png" alt=""></i> <span>30k</span></a></li>
-				      			<li><a href="#" class="googleplus"><i><img src="images/google+.png" alt=""></i> <span>124k</span></a></li>
-				      			<li><a href="#" class="mail"><i><img src="images/mail-hover.png" alt=""></i> <span>89k</span></a></li>
-				      			<div class="clear"></div>
-				    		</ul>
-		          		</div>
--->
-            </div>
-
-            <div class="column_middle">
-                <div class="column_middle_grid1">
-                    <div class="profile_picture">
-                        <a href=""><img src="images/user.png" alt="" /> </a>
-                        <div class="profile_picture_name">
-                            <h2 id="userName2"></h2>
-                            <!--		            	<p>Lorem ipsum dolor sit amet consectetur adipisicing </p>-->
-                        </div>
-                        <!--		             <span><a href="#"> <img src="images/follow_user.png" alt="" /> </a></span>-->
-                    </div>
-                    <!--
-		           <div class="articles_list">
-		           	  <ul>
-		           	  	<li><a href="#" class="red"> <img src="images/comments.png" alt="" /> 23</a></li>
-		           	  	<li><a href="#" class="purple"> <img src="images/views.png" alt="" /> 841</a></li>
-		           	  	<li><a href="#" class="yellow"> <img src="images/likes.png" alt="" /> 49</a></li>
-		           	  	<div class="clear"></div>	
-		           	  </ul>
-		           </div>
--->
-                </div>
-                <!--
-		         <div class="weather">
-		               <h3><i><img src="images/location.png" alt="" /> </i> Cluj-Napoca / Ro</h3>
-		              <div class="today_temp">
-		                <div class="temp">
-							<figure>Fri 29/06<span>24<em>o</em></span></figure>
-						</div>
-						<img src="images/sun.png" alt="" />
-					</div>
-						<div class="temp_list">
-				      			<ul>
-						  		    <li><a href="#"><span class="day_name">Sat</span>&nbsp; 29/06 
-						  			<label class="digits">25<em>o</em> <i><img src="images/sun_icon1.png" alt="" /></i></label><div class="clear"></div></a></li>
-						  			<li class="active"><a href="#"><span class="day_name">Sun</span>&nbsp; 30/06 
-						  			<label class="digits">22<em>o</em> <i><img src="images/clouds.png" alt="" /></i></label><div class="clear"></div></a></li>
-						  			<li><a href="#"><span class="day_name">Mon</span>&nbsp; 01/07 
-						  			<label class="digits">24<em>o</em> <i><img src="images/clouds.png" alt="" /></i></label><div class="clear"></div></a></li>
-						  			<li><a href="#"><span class="day_name">Tue</span>&nbsp; 02/07 
-						  			<label class="digits">26<em>o</em> <i><img src="images/sun_icon1.png" alt="" /></i></label><div class="clear"></div></a></li>
-						  			<li><a href="#"><span class="day_name">Wed</span>&nbsp; 03/07 
-						  			<label class="digits">27<em>o</em> <i><img src="images/sun_icon2.png" alt="" /></i></label><div class="clear"></div></a></li>
-						  			<li><a href="#"><span class="day_name">Thu</span>&nbsp; 04/07
-						  			<label class="digits">29<em>o</em> <i><img src="images/sun_icon2.png" alt="" /></i></label><div class="clear"></div></a></li>
-				    		</ul>
-				      </div>
-		          </div>	           
--->
-                <!--
-		         <div class="tweets">
-		               <h3><i><img src="images/tweets.png" alt="" /> </i> Latest Tweets</h3>		              
-						<div class="tweets_list">
-				      		<ul>
-						  		<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore <a href="#">@Neque</a>
-						  			<span>10 minutes ago</span></li>
-						  	   <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore eiusmod <a href="#">#Creative Cloud</a>
-						  			<span>2 hours ago</span></li>
-				    		</ul>
-				      </div>
-		          </div>
--->
-                <!--
-		          <div class="social_networks">
-				      		<ul>
-				      			<li><a href="#" class="facebook"><i><img src="images/facebook_icon.png" alt="" /></i> <span>Share to Facebook</span><div class="clear"></div></a></li>
-				      			<li><a href="#" class="twitter"><i><img src="images/tweets.png" alt="" /></i> <span>Share to Twitter</span><div class="clear"></div></a></li>
-				      			<li><a href="#" class="googleplus"><i><img src="images/google+.png" alt="" /></i> <span>Share to Google+</span><div class="clear"></div></a></li>
-				    		</ul>
-		          </div>	           
--->
-                <!--
-
--->
-            </div>
-
-            <div class="column_right">
-                <!--
-            	<div class="column_right_grid1">
-                 <div class="newsletter">
-				   <h3>Join the newsletter</h3>
-					    <form>
-					    	<span>
-					 	     <i><img src="images/mail.png" alt="" /></i>
-					 	     <input type="text" value="Enter your email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter your email';}">
-					 	    </span>			 	    
-					 		<input type="submit" class="my_button" value="Subscribe">
-					 	</form>
-				   </div>
-			   </div>
--->
-                <!--
-				 <div class="column_right_grid1 sign-in">
-				 	<div class="sign_in">
-				       <h3>Sign in to your account</h3>
-					    <form>
-					    	<span>
-					 	    <i><img src="images/mail.png" alt="" /></i><input type="text" value="Enter your email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter your email';}">
-					 	    </span>
-					 	    <span>
-					 	     <i><img src="images/lock.png" alt="" /></i>
-					 	     <input type="password" placeholder="password">
-					 	    </span>
-					 		<input type="submit" class="my-button" value="Sign In">
-					 	</form>
-					       <h4><a href="#">Forget Password?</a></h4>				   
-          		       </div>
-          		 	  <div class="signin_facebook">
-					   	 <p><a href="#">  <i> <img src="images/facebook.png" alt="" /></i>Sign in with facebook</a></p>
-				      </div>
-				   </div>
--->
-                <!--
-				   <div class="column_right_grid1 downloading_uploading">
-                      <ul>
-					      <li>                              
-                            <div class="progress">
-                              <div class="progress-bar" style="width:81%"> </div>
-                            </div>
-                            <div class="clearfix">
-                                <p class="downloading"> <i><img src="images/download.png" alt="" /></i> Downloading...</p>
-                                <p class="percentage">81<em>%</em></p>
-                                <div class="clear"></div>
-                            </div>
-                           </li>
-                           <li>                              
-                            <div class="progress">
-                              <div class="progress-bar uploading" style="width:43%"> </div>
-                            </div>
-                            <div class="clearfix">
-                                <p class="downloading"><i><img src="images/upload.png" alt="" /></i> Uploading...</p>
-                                <p class="percentage">43<em>%</em></p>
-                                <div class="clear"></div>
-                            </div>
-                           </li>
-                        </ul>
-				   </div>
--->
-                <div class="column_right_grid1 date_events">
-                    <h3><a href="#" id="slide_prev"><img src="images/arrow-left.png" alt="" /></a> Monday <a href="#" id="slide_next"><img src="images/arrow-right.png" alt="" /></a></h3>
-                    <ul id="slide" class="event_dates">
-                        <li>26</li>
-                        <li>25</li>
-                        <li>24</li>
-                        <li>23</li>
-                        <li>22</li>
-                        <li>21</li>
-                        <li>20</li>
-                        <li>19</li>
-                        <li>18</li>
-                        <li>17</li>
-                        <li>16</li>
-                        <li>15</li>
-                        <li>14</li>
-                        <li>13</li>
-                        <li>12</li>
-                        <li>11</li>
-                        <li>10</li>
-                        <li>9</li>
-                        <li>8</li>
-                        <li>7</li>
-                        <li>6</li>
-                        <li>5</li>
-                        <li>4</li>
-                        <li>3</li>
-                        <li>2</li>
-                        <li>1</li>
-                        <li>31</li>
-                        <li>30</li>
-                        <li>29</li>
-                        <li>28</li>
-                        <li>27</li>
-                    </ul>
-                    <div class="button"><a href="#">Add Event</a></div>
-                    <script type="text/javascript">
-                        $(function () {
-                            $('#slide').ulslide({
-
-                                effect: {
-                                    type: 'carousel', // slide or fade
-                                    axis: 'x', // x, y
-                                    showCount: 1
-                                },
-                                nextButton: '#slide_next',
-                                prevButton: '#slide_prev',
-                                duration: 800,
-                                /*autoslide: 2000,*/
-                                easing: 'easeOutBounce'
-                            });
-                        });
-                    </script>
-                </div>
                 <div class="column_right_grid calender" style="background-color: white">
                     <div id='calendar'> </div>
                 </div>
@@ -531,6 +117,236 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     </div>
     <div class="copy-right">
         <p>© 2013 Designed by <a href="http://graphicburger.com/flat-design-ui-components/" target="_blank">GraphicBurger</a> • Template by <a href="http://w3layouts.com" target="_blank">w3layouts</a> </p>
+    </div>
+
+    <!-- Modal Structure  for tutor session-->
+    <div id="session_modal" class="modal">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
+
+                    <span class="col s12 center-align"><b>Login Student</b></span>
+                    <div class="col s12 center-align">
+                        <input type="text" name="800Num" placeholder="800 #" id="login_box">
+                    </div>
+                    <div class="col s12 center-align" id=studentError>&nbsp;</div>
+                    <div class="col s12 center-align">Select a Course</div>
+                    <div class="col s3 center-align">&nbsp;</div>
+                    <!-- style from http://stackoverflow.com/questions/7280389/scrollable-box-containing-list-of-checkboxes-in-html -->
+                    <div id="courses_box" class="col s6 center-align" style="border:2px solid #ccc;  height: 100px; overflow-y: scroll">
+                        <form action="#" id="courses_form"></form>
+                    </div>
+                    <div class="col s3 center-align">&nbsp;</div>
+                    <div class="col s12 center-align">&nbsp;</div>
+
+                    <div class="col s12 center-align">
+                        <input type="checkbox" name="emailProf" value="Yes" id="professor_toggle" onclick="toggleProfessors()" />
+                        <label for="professor_toggle"> Email Professor</label>
+                    </div>
+
+
+
+
+                    <div class="col s3 center-align">&nbsp;</div>
+                    <!-- style from http://stackoverflow.com/questions/7280389/scrollable-box-containing-list-of-checkboxes-in-html -->
+                    <div id="professor_box" class="col s6 center-align" style="border:2px solid #ccc;  height: 100px; overflow-y: scroll; visibility: hidden">
+                        <form action="#" id="professor_form"></form>
+                    </div>
+                    <div class="col s3 center-align">&nbsp;</div>
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s12 center-align">
+                        <button type="button" onclick="loginStudent()">Login Student</button>
+
+                    </div>
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s12 center-align"><b>Logged in Students</b></div>
+                    <div class="divider col s12"></div>
+
+
+
+                    <div id="student_box" class="col s12 center-align">
+                        <table id="loggedInStudents" border="1" style="cursor: pointer;">
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+
+
+
+    <!-- Modal Structure for viewing requests-->
+    <div id="viewRequests_modal" class="modal">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
+
+                    <span class="col s12 center-align"><b>Requests</b></span>
+                    <div class="col s12 center-align">&nbsp;</div>
+
+                    <div class="col s8" id="tempIDForDemo">
+                        Jeremy Rumsey Wants an appointment on <b>12/9/15</b> at <b>6:00 PM</b>
+                    </div>
+
+                    <div class="col s2" id="tempIDForDemo2">
+                        <button type="button" onclick="demoAcceptRequest()">Accept</button>
+                    </div>
+
+                    <div class="col s2" id="tempIDForDemo3">
+                        <button type="button" onclick="demoRejectRequest()">Reject</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+
+
+
+    <!-- Modal Structure for making requests-->
+    <div id="makeRequests_modal" class="modal">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
+
+                    <span class="col s12 center-align"><b>Request Appointment</b></span>
+                    <div class="col s12 center-align">&nbsp;</div>
+
+
+                    <div class="col s12 center-align">&nbsp;</div>
+
+
+                    <div class="col s4 center-align">&nbsp;</div>
+                    <div class="col s4 center-align">
+                        <input type="text" class="timepicker center-align" placeholder="Time" id="time_box">
+                    </div>
+                    <div class="col s4 center-align">&nbsp;</div>
+                    <div class="col s12 center-align">&nbsp;</div>
+
+                    <div class="col s12 center-align">List of tutors available this day/time</div>
+                    <div class="col s12 center-align">&nbsp;</div>
+
+                    <div class="col s12 center-align">
+                        <button type="button" onclick="requestAppointment()">Request Appointment</button>
+                    </div>
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+
+    <!-- Modal Structure  for viewing schedule-->
+    <div id="schedule_modal" class="modal">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
+
+                    <span class="col s12 center-align"><b>Schedule</b></span>
+
+
+
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <!--
+                                        <div class="col s12 center-align">
+                                            <input type="checkbox" name="emailProf" value="Yes" id="professor_toggle" onclick="toggleProfessors()" />
+                                            <label for="professor_toggle"> Email Professor</label>
+
+
+                                        </div>
+-->
+                    <!--
+                                        <div id="professor_box" class="col s12 center-align"></div>
+                                        <div class="col s12 center-align">&nbsp;</div>
+-->
+                    <!--
+                                        <div class="col s12 center-align">
+                                            <button type="button" onclick="viewStudentSchedule()">Login Student</button>
+
+                                        </div>
+-->
+                    <!--
+                                        <div class="col s12 center-align">&nbsp;</div>
+                                        <div class="col s12 center-align">&nbsp;</div>
+-->
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s12 center-align">Functionality Excluded for Demo Purposes.</div>
+                    <div class="col s12 center-align">&nbsp;</div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+
+
+
+
+    <!-- Modal Structure for appointments-->
+    <div id="appointments_modal" class="modal">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
+
+                    <span class="col s12 center-align"><b>Schedule</b></span>
+
+
+
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <!--
+                                        <div class="col s12 center-align">
+                                            <input type="checkbox" name="emailProf" value="Yes" id="professor_toggle" onclick="toggleProfessors()" />
+                                            <label for="professor_toggle"> Email Professor</label>
+
+
+                                        </div>
+-->
+                    <!--
+                                        <div id="professor_box" class="col s12 center-align"></div>
+                                        <div class="col s12 center-align">&nbsp;</div>
+-->
+                    <!--
+                                        <div class="col s12 center-align">
+                                            <button type="button" onclick="viewStudentSchedule()">Login Student</button>
+
+                                        </div>
+-->
+                    <!--
+                                        <div class="col s12 center-align">&nbsp;</div>
+                                        <div class="col s12 center-align">&nbsp;</div>
+-->
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s12 center-align">Functionality Excluded for Demo Purposes.</div>
+                    <div class="col s12 center-align">&nbsp;</div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
     </div>
     <script>
         //Jquery Plugin Initilizations
@@ -621,32 +437,78 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         });
 
 
+        //from http://stackoverflow.com/questions/4220126/run-javascript-function-when-user-finishes-typing-instead-of-on-key-up
+        //setup before functions
+        var typingTimer; //timer identifier
+        var doneTypingInterval = 1500; //time in ms, 3 second for example
+
+        var courseIDForSession = "";
+        //on keyup, start the countdown
+        $('#login_box').keyup(function () {
+            clearTimeout(typingTimer);
+            courseIDForSession = "";
+            if ($('#login_box').val) {
+                typingTimer = setTimeout(doneTyping, doneTypingInterval);
+            }
+        });
+
+        //user is "finished typing," do something
+        function doneTyping() {
+            //call for getting courses in box
+            var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + document.getElementById("login_box").value;
+            var studentCoursesQuery = "https://tutorme.stetson.edu/api/students/getStudentCourses?StudentID=" + document.getElementById("login_box").value;
+
+            $.getJSON(studentQuery, function (data) {
+                if (data.result[0] != undefined) {
+                    $.getJSON(studentCoursesQuery, function (data) {
+                        //id = course ref number
+                        document.getElementById("courses_form").innerHTML = "";
+                        document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test1\" /><label for=\"test1\">Software Development II</label></p>";
+                        document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test2\" /><label for=\"test2\">Earth Effecting People</label></p>";
+                        document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test3\" /><label for=\"test3\">Computer Organization</label></p>";
+                        document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test4\" /><label for=\"test4\">Senior Research I</label></p>";
+                        document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test5\" /><label for=\"test5\">Computer Graphics I</label></p>";
+                    });
+                }
+            });
+        }
+
+
+        $("#courses_form").on("change", function () {
+            //alert("p");
+            courseIDForSession = $("input[name=group1]:checked").attr("id");
+        });
+
+
         //init username
         var userName = "";
         var firstName = "";
         var lastName = "";
+        var tutorRefID = "";
+        var tutorSubject = "";
 
         //setTimeout(function(){ initUserData(); }, 1000);
 
         initUserData();
+        initTutoringSession();
 
 
 
         function initUserData() {
             $.getJSON('https://tutorme.stetson.edu/user', function (data) {
-                //sessionStorage.setItem('User', JSON.stringify(data));
+                //localStorage.setItem('User', JSON.stringify(data));
                 //var userNameJSON = JSON.parse(data);
                 userName = data.username;
-                
+
                 initPendingAppointments();
                 initSessionButton();
                 initCalanderEvents();
 
                 var selfQuery = "https://tutorme.stetson.edu/api/students/get?field=Username&value=" + userName;
 
-                //grab info about self
+                //grab info about self as student
                 $.getJSON(selfQuery, function (data) {
-                    //sessionStorage.setItem('User', JSON.stringify(data));
+                    //localStorage.setItem('User', JSON.stringify(data));
                     //var selfJSON = JSON.parse(data);
 
                     //console.log(data.result[0].Email);
@@ -658,27 +520,108 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     document.getElementById("userName2").innerHTML = firstName + " " + lastName;
 
                     //userName = UserNameJSON.username;
+
+                    //now grab tutor info
+                    var selfQuery = "https://tutorme.stetson.edu/api/tutors/get?field=ID&value=" + data.result[0].ID;
+                    $.getJSON(selfQuery, function (data) {
+                        tutorRefID = data.result[0].id;
+                        tutorSubject = data.result[0].Subject;
+
+                    });
                 });
+
+
             });
         };
-        
-        
-        function initPendingAppointments(){
+
+
+        function initPendingAppointments() {
             var appointmentsQuery = "https://tutorme.stetson.edu/api/getAppointmentRequests?as=Tutor&Username=" + userName;
             $.getJSON(appointmentsQuery, function (data) {
-                console.log(data)
+                //console.log(data)
             });
-                        
+
         }
-        
-        function initSessionButton(){
-            
-            
+
+        //grabs logged in students from local storage and updates the session button accordingly
+        function initTutoringSession() {
+            //students exist in storage
+            if (localStorage.getItem("loggedInStudents") != undefined) {
+
+                //shows active session
+                document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Resume Session"
+
+                //more than one student
+                if (localStorage.getItem("loggedInStudents").length > 9) {
+                    for (var i = 0; i < localStorage.getItem("loggedInStudents").split(":").length; i++) {
+                        var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + localStorage.getItem("loggedInStudents").split(":")[i];
+
+                        $.getJSON(studentQuery, function (data) {
+
+                            if (data.result[0] != undefined) {
+                                //add to the table
+                                var table = document.getElementById("loggedInStudents");
+
+                                //append to table
+                                var row = table.insertRow(-1);
+
+                                //first element
+                                var cell1 = row.insertCell(0);
+                                //second element
+                                var cell2 = row.insertCell(1);
+                                var index = i
+                                cell1.innerHTML = data.result[0].ID;
+                                cell2.innerHTML = data.result[0].FirstName + " " + data.result[0].LastName;
+
+
+
+                                //add click handlers to the rows
+                                addRowHandlers();
+                            }
+                        });
+
+
+                    }
+
+
+
+                } else {
+                    var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + localStorage.getItem("loggedInStudents");
+
+                    $.getJSON(studentQuery, function (data) {
+
+                        if (data.result[0] != undefined) {
+                            //add to the table
+                            var table = document.getElementById("loggedInStudents");
+
+                            //append to table
+                            var row = table.insertRow(-1);
+
+                            //first element
+                            var cell1 = row.insertCell(0);
+                            //second element
+                            var cell2 = row.insertCell(1);
+                            cell1.innerHTML = localStorage.getItem("loggedInStudents");
+                            cell2.innerHTML = data.result[0].FirstName + " " + data.result[0].LastName;
+
+
+
+                            //add click handlers to the rows
+                            addRowHandlers();
+                        }
+                    });
+
+                }
+
+
+
+            }
+
         }
-        
-        function initCalanderEvents(){
-            
-            
+
+        function initCalanderEvents() {
+
+
         }
 
 
@@ -706,18 +649,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                             //document.getElementById("professor_box").innerHTML = ""
                             $.getJSON(professorQuery, function (data) {
-                                //sessionStorage.setItem('User', JSON.stringify(data));
+                                //localStorage.setItem('User', JSON.stringify(data));
                                 //var userNameJSON = JSON.parse(data);
-                                console.log(data);
+                                //console.log(data);
                                 //document.getElementById("professor_box").innerHTML = "List of Professors";
                                 document.getElementById("professor_box").style.visibility = "visible";
-                                document.getElementById("professor_box").innerHTML += "<input type=\"checkbox\" name=\"emailProf1\" value=\"Yes\" id=\"jeckeroth@\" /><label for=\"jeckeroth@\">professor1</label><br/>";
-                                document.getElementById("professor_box").innerHTML += "<input type=\"checkbox\" name=\"emailProf2\" value=\"Yes\" id=\"jeckeroth2@\" /><label for=\"jeckeroth2@\">professor2</label<br/>";
+                                document.getElementById("professor_form").innerHTML += "<p><input type=\"checkbox\" name=\"emailProf\" value=\"Yes\" id=\"mbranton@stetson.edu\" /><label for=\"mbranton@stetson.edu\">Michael Branton</label><br/></p>";
+                                document.getElementById("professor_form").innerHTML += "<p><input type=\"checkbox\" name=\"emailProf\" value=\"Yes\" id=\"jeckeroth@stetson.edu\" /><label for=\"jeckeroth@stetson.edu\">Joshua Eckroth</label<br/></p>";
+                                document.getElementById("professor_form").innerHTML += "<p><input type=\"checkbox\" name=\"emailProf\" value=\"Yes\" id=\"wanderson@stetson.edu\" /><label for=\"wanderson@stetson.edu\">Wanda Anderson</label<br/></p>";
+                                document.getElementById("professor_form").innerHTML += "<p><input type=\"checkbox\" name=\"emailProf\" value=\"Yes\" id=\"plucas@stetson.edu\" /><label for=\"plucas@stetson.edu\">Phillip Lucas</label<br/></p>";
                             })
 
                         } else {
                             //invaild student   
-                            document.getElementById("professor_box").innerHTML = ""
+                            document.getElementById("professor_form").innerHTML = ""
                             document.getElementById("studentError").innerHTML = "<font color=\"red\">Invalid Student ID</font>";
                             setTimeout(function () {
                                 document.getElementById("studentError").innerHTML = "&nbsp;";
@@ -730,7 +675,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                 } else {
                     //student id not right length
-                    document.getElementById("professor_box").innerHTML = ""
+                    document.getElementById("professor_form").innerHTML = ""
                     document.getElementById("professor_box").style.visibility = "hidden";
                     document.getElementById("studentError").innerHTML = "<font color=\"red\">Invalid Student ID</font>";
                     setTimeout(function () {
@@ -742,7 +687,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
             } else {
 
-                document.getElementById("professor_box").innerHTML = "";
+                document.getElementById("professor_form").innerHTML = "";
                 document.getElementById("professor_box").style.visibility = "hidden";
 
             }
@@ -751,85 +696,77 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 
         function loginStudent() {
-            //if (document.getElementById("login_box").value != "") {
-            //	//            document.getElementById("student_box").innerHTML += document.getElementById("login_box").value + "<br>";
-            //
-            //	var textInput = document.getElementById("login_box"); //getting text input
-            //	var text = textInput.value; //getting value of text input element
-            //	var ul = document.getElementById("student_list"); //getting element <ul> to add element to
-            //	var li = document.createElement("li"); //creating li element to add
-            //	li.innerHTML = text; //inserting text into newly created <li> element
-            //	li.onclick = function () {
-            //		this.parentNode.removeChild(this);
-            //	}
-            //	if (ul.childElementCount == 0) { //using if/else statement to add items to top of list
-            //		ul.appendChild(li); // will add if count of ul children is 0 otherwise add before first item
-            //	} else {
-            //		ul.insertBefore(li, ul.firstChild);
-            //	}
-            //
-            //
-            //
-            //
-            //	document.getElementById("login_box").value = "";
-            //	document.getElementById("professor_toggle").checked = false;
-            //	toggleProfessors();
-            //}
 
+            //make sure not already logged in
             if (checkIfLoggedIn() == false) {
+                //make sure length = 9
                 if (document.getElementById("login_box").value.length == 9) {
+                    if (courseIDForSession.length > 1) {
 
-                    var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + document.getElementById("login_box").value;
+                        var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + document.getElementById("login_box").value;
 
-                    $.getJSON(studentQuery, function (data) {
+                        $.getJSON(studentQuery, function (data) {
 
-                        if (data.result[0] != undefined) {
-                            //add to the table
-                            var table = document.getElementById("loggedInStudents");
+                            if (data.result[0] != undefined) {
+                                //add to the table
+                                var table = document.getElementById("loggedInStudents");
 
-                            //append to table
-                            var row = table.insertRow(-1);
+                                //append to table
+                                var row = table.insertRow(-1);
 
-                            //first element
-                            var cell1 = row.insertCell(0);
-                            //second element
-                            var cell2 = row.insertCell(1);
-                            cell1.innerHTML = document.getElementById("login_box").value;
-                            cell2.innerHTML = data.result[0].FirstName + " " + data.result[0].LastName;
-
-
-                            ////table.rows[rows.length - 1].onclick=function(){
-                            ////	alert(this.innerHTML)
-                            ////}
-                            //
-                            ////table.addEventListener('click',new function(){alert(table.rows.length)},false);
-                            //var rows = document.getElementsByTagName('tr');
-                            //for (var row in rows) {
-                            //row.addEventListener('click',  function(){alert("hello")}); 
-                            //// or attachEvent, depends on browser
-                            //}
-
-                            //add click handlers to the rows
-                            addRowHandlers();
-
-                            //shows active session
-                            document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Resume Session"
-
-                            //resets fields
-                            document.getElementById("login_box").value = "";
-                            document.getElementById("professor_toggle").checked = false;
-                            toggleProfessors();
-                        } else {
-                            //invalid ID
-                            document.getElementById("studentError").innerHTML = "<font color=\"red\">Invalid Student ID</font>";
-                            setTimeout(function () {
-                                document.getElementById("studentError").innerHTML = "&nbsp;";
-                            }, 1500);
+                                //first element
+                                var cell1 = row.insertCell(0);
+                                //second element
+                                var cell2 = row.insertCell(1);
+                                cell1.innerHTML = document.getElementById("login_box").value;
+                                cell2.innerHTML = data.result[0].FirstName + " " + data.result[0].LastName;
 
 
-                        }
 
-                    });
+                                //add click handlers to the rows
+                                addRowHandlers();
+
+                                //add logged in students to browser storage and stores date
+                                if (localStorage.getItem('loggedInStudents') != undefined) {
+                                    localStorage.setItem('loggedInStudents', localStorage.getItem('loggedInStudents') + ":" + document.getElementById("login_box").value);
+                                    localStorage.setItem('studentStartTime', localStorage.getItem('studentStartTime') + "|" + Date())
+                                    localStorage.setItem('studentCourseRef', localStorage.getItem('studentCourseRef') + ":" + courseIDForSession);
+                                } else {
+                                    localStorage.setItem('loggedInStudents', document.getElementById("login_box").value);
+                                    localStorage.setItem('studentStartTime', Date());
+                                    localStorage.setItem('studentCourseRef', courseIDForSession);
+                                }
+
+                                //shows active session
+                                document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Resume Session"
+
+                                //resets fields
+                                document.getElementById("login_box").value = "";
+                                document.getElementById("professor_toggle").checked = false;
+                                document.getElementById("courses_form").innerHTML = "";
+                                courseIDForSession = "";
+                                toggleProfessors();
+                            } else {
+                                //invalid ID
+                                document.getElementById("studentError").innerHTML = "<font color=\"red\">Invalid Student ID</font>";
+                                setTimeout(function () {
+                                    document.getElementById("studentError").innerHTML = "&nbsp;";
+                                }, 1500);
+
+
+                            }
+
+                        });
+                    } else {
+                        //course not selected
+                        document.getElementById("studentError").innerHTML = "<font color=\"red\">Must Select A Course</font>";
+                        //alert(courseIDForSession);
+                        setTimeout(function () {
+                            document.getElementById("studentError").innerHTML = "&nbsp;";
+                        }, 1500);
+
+
+                    }
                 } else {
                     //dont need to check, ID isnt the right size
                     document.getElementById("studentError").innerHTML = "<font color=\"red\">Invalid Student ID</font>";
@@ -850,64 +787,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
             }
 
-            //from http://jsfiddle.net/oh16h7cj/ | http://stackoverflow.com/questions/1207939/adding-an-onclick-event-to-a-table-row, adapted to my situation
-            function addRowHandlers() {
-                var table = document.getElementById("loggedInStudents");
-                var rows = table.getElementsByTagName("tr");
-                for (i = 0; i < rows.length; i++) {
-                    var currentRow = table.rows[i];
-                    var createClickHandler =
-                        function (row) {
-                            return function () {
-                                var cell = row.getElementsByTagName("td")[0];
-                                var id = cell.innerHTML;
-                                cell = row.getElementsByTagName("td")[1];
-                                var name = cell.innerHTML;
-
-                                var conf = confirm("Logout " + name + "?");
-
-
-                                //on click, look for row with this id
-                                if (conf == true) {
-                                    removeRow(id);
-                                };
-
-                            };
-                        };
-
-                    currentRow.onclick = createClickHandler(currentRow);
-                }
-            }
-
-            function removeRow(id) {
-                var table = document.getElementById("loggedInStudents");
-                var rows = table.getElementsByTagName("tr");
-
-
-                //go through rows looking for one with id
-                for (i = 0; i < rows.length; i++) {
-                    //alert(document.getElementById("loggedInStudents").getElementsByTagName("tr")[0].innerHTML);
-
-                    var currentRow = table.rows[i];
-                    var cell = currentRow.getElementsByTagName("td")[0];
-                    var tID = cell.innerHTML;
-                    //alert(currentRow.row.getElementsByTagName("td")[0])
-                    //alert(table.rows[i].cells[0].innerhtml);
-                    if (tID == id) {
-                        table.deleteRow(i);
-
-
-                    }
-                }
-
-                //if no one is left, reset session button
-                if (rows.length == 0) {
-                    document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Start Session"
-
-                }
-
-
-            }
 
         }
 
@@ -989,21 +868,173 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         }
 
         function requestAppointment() {
-            alert("hi");
+            //alert("hi");
             addAppointment();
         }
-        
-        function acceptAppointment(){
-            
-            
+
+        function acceptAppointment() {
+
+
+        }
+
+        function rejectAppointment() {
+
+
+        }
+
+        //from http://jsfiddle.net/oh16h7cj/ | http://stackoverflow.com/questions/1207939/adding-an-onclick-event-to-a-table-row, adapted to my situation
+        function addRowHandlers() {
+            var table = document.getElementById("loggedInStudents");
+            var rows = table.getElementsByTagName("tr");
+            for (i = 0; i < rows.length; i++) {
+                var currentRow = table.rows[i];
+                var createClickHandler =
+                    function (row) {
+                        return function () {
+                            var cell = row.getElementsByTagName("td")[0];
+                            var id = cell.innerHTML;
+                            cell = row.getElementsByTagName("td")[1];
+                            var name = cell.innerHTML;
+
+                            var conf = confirm("Logout " + name + "?");
+
+
+                            //on click, look for row with this id
+                            if (conf == true) {
+                                removeRow(id);
+
+
+                                //need to call end session
+                                var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + id;
+
+                                //need to grab student ref
+                                $.getJSON(studentQuery, function (data) {
+                                    var studentRefID = data.result[0].id;
+
+
+                                });
+
+
+
+                                //need to check if we clear storage completely or remove from existing storage
+                                if (localStorage.getItem("loggedInStudents").length > 9) {
+                                    var index = localStorage.getItem("loggedInStudents").split(":").indexOf(id);
+                                    var newLoggedList = "";
+                                    //remove from storage
+                                    for (var i = 0; i < localStorage.getItem("loggedInStudents").split(":").length; i++) {
+                                        if (i != index) {
+                                            newLoggedList += localStorage.getItem("loggedInStudents").split(":")[i] + ":";
+
+                                        }
+
+                                    }
+
+                                    //remove last :
+
+                                    newLoggedList = newLoggedList.slice(0, -1);
+                                    localStorage.setItem("loggedInStudents", newLoggedList);
+
+                                    //now for date
+                                    var newDateList = "";
+
+                                    for (var i = 0; i < localStorage.getItem("studentStartTime").split("|").length; i++) {
+                                        if (i != index) {
+                                            newDateList += localStorage.getItem("studentStartTime").split("|")[i] + "|";
+
+                                        }
+
+                                    }
+
+                                    //remove last |
+                                    newDateList = newDateList.slice(0, -1);
+
+                                    localStorage.setItem("studentStartTime", newDateList);
+
+                                    //now for course ref
+                                    var newCourseRefList = "";
+
+                                    for (var i = 0; i < localStorage.getItem("studentCourseRef").split(":").length; i++) {
+                                        if (i != index) {
+                                            newCourseRefList += localStorage.getItem("studentCourseRef").split(":")[i] + ":";
+
+                                        }
+
+                                    }
+
+                                    //remove last :
+                                    newCourseRefList = newCourseRefList.slice(0, -1);
+
+                                    localStorage.setItem("studentCourseRef", newCourseRefList);
+
+
+
+                                } else {
+
+                                    localStorage.clear();
+
+                                }
+
+
+
+
+                            };
+
+                        };
+                    };
+
+                currentRow.onclick = createClickHandler(currentRow);
+            }
+        }
+
+        function removeRow(id) {
+            var table = document.getElementById("loggedInStudents");
+            var rows = table.getElementsByTagName("tr");
+
+
+            //go through rows looking for one with id
+            for (i = 0; i < rows.length; i++) {
+                //alert(document.getElementById("loggedInStudents").getElementsByTagName("tr")[0].innerHTML);
+
+                var currentRow = table.rows[i];
+                var cell = currentRow.getElementsByTagName("td")[0];
+                var tID = cell.innerHTML;
+                //alert(currentRow.row.getElementsByTagName("td")[0])
+                //alert(table.rows[i].cells[0].innerhtml);
+                if (tID == id) {
+                    table.deleteRow(i);
+
+
+                }
+            }
+
+            //if no one is left, reset session button
+            if (rows.length == 0) {
+                document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Start Session"
+
+            }
+
+
         }
         
-        function rejectAppointment(){
+        function demoAcceptRequest(){
+            document.getElementById("requests_tab").innerHTML = "<i><img src=\"images/mail.png\" alt=\"\"></i>View Requests"
+            document.getElementById("tempIDForDemo").innerHTML = ""
+            document.getElementById("tempIDForDemo2").innerHTML = ""
+            document.getElementById("tempIDForDemo3").innerHTML = ""
+            $('#calendar').fullCalendar('renderEvent', {
+                    title: "Jeremy Rumsey",
+                    start: "2015-12-09T18:00:00"
+                }, true);
+            }
             
+        
+        function demoRejectRequest(){
+            document.getElementById("requests_tab").innerHTML = "<i><img src=\"images/mail.png\" alt=\"\"></i>View Requests"
+            document.getElementById("tempIDForDemo").innerHTML = ""
+            document.getElementById("tempIDForDemo2").innerHTML = ""
+            document.getElementById("tempIDForDemo3").innerHTML = ""
             
         }
-        
-        
     </script>
 </body>
 

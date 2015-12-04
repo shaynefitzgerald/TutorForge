@@ -198,8 +198,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <div class="menu">
                     <a class="toggleMenu" href="#"><img src="images/nav.png" alt="" /></a>
                     <ul class="nav">
-                        <li class="active"><a href="#"><i><img src="images/user.png" alt="" /></i>Home</a></li>
-                        <li><a class="active" href="#mCal"><i><img src="images/events.png" alt="" /></i>Calendar</a></li>
+                        <li class="active"><a href="#"><i><img src="images/user.png" alt="" /></i><font size=3>Home</font></a></li>
+                        <li><a class="active" href="#mCal"><i><img src="images/events.png" alt="" /></i><font size=3>Calendar</font></a></li>
                         <div class="modalCalendar" id="mCal">
                             <div class="modalCalendar-container">
                                 <div id="calendar" style="background-color: white"></div>
@@ -230,7 +230,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </div>
                     </div>
                     <div class="profile_img">
-                        <a href="#"><img src="images/Admin%20Picture.png" width="100" height="100" alt="" /> </a>
+                        <a href="#"><img src="images/adminPic.jpg" width="50" height="50" alt="" /> </a>
 
                     </div>
                     <div class="clear"></div>
@@ -254,94 +254,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </ul>
                     </div>
                 </div>
-                <div class="chart">
-                    <h3>My Rankings and FeedBack</h3>
-                    <div class="diagram">
-                        <canvas id="canvas" height="220" width="220"> </canvas>
-                        <h4><span>June</span><br />2013</h4>
-                    </div>
-
-                    <!----		              
-<span><img src="images/chart.png" alt="" /></span>
------>
-                    <div class="chart_list">
-                        <ul>
-                            <li><a href="#" class="red">1 Star<p class="percentage">21<em>%</em></p></a></li>
-                            <li><a href="#" class="blue">2 Star<p class="percentage">48<em>%</em></p></a></li>
-                            <li><a href="#" class="yellow">3 Star<p class="percentage">9<em>%</em></p></a></li>
-                            <li><a href="#" class="purple">4 Star<p class="percentage">32<em>%</em></p></a></li>
-                            <div class="clear"></div>
-                        </ul>
-                    </div>
-                    <script>
-                        var doughnutData = [
-                            {
-                                value: 21,
-                                color: "#E64C65"
-},
-                            {
-                                value: 48,
-                                color: "#11A8AB"
-},
-                            {
-                                value: 32,
-                                color: "#4FC4F6"
-},
-                            {
-                                value: 9,
-                                color: "#FCB150"
-},
-
-];
-                        var myDoughnut = new Chart(document.getElementById("canvas").getContext("2d")).Doughnut(doughnutData);
-                    </script>
-                </div>
-                <div class="graph">
-                    <canvas id="line-chart"> </canvas>
-                    <script>
-                        var lineChartData = {
-                            labels: ["Apr", "May", "Jun"],
-                            datasets: [
-                                {
-                                    fillColor: "rgba(255, 255, 255, 0)",
-                                    strokeColor: "#FFF",
-                                    pointColor: "#11a8ab",
-                                    pointStrokeColor: "#FFF",
-                                    data: [21, 48, 35]
-	}
-	]
-
-                        }
-
-                        var myLine = new Chart(document.getElementById("line-chart").getContext("2d")).Line(lineChartData);
-                    </script>
-                    <!---
-<img src="images/graph.png" alt="" />
-------->
-                    <div class="graph_list">
-                        <div class="week-month-year">
-                            <p><a href="#">Week</a></p>
-                            <p><a href="#" class="active">Month</a></p>
-                            <p><a href="#">year</a></p>
-                            <div class="clear"></div>
-                        </div>
-                        <ul>
-                            <li><a href="#"><span class="day_name">Apr</span> 2013 
-<label class="digits"><span>+</span>21<em>%</em></label><div class="clear"></div></a></li>
-                            <li class="active"><a href="#"><span class="day_name">May</span> 2013 
-<label class="digits"><span>+</span>48<em>%</em></label><div class="clear"></div></a></li>
-                            <li><a href="#"><span class="day_name">Jun</span> 2013 
-<label class="digits"><span>+</span>35<em>%</em> </label><div class="clear"></div></a></li>
-                        </ul>
-                    </div>
-                </div>
-                -->
             </div>
 
             <div class="column_middle">
                 <div class="column_middle_grid1">
                     <div class="profile_picture">
-                        <a href="#"><img src="images/Admin%20Picture.png" width="125" height="125" alt="" /> </a>
+                        <a href="#"><img src="images/adminPic.jpg" width="125" height="125" alt="" /> </a>
                         <div class="profile_picture_name">
                             <h2><div id="UN"></div></h2>
 
@@ -353,10 +271,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <script>
                         var username;
                         var usernameQuery;
-                        $.get('https://tutorme.stetson.edu/user', function (data) {
+                        $.getJSON('https://tutorme.stetson.edu/user', function (data) {
                             sessionStorage.setItem('User', JSON.stringify(data));
                             var UserNameJSON = JSON.parse(data);
                             username = UserNameJSON.username;
+                            system.log(username);
                             document.getElementById('UN').innerHTML = username;
                             document.getElementById('UNTop').innerHTML = username;
 
@@ -478,7 +397,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 
                     <div id="users-contain" class="ui-widget">
-                        <h1>Recently Registered Tutors!</h1>
+                        <h1><div align = "center"><font size= 3 color= "#ffffff" > Registered Tutors! </font></div></h1>
                         <table id="users" class="ui-widget ui-widget-content">
                             <thead>
                                 <tr class="ui-widget-header ">
@@ -496,7 +415,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             </tbody>
                         </table>
                     </div>
-                    <button id="create-user">Register Tutor!</button>
+                    <div align="center">
+                        <button id="create-user">Register Tutor!</button>
+                    </div>
 
                 </div>
 
@@ -509,7 +430,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <div id="calendar_1"></div>
 </div>
 -->
-                <div id="calendar_1" style="background-color: #4AB8AF"></div>
+                <div id="calendar_1" style="background-color: #ffffff"></div>
             </div>
             <div class="clear"></div>
         </div>
@@ -635,7 +556,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
             if (checkGetSuccess) {
                 for (i = 0; i < allTutors.length; i++) {
+
                     console.log("Add Row");
+
+
                     $("#users tbody").append("<tr>" +
                         "<td><a href='#mTut" + i + "'>" + allTutors[i].FullName + "</a></td>" +
                         "<td><a href='#mTut" + i + "'>" + allTutors[i].Email + "</a></td>" +
@@ -643,9 +567,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         "</tr>", "<div class='modalTutor' id='mTut" + i +
                         "'> <div class='modalTutor-container'>" +
                         "<p align= 'center'><font size= '7' color= 'white'><strong>" + allTutors[i].FullName + "</strong></font>" +
-                        "<div class='modalTutor-rmTutor'><button onclick='removeTutor(" + allTutors[i].ID + ")'>Remove Tutor</button></div></p>" +
+                        "<div class='modalTutor-rmTutor'><a class = 'myButton' onclick='removeTutor(" + allTutors[i].ID + ")'>Remove Tutor</a></div></p>" +
                         "<div class= 'modalTutor-feedback'><p align= 'center'><font size= '7' color='white'><strong>Feedback</strong></font></p> " +
                         "</div> <div class= 'modalTutor-stats'><p align= 'center'><font size= '7' color='white'><strong>Statistics</strong></font></p> " +
+                        "<p><font size= '3' color='white'>Appointments:</font></p>" +
                         "</div> <div class= 'modalTutor-schedule'><p align= 'center'><font size= '7' color='white'><strong>Schedule</strong></font></p></div>" +
                         "<div class = 'modalTutor-close'><p align= 'right'><a href='#'><font size= '5' color='#66e0ff'>Close</font></a></p></div></div></div>");
 
@@ -656,6 +581,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 console.log("GetAllTutors Failed");
             }
         }, 1000);
+        //https://tutorme.stetson.edu/api/sessions/getPreviousSessions?by=Username&value=someguy
 
         //from http://jsfiddle.net/oh16h7cj/ | http://stackoverflow.com/questions/1207939/adding-an-onclick-event-to-a-table-row, adapted to my situation
     </script>
