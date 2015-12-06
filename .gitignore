@@ -6,6 +6,7 @@
 cas-testing/
 .sessionKey
 npm_debug.log
+TutorMe-Backend/node_modules/
 
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio
