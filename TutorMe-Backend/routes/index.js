@@ -65,18 +65,6 @@ exports.init = function(cas, db) {
       return res.end(e.toString());
     }
   });
-  router.get('/resetFlags', cas.block, function(req, res) {
-    res.type('application/json');
-    req.session.userPermissions = "";
-    return fn_success(res, req.session);
-  });
-  router.post('/setPermissionsFlags', cas.block, function(req, res) {
-    res.type('application/json');
-    var body = req.body;
-    if (body.flags === undefined) fn_error(res, "Missing Parameter: flags");
-    req.session.userPermissions = body.flags;
-    return fn_success(res, req.session);
-  });
 
   router.get('/api/iosauthenticate', cas.bounce, function(req, res) {
     res.type('application/json');

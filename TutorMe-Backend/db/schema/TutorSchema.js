@@ -22,6 +22,15 @@ var SchemaObject = {
   }],
   LifetimeSessionCount: Number,
   LastArchivedSession: Date,
+  Schedule : {
+    M : [{Start : Date, End : Date}],
+    T : [{Start : Date, End : Date}],
+    W : [{Start : Date, End : Date}],
+    R : [{Start : Date, End : Date}],
+    F : [{Start : Date, End : Date}],
+    S : [{Start : Date, End : Date}],
+    U : [{Start : Date, End : Date}]
+  },
 };
 var SchemaOptions = {
   toObject: {
