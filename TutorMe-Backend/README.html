@@ -291,7 +291,108 @@
     "<span class="hljs-attribute">error</span>" : <span class="hljs-value">{}</span>,
 }
 </code></pre>
-<h2><a id="Appointment_Requests_344"></a>Appointment Requests</h2>
+<h3><a id="createSchedule_https_post_344"></a>/createSchedule <code>[https post]</code></h3>
+<pre><code>/api/tutor/createSchedule
+</code></pre>
+<p>Creates/Overwrites existing schedule data associated with the tutor.</p>
+<p>The Tutor is selected by the same method as <code>/api/tutors/get</code>, with <code>field</code> and <code>value</code>, except in the body instead.</p>
+<h4><a id="Schedule_Format_352"></a>Schedule Format</h4>
+<pre><code class="language-JSON">    {
+        "M" : [{ Start : Date, End : Date}],
+        "T" : [{ Start : Date, End : Date}],
+        "W" : [{ Start : Date, End : Date}],
+        "R" : [{ Start : Date, End : Date}],
+        "F" : [{ Start : Date, End : Date}],
+        "S" : [{ Start : Date, End : Date}],
+        "U" : [{ Start : Date, End : Date}],
+    }
+</code></pre>
+<p><strong>Example Query</strong></p>
+<pre><code>/api/tutors/createSchedule
+</code></pre>
+<p><em><strong>Post Body</strong></em></p>
+<pre><code class="language-json">{
+    "field" : "Username",
+    "value" : "someguy",
+    "Schedule" : {
+        "M" : [{ Start : Date, End : Date}],
+        "T" : [{ Start : Date, End : Date}],
+        "W" : [{ Start : Date, End : Date}],
+        "R" : [{ Start : Date, End : Date}],
+        "F" : [{ Start : Date, End : Date}],
+        "S" : [{ Start : Date, End : Date}],
+        "U" : [{ Start : Date, End : Date}],
+    }
+}
+</code></pre>
+<p><em><strong>On Success</strong></em></p>
+<pre><code class="language-json">{
+    "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+}
+</code></pre>
+<p><em><strong>On Failure</strong></em></p>
+<pre><code class="language-json">{
+    "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+    "<span class="hljs-attribute">error</span>" : <span class="hljs-value">{}</span>,
+}
+</code></pre>
+<h3><a id="updateSchedule_https_post_401"></a>/updateSchedule <code>[https post]</code></h3>
+<pre><code>/api/tutors/updateSchedule
+</code></pre>
+<p>Appends Start/End data to existing schedule data associated with the tutor.</p>
+<p>The Tutor is selected by the same method as <code>/api/tutors/get</code>, with <code>field</code> and <code>value</code>, except in the body instead.</p>
+<p><strong>Example Query</strong></p>
+<pre><code>/api/tutors/updateSchedule
+</code></pre>
+<p><em><strong>Post Body</strong></em></p>
+<pre><code class="language-json">{
+    "field" : "Username",
+    "value" : "someguy",
+    "Schedule" : {
+        "M" : [{ Start : Date, End : Date}],
+    }
+}
+</code></pre>
+<p><em><strong>On Success</strong></em></p>
+<pre><code class="language-json">{
+    "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+}
+</code></pre>
+<p><em><strong>On Failure</strong></em></p>
+<pre><code class="language-json">{
+    "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+    "<span class="hljs-attribute">error</span>" : <span class="hljs-value">{}</span>,
+}
+</code></pre>
+<h3><a id="removeScheduleEntry_https_post_439"></a>/removeScheduleEntry <code>[https post]</code></h3>
+<pre><code>/api/tutor/removeScheduleEntry
+</code></pre>
+<p>Removes an existing Start/End date from the specified day.</p>
+<p>The Tutor is selected by the same method as <code>/api/tutors/get</code>, with <code>field</code> and <code>value</code>, except in the body instead.</p>
+<p><strong>Example Query</strong></p>
+<pre><code>/api/tutors/removeScheduleEntry
+</code></pre>
+<p><em><strong>Post Body</strong></em></p>
+<pre><code class="language-json">{
+    "field" : "Username",
+    "value" : "someguy",
+    "Schedule" : {
+        "M" : [{ Start : Date, End : Date}],
+    }
+}
+</code></pre>
+<p><em><strong>On Success</strong></em></p>
+<pre><code class="language-json">{
+    "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+}
+</code></pre>
+<p><em><strong>On Failure</strong></em></p>
+<pre><code class="language-json">{
+    "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+    "<span class="hljs-attribute">error</span>" : <span class="hljs-value">{}</span>,
+}
+</code></pre>
+<h2><a id="Appointment_Requests_479"></a>Appointment Requests</h2>
 <p>Appointments are handled separately from sessions due to their validation requirements from the tutor.</p>
 <p>The appointment lifecycle is as follows:</p>
 <ol>
@@ -302,7 +403,7 @@
 <li>If the appointment is rejected, the appointment will be marked as rejected. The appointment wont be deleted from the database until the Student who made the request withdraws it using <code>/api/appointments/withdrawRequest</code></li>
 </ol>
 <p>Appointments may be withdrawn at any time by their creator using <code>/api/appointments/withdraWRequest</code></p>
-<h3><a id="makeRequest_httpspost_358"></a>/makeRequest <code>[https/post]</code></h3>
+<h3><a id="makeRequest_httpspost_493"></a>/makeRequest <code>[https/post]</code></h3>
 <p>Creates an Appointment Request. Requires the following fields:</p>
 <ul>
 <li><code>StudentField</code>: The field in which to search by for the corresponding student. Recommended fields are <code>Email</code>,<code>ID</code>, <code>_id</code>, but can technically be any. Will select the first result alphabetically for any ambiguous field such as <code>FirstName</code>, <code>LastName</code>, etc. Do not use <code>Username</code> or <code>FullName</code>, as these are virtual fields that cannot be polled through this API URL at the moment. (If you need Username polling, please request it.)</li>
@@ -338,10 +439,10 @@
     "<span class="hljs-attribute">error</span>" : <span class="hljs-value">{}</span>,
 }
 </code></pre>
-<h3><a id="getAppointmentRequests_httpsget_401"></a>/getAppointmentRequests <code>[https/get]</code></h3>
+<h3><a id="getAppointmentRequests_httpsget_536"></a>/getAppointmentRequests <code>[https/get]</code></h3>
 <p>Returns the AppointmentRequests corresponding to the username specified. Note that the <code>as</code> parameter specifies Student/Tutor distinctions, so be aware of which you need.</p>
 <p><strong>Example Query</strong></p>
-<pre><code>/api/getAppointmentRequests?as=Tutor&amp;Username=someguy
+<pre><code>/api/appointments/getAppointmentRequests?as=Tutor&amp;Username=someguy
 </code></pre>
 <p><strong>Expected Response</strong></p>
 <p><em><strong>On Success</strong></em></p>
@@ -363,7 +464,7 @@
  "<span class="hljs-attribute">error</span>" : <span class="hljs-value">{}
 </span>}
 </code></pre>
-<h4><a id="Notes_433"></a>Notes:</h4>
+<h4><a id="Notes_568"></a>Notes:</h4>
 <ul>
 <li>Sesssions also have two other fields:
 <ul>
@@ -373,7 +474,7 @@
 </li>
 <li>Both <code>Student</code> and <code>Tutor</code> will be populated by their corresponding objects from the database.</li>
 </ul>
-<h2><a id="respondToRequest_httpspost_440"></a>/respondToRequest <code>[https/post]</code></h2>
+<h2><a id="respondToRequest_httpspost_575"></a>/respondToRequest <code>[https/post]</code></h2>
 <pre><code>/api/appointments/respondToRequest
 </code></pre>
 <p>Responds to a request by ObjectId Reference. (where the reference looks like <code>507f1f77bcf86cd799439011</code>)</p>
@@ -392,7 +493,7 @@
 </span>}
 </code></pre>
 <p><em>note the result here is the <code>_id</code> of the resulting Session</em></p>
-<h3><a id="withdrawRequest_httpspost_466"></a>/withdrawRequest <code>[https/post]</code></h3>
+<h3><a id="withdrawRequest_httpspost_601"></a>/withdrawRequest <code>[https/post]</code></h3>
 <p>Withraws an AppointmentRequest by reference.</p>
 <p><strong>Example Request</strong></p>
 <pre><code>/api/appointments/withdrawRequest
@@ -407,7 +508,7 @@
     "<span class="hljs-attribute">success</span>" : <span class="hljs-value"><span class="hljs-literal">true</span>
 </span>}
 </code></pre>
-<h2><a id="Sessions_490"></a>Sessions</h2>
+<h2><a id="Sessions_625"></a>Sessions</h2>
 <p><strong>Session Schema</strong></p>
 <pre><code class="language-JSON">{
     "<span class="hljs-attribute">Start</span>" : <span class="hljs-value">Date</span>,
@@ -430,7 +531,7 @@
 }
 </code></pre>
 <p>(Note that <code>Student</code>, <code>Tutor</code>, and <code>ForClass</code> are all ObjectId Strings.)</p>
-<h3><a id="endSession_httpspost_517"></a>/endSession <code>[https/post]</code></h3>
+<h3><a id="endSession_httpspost_652"></a>/endSession <code>[https/post]</code></h3>
 <p>The meat and potatoes of the application. Sessions are divided by this function into two categories: Impromptu, and Scheduled.</p>
 <ul>
 <li>Impromptu: Sessions that aren’t pre-scheduled and require a new Session to be created are desiginated this way. All the fields from the Schema above are required for this version.</li>
@@ -464,7 +565,7 @@
     "<span class="hljs-attribute">error</span>" : <span class="hljs-value">{}</span>,
 }
 </code></pre>
-<h3><a id="getPreviousSessions_httpsget_560"></a>/getPreviousSessions <code>[https/get]</code></h3>
+<h3><a id="getPreviousSessions_httpsget_695"></a>/getPreviousSessions <code>[https/get]</code></h3>
 <p>Works two different ways. If you’re authenticated as a tutor, simply call this URI without arguments to get your previous sessions. Otherwise, use any of the query-able fields to find a tutor to get the previous sessions of.</p>
 <p><strong>Example Query</strong></p>
 <pre><code>/api/sessions/getPreviousSessions?by=Username&amp;value=someguy
@@ -483,7 +584,7 @@
     "<span class="hljs-attribute">error</span>" : <span class="hljs-value">{}
 </span>}
 </code></pre>
-<h2><a id="getScheduledSessions_httpsget_589"></a>/getScheduledSessions <code>[https/get]</code></h2>
+<h2><a id="getScheduledSessions_httpsget_724"></a>/getScheduledSessions <code>[https/get]</code></h2>
 <p>Same as above, but with upcoming sessions, scheduled or otherwise where the start date is further on from today.</p>
 <p><strong>Example Query</strong></p>
 <pre><code>/api/sessions/getPreviousSessions?by=Username&amp;value=someguy

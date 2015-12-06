@@ -342,6 +342,141 @@ Accepted fields are `ID Email Subject Username`
 }
 ```
 
+### /createSchedule `[https post]`
+
+    /api/tutor/createSchedule
+
+Creates/Overwrites existing schedule data associated with the tutor.
+
+The Tutor is selected by the same method as `/api/tutors/get`, with `field` and `value`, except in the body instead.
+
+#### Schedule Format
+```JSON
+    {
+        "M" : [{ Start : Date, End : Date}],
+        "T" : [{ Start : Date, End : Date}],
+        "W" : [{ Start : Date, End : Date}],
+        "R" : [{ Start : Date, End : Date}],
+        "F" : [{ Start : Date, End : Date}],
+        "S" : [{ Start : Date, End : Date}],
+        "U" : [{ Start : Date, End : Date}],
+    }
+```
+
+**Example Query**
+
+    /api/tutors/createSchedule
+
+*__Post Body__*
+```json
+{
+    "field" : "Username",
+    "value" : "someguy",
+    "Schedule" : {
+        "M" : [{ Start : Date, End : Date}],
+        "T" : [{ Start : Date, End : Date}],
+        "W" : [{ Start : Date, End : Date}],
+        "R" : [{ Start : Date, End : Date}],
+        "F" : [{ Start : Date, End : Date}],
+        "S" : [{ Start : Date, End : Date}],
+        "U" : [{ Start : Date, End : Date}],
+    }
+}
+```
+
+*__On Success__*
+```json
+{
+    "success" : true,
+}
+```
+
+*__On Failure__*
+```json
+{
+    "success" : false,
+    "error" : {},
+}
+```
+
+### /updateSchedule `[https post]`
+
+    /api/tutors/updateSchedule
+
+Appends Start/End data to existing schedule data associated with the tutor.
+
+The Tutor is selected by the same method as `/api/tutors/get`, with `field` and `value`, except in the body instead.
+
+**Example Query**
+
+    /api/tutors/updateSchedule
+
+*__Post Body__*
+```json
+{
+    "field" : "Username",
+    "value" : "someguy",
+    "Schedule" : {
+        "M" : [{ Start : Date, End : Date}],
+    }
+}
+```
+
+*__On Success__*
+```json
+{
+    "success" : true,
+}
+```
+
+*__On Failure__*
+```json
+{
+    "success" : false,
+    "error" : {},
+}
+```
+
+### /removeScheduleEntry `[https post]`
+
+    /api/tutor/removeScheduleEntry
+
+Removes an existing Start/End date from the specified day.
+
+The Tutor is selected by the same method as `/api/tutors/get`, with `field` and `value`, except in the body instead.
+
+
+**Example Query**
+
+    /api/tutors/removeScheduleEntry
+
+*__Post Body__*
+```json
+{
+    "field" : "Username",
+    "value" : "someguy",
+    "Schedule" : {
+        "M" : [{ Start : Date, End : Date}],
+    }
+}
+```
+
+*__On Success__*
+```json
+{
+    "success" : true,
+}
+```
+
+*__On Failure__*
+```json
+{
+    "success" : false,
+    "error" : {},
+}
+```
+
+
 ## Appointment Requests
 
 Appointments are handled separately from sessions due to their validation requirements from the tutor.
