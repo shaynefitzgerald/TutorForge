@@ -47,10 +47,10 @@ var db_getAppointmentRequests_Students = function(db, query, callback) {
   var AppointmentRequestModel = db.model('AppointmentRequestModel');
   var StudentModel = db.model('StudentModel');
   StudentModel.findOne({
-    'Username': query
+    'Email' : toEmail(query)
   }, function(err, student) {
     if (err) return callback(false, err);
-    if (student === undefined) {
+    if (student === undefined || student === null) {
       return callback(false, "No Such User");
     } else {
       return AppointmentRequestModel.find({
@@ -68,7 +68,7 @@ var db_getAppointmentRequests_Tutors = function(db, query, callback) {
   var AppointmentRequestModel = db.model('AppointmentRequestModel');
   var TutorModel = db.model('TutorModel');
   TutorModel.findOne({
-    'Username': query
+    'Email' : toEmail(query)
   }, function(err, tutor) {
     if (err) return callback(false, err);
     if (tutor === undefined || tutor === null) {
