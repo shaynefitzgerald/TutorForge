@@ -230,13 +230,13 @@ exports.init = function(cas, db) {
 
     if (query.as !== undefined && query.Username !== undefined) {
       if (query.as === "Student") {
-        return db_getAppointmentRequests_Students(db, query.Username, function(err, result) {
-          if (err) return fn_error(res, result);
+        return db_getAppointmentRequests_Students(db, query.Username, function(success, result) {
+          if (!success) return fn_error(res, result);
           return fn_success(res, result);
         });
       } else if (query.as === "Tutor") {
-        return db_getAppointmentRequests_Tutors(db, query.Username, function(err, result) {
-          if (err) return fn_error(res, result);
+        return db_getAppointmentRequests_Tutors(db, query.Username, function(success, result) {
+          if (!success) return fn_error(res, result);
           return fn_success(res, result);
         });
       } else {
