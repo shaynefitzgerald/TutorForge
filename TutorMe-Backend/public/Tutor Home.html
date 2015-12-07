@@ -185,7 +185,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <div id="viewRequests_modal" class="modal">
         <div class="modal-content">
             <div class="container">
-                <div class="row">
+                <div class="row" id="pending_requests">
 
                     <span class="col s12 center-align"><b>Requests</b></span>
                     <div class="col s12 center-align">&nbsp;</div>
@@ -461,22 +461,30 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             $.getJSON(studentQuery, function (data) {
                 if (data.result[0] != undefined) {
                     $.getJSON(studentCoursesQuery, function (data) {
-                        //id = course ref number
+
                         document.getElementById("courses_form").innerHTML = "";
-                        document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test1\" /><label for=\"test1\">Software Development II</label></p>";
-                        document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test2\" /><label for=\"test2\">Earth Effecting People</label></p>";
-                        document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test3\" /><label for=\"test3\">Computer Organization</label></p>";
-                        document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test4\" /><label for=\"test4\">Senior Research I</label></p>";
-                        document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test5\" /><label for=\"test5\">Computer Graphics I</label></p>";
+                        for (var i = 0; i < data.result.length; i++) {
+                            var courseTitle = data.result[i].CourseTitle;
+                            var courseRefID = data.result[i]._id;
+                            var htmlString = "<p><input name=\"courseRadios\" type=\"radio\" id=\"" + courseRefID + "\" /><label for=\"" + courseRefID + "\">" + courseTitle + "</label></p>"
+                            document.getElementById("courses_form").innerHTML += htmlString;
+
+                        }
+                        //document.getElementById("courses_form").innerHTML = "";
+                        //document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test1\" /><label for=\"test1\">Software Development II</label></p>";
+                        //document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test2\" /><label for=\"test2\">Earth Effecting People</label></p>";
+                        //document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test3\" /><label for=\"test3\">Computer Organization</label></p>";
+                        //document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test4\" /><label for=\"test4\">Senior Research I</label></p>";
+                        //document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test5\" /><label for=\"test5\">Computer Graphics I</label></p>";
                     });
                 }
             });
         }
 
-
+        //grab id of checked radio button
         $("#courses_form").on("change", function () {
             //alert("p");
-            courseIDForSession = $("input[name=group1]:checked").attr("id");
+            courseIDForSession = $("input[name=courseRadios]:checked").attr("id");
         });
 
 
@@ -501,7 +509,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 userName = data.username;
 
                 initPendingAppointments();
-                initSessionButton();
+                //initSessionButton();
                 initCalanderEvents();
 
                 var selfQuery = "https://tutorme.stetson.edu/api/students/get?field=Username&value=" + userName;
@@ -536,9 +544,29 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 
         function initPendingAppointments() {
-            var appointmentsQuery = "https://tutorme.stetson.edu/api/getAppointmentRequests?as=Tutor&Username=" + userName;
+            var appointmentsQuery = "https://tutorme.stetson.edu/api/appointments/getAppointmentRequests?as=Tutor&Username=" + userName;
             $.getJSON(appointmentsQuery, function (data) {
                 //console.log(data)
+                
+                //button id are student ref or student name + A if accept or R if reject
+                
+                //text for buttons
+                document.getElementById("pending_requests").innerHTML += "<div class=\"col s8\" id=\"tempIDForDemo\">Student Wants an appointment on <b>Date</b> at <b>Time</b></div>"
+                
+                //accept button
+                document.getElementById("pending_requests").innerHTML += "<div class=\"col s2\" id=\"studentRefA\"><button type=\"button\">Accept</button></div>"
+                
+                //reject button
+                document.getElementById("pending_requests").innerHTML += "<div class=\"col s2\" id=\"studentRefR\"><button type=\"button\">Reject</button></div>"
+                
+                //add Accept function
+                document.getElementById("studentRefA").onclick = function(){
+                   alert("you hit accept");
+                };
+                //add Reject function
+                document.getElementById("studentRefR").onclick = function(){
+                   alert("you hit reject");
+                } 
             });
 
         }
@@ -647,17 +675,35 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             //student is valid, grab professors
                             var professorQuery = 'https://tutorme.stetson.edu/api/students/getStudentProfessors?StudentID=' + document.getElementById("login_box").value;
 
+                            //string to make sure each prof only gets added once
+                            var profCheck = "";
+
                             //document.getElementById("professor_box").innerHTML = ""
                             $.getJSON(professorQuery, function (data) {
                                 //localStorage.setItem('User', JSON.stringify(data));
                                 //var userNameJSON = JSON.parse(data);
                                 //console.log(data);
                                 //document.getElementById("professor_box").innerHTML = "List of Professors";
+                                for (var i = 0; i < data.result.length; i++) {
+                                    var profEmail = data.result[i].InstructorEmail;
+                                    var profFirstName = data.result[i].InstructorFirstName;
+                                    var profLastName = data.result[i].InstructorLastName;
+
+                                    //check to make sure only added once
+                                    if (profCheck.indexOf(profEmail) == -1) {
+
+                                        var htmlString = "<p><input type=\"checkbox\" name=\"emailProf\" value=\"yes\" id=\"" + profEmail + "\" /><label for=\"" + profEmail + "\">" + profFirstName + " " + profLastName + "</label><br/></p>"
+                                        document.getElementById("professor_form").innerHTML += htmlString;
+                                        profCheck += profEmail;
+                                    }
+
+
+                                }
+
+
+
                                 document.getElementById("professor_box").style.visibility = "visible";
-                                document.getElementById("professor_form").innerHTML += "<p><input type=\"checkbox\" name=\"emailProf\" value=\"Yes\" id=\"mbranton@stetson.edu\" /><label for=\"mbranton@stetson.edu\">Michael Branton</label><br/></p>";
-                                document.getElementById("professor_form").innerHTML += "<p><input type=\"checkbox\" name=\"emailProf\" value=\"Yes\" id=\"jeckeroth@stetson.edu\" /><label for=\"jeckeroth@stetson.edu\">Joshua Eckroth</label<br/></p>";
-                                document.getElementById("professor_form").innerHTML += "<p><input type=\"checkbox\" name=\"emailProf\" value=\"Yes\" id=\"wanderson@stetson.edu\" /><label for=\"wanderson@stetson.edu\">Wanda Anderson</label<br/></p>";
-                                document.getElementById("professor_form").innerHTML += "<p><input type=\"checkbox\" name=\"emailProf\" value=\"Yes\" id=\"plucas@stetson.edu\" /><label for=\"plucas@stetson.edu\">Phillip Lucas</label<br/></p>";
+
                             })
 
                         } else {
@@ -904,75 +950,110 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 removeRow(id);
 
 
-                                //need to call end session
+
+                                var index = localStorage.getItem("loggedInStudents").split(":").indexOf(id);
                                 var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + id;
 
                                 //need to grab student ref
                                 $.getJSON(studentQuery, function (data) {
+                                    var impromptu = true;
+                                    var startTime = localStorage.getItem("studentStartTime").split("|")[index];
+                                    //alert("Start: " + startTime);
+                                    var endTime = Date();
+                                    //alert("End: " + endTime);
+                                    //alert("Tutor Subject: " + tutorSubject);
+                                    var location = "";
                                     var studentRefID = data.result[0].id;
+
+                                    //alert("studentRefID: " + studentRefID);
+                                    //alert("tutorRefID: " + tutorRefID);
+
+                                    var classRef = localStorage.getItem("studentCourseRef").split(":")[index];
+                                    //alert("Clasref: " + classRef);
+
+                                    var profNoti = false;
+
+
+                                    //need to call end session
+                                    $.post("https://tutorme.stetson.edu/api/sessions/endSession", {
+                                        Impromptu: true,
+                                        Start: startTime,
+                                        End: endTime,
+                                        Subject: tutorSubject,
+                                        Location: location,
+                                        Student: studentRefID,
+                                        Tutor: tutorRefID,
+                                        ForClass: classRef,
+                                        RequestProfessorNotification: false
+
+                                    }, function (data) {console.log(data)}, "json");
+
+
+                                    //need to check if we clear storage completely or remove from existing storage
+                                    if (localStorage.getItem("loggedInStudents").length > 9) {
+
+                                        var newLoggedList = "";
+                                        //remove from storage
+                                        for (var i = 0; i < localStorage.getItem("loggedInStudents").split(":").length; i++) {
+                                            if (i != index) {
+                                                newLoggedList += localStorage.getItem("loggedInStudents").split(":")[i] + ":";
+
+                                            }
+
+                                        }
+
+                                        //remove last :
+
+                                        newLoggedList = newLoggedList.slice(0, -1);
+                                        localStorage.setItem("loggedInStudents", newLoggedList);
+
+                                        //now for date
+                                        var newDateList = "";
+
+                                        for (var i = 0; i < localStorage.getItem("studentStartTime").split("|").length; i++) {
+                                            if (i != index) {
+                                                newDateList += localStorage.getItem("studentStartTime").split("|")[i] + "|";
+
+                                            }
+
+                                        }
+
+                                        //remove last |
+                                        newDateList = newDateList.slice(0, -1);
+
+                                        localStorage.setItem("studentStartTime", newDateList);
+
+                                        //now for course ref
+                                        var newCourseRefList = "";
+
+                                        for (var i = 0; i < localStorage.getItem("studentCourseRef").split(":").length; i++) {
+                                            if (i != index) {
+                                                newCourseRefList += localStorage.getItem("studentCourseRef").split(":")[i] + ":";
+
+                                            }
+
+                                        }
+
+                                        //remove last :
+                                        newCourseRefList = newCourseRefList.slice(0, -1);
+
+                                        localStorage.setItem("studentCourseRef", newCourseRefList);
+
+
+
+                                    } else {
+
+                                        localStorage.clear();
+
+                                    }
+
 
 
                                 });
 
 
 
-                                //need to check if we clear storage completely or remove from existing storage
-                                if (localStorage.getItem("loggedInStudents").length > 9) {
-                                    var index = localStorage.getItem("loggedInStudents").split(":").indexOf(id);
-                                    var newLoggedList = "";
-                                    //remove from storage
-                                    for (var i = 0; i < localStorage.getItem("loggedInStudents").split(":").length; i++) {
-                                        if (i != index) {
-                                            newLoggedList += localStorage.getItem("loggedInStudents").split(":")[i] + ":";
 
-                                        }
-
-                                    }
-
-                                    //remove last :
-
-                                    newLoggedList = newLoggedList.slice(0, -1);
-                                    localStorage.setItem("loggedInStudents", newLoggedList);
-
-                                    //now for date
-                                    var newDateList = "";
-
-                                    for (var i = 0; i < localStorage.getItem("studentStartTime").split("|").length; i++) {
-                                        if (i != index) {
-                                            newDateList += localStorage.getItem("studentStartTime").split("|")[i] + "|";
-
-                                        }
-
-                                    }
-
-                                    //remove last |
-                                    newDateList = newDateList.slice(0, -1);
-
-                                    localStorage.setItem("studentStartTime", newDateList);
-
-                                    //now for course ref
-                                    var newCourseRefList = "";
-
-                                    for (var i = 0; i < localStorage.getItem("studentCourseRef").split(":").length; i++) {
-                                        if (i != index) {
-                                            newCourseRefList += localStorage.getItem("studentCourseRef").split(":")[i] + ":";
-
-                                        }
-
-                                    }
-
-                                    //remove last :
-                                    newCourseRefList = newCourseRefList.slice(0, -1);
-
-                                    localStorage.setItem("studentCourseRef", newCourseRefList);
-
-
-
-                                } else {
-
-                                    localStorage.clear();
-
-                                }
 
 
 
@@ -1015,25 +1096,25 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 
         }
-        
-        function demoAcceptRequest(){
+
+        function demoAcceptRequest() {
             document.getElementById("requests_tab").innerHTML = "<i><img src=\"images/mail.png\" alt=\"\"></i>View Requests"
             document.getElementById("tempIDForDemo").innerHTML = ""
             document.getElementById("tempIDForDemo2").innerHTML = ""
             document.getElementById("tempIDForDemo3").innerHTML = ""
             $('#calendar').fullCalendar('renderEvent', {
-                    title: "Jeremy Rumsey",
-                    start: "2015-12-09T18:00:00"
-                }, true);
-            }
-            
-        
-        function demoRejectRequest(){
+                title: "Jeremy Rumsey",
+                start: "2015-12-09T18:00:00"
+            }, true);
+        }
+
+
+        function demoRejectRequest() {
             document.getElementById("requests_tab").innerHTML = "<i><img src=\"images/mail.png\" alt=\"\"></i>View Requests"
             document.getElementById("tempIDForDemo").innerHTML = ""
             document.getElementById("tempIDForDemo2").innerHTML = ""
             document.getElementById("tempIDForDemo3").innerHTML = ""
-            
+
         }
     </script>
 </body>
