@@ -48,8 +48,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <!--								<li><a href="#"><i><img src="images/settings.png" alt="" /></i>Settings</a></li>-->
                         <li><a class="modal-trigger" href="#schedule_modal"><i><img src="images/events.png" alt="" /></i>Schedule</a></li>
                         <li><a class="modal-trigger" href="#appointments_modal"><i><img src="images/follow_user.png" alt="" /></i>Request Appointment</a></li>
-                        <!-- <li><a class="modal-trigger" href="#viewRequests_modal"><i><img src="images/mail.png" alt="" /></i>View Requests</a></li> -->
-                        <li><a class="modal-trigger" href="#viewRequests_modal" id=requests_tab><i><img src="images/mail.png" alt="" /></i>View Requests<span class="messages">1</span></a></li>
+                        <li><a class="modal-trigger" href="#viewRequests_modal" id=requests_tab><i><img src="images/mail.png" alt="" /></i>View Requests</a></li>
+                        <!--<li><a class="modal-trigger" href="#viewRequests_modal" id=requests_tab><i><img src="images/mail.png" alt="" /></i>View Requests<span class="messages">1</span></a></li>-->
                         <li><a class="modal-trigger" id="sessionButton" href="#session_modal"><i><img src="images/loginArrow.png" alt="" /></i>Start Session</a></li>
 
                         <!-- Dropdown Structure for requests button -->
@@ -185,14 +185,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <div id="viewRequests_modal" class="modal">
         <div class="modal-content">
             <div class="container">
-                <div class="row">
+                <div class="row" id="pending_requests">
 
                     <span class="col s12 center-align"><b>Requests</b></span>
                     <div class="col s12 center-align">&nbsp;</div>
 
-                    <div class="col s8" id="tempIDForDemo">
+                    <!-- <div class="col s8" id="tempIDForDemo">
                         Jeremy Rumsey Wants an appointment on <b>12/9/15</b> at <b>6:00 PM</b>
                     </div>
+                    
 
                     <div class="col s2" id="tempIDForDemo2">
                         <button type="button" onclick="demoAcceptRequest()">Accept</button>
@@ -201,6 +202,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="col s2" id="tempIDForDemo3">
                         <button type="button" onclick="demoRejectRequest()">Reject</button>
                     </div>
+                    -->
 
                 </div>
             </div>
@@ -267,8 +269,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         <div class="col s12 center-align">
                                             <input type="checkbox" name="emailProf" value="Yes" id="professor_toggle" onclick="toggleProfessors()" />
                                             <label for="professor_toggle"> Email Professor</label>
-
-
                                         </div>
 -->
                     <!--
@@ -278,18 +278,26 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <!--
                                         <div class="col s12 center-align">
                                             <button type="button" onclick="viewStudentSchedule()">Login Student</button>
-
                                         </div>
 -->
                     <!--
                                         <div class="col s12 center-align">&nbsp;</div>
                                         <div class="col s12 center-align">&nbsp;</div>
 -->
+                    <div class="col s12 center-align"><b> </b></div>
+                    <div class="divider col s12"></div>
                     <div class="col s12 center-align">&nbsp;</div>
                     <div class="col s12 center-align">&nbsp;</div>
                     <div class="col s12 center-align">&nbsp;</div>
-                    <div class="col s12 center-align">Functionality Excluded for Demo Purposes.</div>
                     <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s12 center-align"><b>Requests awaiting confirmation</b></div>
+                    <div class="divider col s12"></div>
+
+                    <div id="appointment_request" class="col s12 center-align">
+                        <table id="tutorRequest" border="1" style="cursor: pointer;">
+
+                        </table>
+                    </div>
 
                 </div>
             </div>
@@ -308,253 +316,416 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="container">
                 <div class="row">
 
-                    <span class="col s12 center-align"><b>Schedule</b></span>
+                    <span class="col s12 center-align"><b>Request Appointment</b></span>
 
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s4 center-align">&nbsp;</div>
+
+                    <div class="col s4 center-align">
+                        <input type="date" class="datepicker center-align" placeholder="Date" id="appointment_dates">
+                    </div>
+
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s4 center-align">&nbsp;</div>
+
+                    <div class="col s4 center-align">
+                        <input type="text" class="timepicker center-align" placeholder="Time" id="appointment_time">
+                    </div>
+
+                    <div class="col s12 center-align">&nbsp;</div>
+                    <div class="col s4 center-align">&nbsp;</div>
+
+                    <div class="col s12 center-align">
+                        <input type="text" class='dropdown-button center-align' data-activates='subject_dropdown' placeholder="Pick a Subject" id="appointment_subject">
+                    </div>
+
+                    <!-- Dropdown Structure -->
+                    <ul id='subject_dropdown' class='dropdown-content'>
+                        <li><a href="#!" onclick="pickSubject('Accounting', '0')">Accounting</a></li>
+                        <li><a href="#!" onclick="pickSubject('Business', '1')">Business</a></li>
+                        <li><a href="#!" onclick="pickSubject('Computer Science', '2')">Computer Science</a></li>
+                        <li><a href="#!" onclick="pickSubject('Ecocomics', '3')">Economics</a></li>
+                        <li><a href="#!" onclick="pickSubject('Finance', '4')">Finance</a></li>
+                        <li><a href="#!" onclick="pickSubject('Health & Medical', '5')">Health & Medical</a></li>
+                        <li><a href="#!" onclick="pickSubject('Math', 6)">Math</a></li>
+                        <li><a href="#!" onclick="pickSubject('Music', 7)">Music</a></li>
+                        <li><a href="#!" onclick="pickSubject('Physics', 8)">Physics</a></li>
+                        <li><a href="#!" onclick="pickSubject('Russian', 9)">Russian</a></li>
+                        <li><a href="#!" onclick="pickSubject('Writing', 10)">Writing</a></li>
+
+                    </ul>
 
 
                     <div class="col s12 center-align">&nbsp;</div>
-                    <!--
-                                        <div class="col s12 center-align">
-                                            <input type="checkbox" name="emailProf" value="Yes" id="professor_toggle" onclick="toggleProfessors()" />
-                                            <label for="professor_toggle"> Email Professor</label>
+                    <div class="col s4 center-align">&nbsp;</div>
 
+                    <div class="col s12 center-align">
+                        <input type="text" class='dropdown-button center-align' data-activates='tutor_dropdown' placeholder="Pick a Tutor" id="chosen_tutor">
+                    </div>
+                    <!-- Dropdown Structure -->
+                    <ul id='tutor_dropdown' class='dropdown-content'>
+                    </ul>
 
-                                        </div>
--->
-                    <!--
-                                        <div id="professor_box" class="col s12 center-align"></div>
-                                        <div class="col s12 center-align">&nbsp;</div>
--->
-                    <!--
-                                        <div class="col s12 center-align">
-                                            <button type="button" onclick="viewStudentSchedule()">Login Student</button>
-
-                                        </div>
--->
-                    <!--
-                                        <div class="col s12 center-align">&nbsp;</div>
-                                        <div class="col s12 center-align">&nbsp;</div>
--->
-                    <div class="col s12 center-align">&nbsp;</div>
-                    <div class="col s12 center-align">&nbsp;</div>
-                    <div class="col s12 center-align">&nbsp;</div>
-                    <div class="col s12 center-align">Functionality Excluded for Demo Purposes.</div>
-                    <div class="col s12 center-align">&nbsp;</div>
-
+                    <div class="col s12 center-align">
+                        <!--                                          <button type="button" onclick="requestAppointment()">Make Request</button>-->
+                    </div>
                 </div>
             </div>
+            <div class="modal-footer">
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="requestAppointment()">Make Request</a>
+            </div>
         </div>
-        <div class="modal-footer">
-            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-        </div>
-    </div>
-    <script>
-        //Jquery Plugin Initilizations
-        $(document).ready(function () {
-            // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-            $('.modal-trigger').leanModal();
-        });
+        <script>
+            //Jquery Plugin Initilizations
+            $(document).ready(function () {
+                // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+                $('.modal-trigger').leanModal();
+            });
 
-        $('.datepicker').pickadate({
-            dateFormat: 'yyyy-mm-dd',
-            selectMonths: true, // Creates a dropdown to control month
-            selectYears: 1 // Creates a dropdown of 1 years to control year
+            $('.datepicker').pickadate({
+                dateFormat: 'yyyy-mm-dd',
+                selectMonths: true, // Creates a dropdown to control month
+                selectYears: 1 // Creates a dropdown of 1 years to control year
 
-        });
+            });
 
-        $('.timepicker').pickatime({
-            autoclose: true
-        });
+            $('.timepicker').pickatime({
+                autoclose: true
+            });
 
-        $('.dropdown-button').dropdown({
-            inDuration: 300,
-            outDuration: 225,
-            //constrain_width: false, // Does not change width of dropdown to that of the activator
-            hover: true, // Activate on hover
-            gutter: 0, // Spacing from edge
-            belowOrigin: false, // Displays dropdown below the button
-            alignment: 'left' // Displays dropdown with edge aligned to the left of button
-        });
+            $('.dropdown-button').dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                //constrain_width: false, // Does not change width of dropdown to that of the activator
+                hover: true, // Activate on hover
+                gutter: 0, // Spacing from edge
+                belowOrigin: false, // Displays dropdown below the button
+                alignment: 'left' // Displays dropdown with edge aligned to the left of button
+            });
 
-        $(window).load(function () {
+            $(window).load(function () {
 
-            // page is now ready, initialize the calendar...
+                // page is now ready, initialize the calendar...
 
-            $('#calendar').fullCalendar({
-                // put your options and callbacks here
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,basicWeek,basicDay'
-                },
-                //eventLimit: 2,
-                prev: 'left-single-arrow',
-                events: [
-                    {
-                        title: 'Tutoring',
-                        start: '2015-11-01'
+                $('#calendar').fullCalendar({
+                    // put your options and callbacks here
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,basicWeek,basicDay'
                     },
-                    {
-                        title: 'Tutoring',
-                        start: '2015-11-05',
-                        end: '2015-11-05'
+                    //eventLimit: 2,
+                    prev: 'left-single-arrow',
+                    events: [
+                        {
+                            title: 'Tutoring',
+                            start: '2015-11-01'
                     },
-                    {
-                        title: 'Joe',
-                        start: '2015-11-12'
+                        {
+                            title: 'Tutoring',
+                            start: '2015-11-05',
+                            end: '2015-11-05'
                     },
-                    {
-                        title: 'Bill',
-                        start: '2015-11-12'
+                        {
+                            title: 'Joe',
+                            start: '2015-11-12'
                     },
-                    {
-                        title: 'Casey',
-                        start: '2015-11-12'
+                        {
+                            title: 'Bill',
+                            start: '2015-11-12'
                     },
-                    {
-                        title: 'Bob',
-                        start: '2015-11-12'
+                        {
+                            title: 'Casey',
+                            start: '2015-11-12'
+                    },
+                        {
+                            title: 'Bob',
+                            start: '2015-11-12'
         }
     ]
 
 
 
-            })
+                })
 
-        });
+            });
 
-        //restrict student session box to numbers only, from http://stackoverflow.com/questions/18156824/restricting-an-input-box-to-only-numbers-0-9
-        document.getElementById('login_box').onkeydown = function (e) {
-            var key = e.keyCode ? e.keyCode : e.which;
-            //8 = backspace
-            if (isNaN(String.fromCharCode(key)) && key != 8) return false;
-        }
-
-        //make sure that we don't check for professors and then change student ID
-        $('#login_box').bind('input', function () {
-            document.getElementById("professor_toggle").checked = false;
-            toggleProfessors();
-        });
-
-
-        //from http://stackoverflow.com/questions/4220126/run-javascript-function-when-user-finishes-typing-instead-of-on-key-up
-        //setup before functions
-        var typingTimer; //timer identifier
-        var doneTypingInterval = 1500; //time in ms, 3 second for example
-
-        var courseIDForSession = "";
-        //on keyup, start the countdown
-        $('#login_box').keyup(function () {
-            clearTimeout(typingTimer);
-            courseIDForSession = "";
-            if ($('#login_box').val) {
-                typingTimer = setTimeout(doneTyping, doneTypingInterval);
+            //restrict student session box to numbers only, from http://stackoverflow.com/questions/18156824/restricting-an-input-box-to-only-numbers-0-9
+            document.getElementById('login_box').onkeydown = function (e) {
+                var key = e.keyCode ? e.keyCode : e.which;
+                //8 = backspace
+                if (isNaN(String.fromCharCode(key)) && key != 8) return false;
             }
-        });
 
-        //user is "finished typing," do something
-        function doneTyping() {
-            //call for getting courses in box
-            var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + document.getElementById("login_box").value;
-            var studentCoursesQuery = "https://tutorme.stetson.edu/api/students/getStudentCourses?StudentID=" + document.getElementById("login_box").value;
+            //make sure that we don't check for professors and then change student ID
+            $('#login_box').bind('input', function () {
+                document.getElementById("professor_toggle").checked = false;
+                toggleProfessors();
+            });
 
-            $.getJSON(studentQuery, function (data) {
-                if (data.result[0] != undefined) {
-                    $.getJSON(studentCoursesQuery, function (data) {
-                        //id = course ref number
-                        document.getElementById("courses_form").innerHTML = "";
-                        document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test1\" /><label for=\"test1\">Software Development II</label></p>";
-                        document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test2\" /><label for=\"test2\">Earth Effecting People</label></p>";
-                        document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test3\" /><label for=\"test3\">Computer Organization</label></p>";
-                        document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test4\" /><label for=\"test4\">Senior Research I</label></p>";
-                        document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test5\" /><label for=\"test5\">Computer Graphics I</label></p>";
-                    });
+
+            //from http://stackoverflow.com/questions/4220126/run-javascript-function-when-user-finishes-typing-instead-of-on-key-up
+            //setup before functions
+            var typingTimer; //timer identifier
+            var doneTypingInterval = 1500; //time in ms, 3 second for example
+
+            var courseIDForSession = "";
+            //on keyup, start the countdown
+            $('#login_box').keyup(function () {
+                clearTimeout(typingTimer);
+                courseIDForSession = "";
+                if ($('#login_box').val) {
+                    typingTimer = setTimeout(doneTyping, doneTypingInterval);
                 }
             });
-        }
+
+            //user is "finished typing," do something
+            function doneTyping() {
+                //call for getting courses in box
+                var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + document.getElementById("login_box").value;
+                var studentCoursesQuery = "https://tutorme.stetson.edu/api/students/getStudentCourses?StudentID=" + document.getElementById("login_box").value;
+
+                $.getJSON(studentQuery, function (data) {
+                    if (data.result[0] != undefined) {
+                        $.getJSON(studentCoursesQuery, function (data) {
+
+                            document.getElementById("courses_form").innerHTML = "";
+                            for (var i = 0; i < data.result.length; i++) {
+                                var courseTitle = data.result[i].CourseTitle;
+                                var courseRefID = data.result[i]._id;
+                                var htmlString = "<p><input name=\"courseRadios\" type=\"radio\" id=\"" + courseRefID + "\" /><label for=\"" + courseRefID + "\">" + courseTitle + "</label></p>"
+                                document.getElementById("courses_form").innerHTML += htmlString;
+
+                            }
+                            //document.getElementById("courses_form").innerHTML = "";
+                            //document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test1\" /><label for=\"test1\">Software Development II</label></p>";
+                            //document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test2\" /><label for=\"test2\">Earth Effecting People</label></p>";
+                            //document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test3\" /><label for=\"test3\">Computer Organization</label></p>";
+                            //document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test4\" /><label for=\"test4\">Senior Research I</label></p>";
+                            //document.getElementById("courses_form").innerHTML += "<p><input name=\"group1\" type=\"radio\" id=\"test5\" /><label for=\"test5\">Computer Graphics I</label></p>";
+                        });
+                    }
+                });
+            }
+
+            //grab id of checked radio button
+            $("#courses_form").on("change", function () {
+                //alert("p");
+                courseIDForSession = $("input[name=courseRadios]:checked").attr("id");
+            });
 
 
-        $("#courses_form").on("change", function () {
-            //alert("p");
-            courseIDForSession = $("input[name=group1]:checked").attr("id");
-        });
+            //init username
+            var userName = "";
+            var firstName = "";
+            var lastName = "";
+            var tutorRefID = "";
+            var tutorSubject = "";
 
+            //setTimeout(function(){ initUserData(); }, 1000);
 
-        //init username
-        var userName = "";
-        var firstName = "";
-        var lastName = "";
-        var tutorRefID = "";
-        var tutorSubject = "";
-
-        //setTimeout(function(){ initUserData(); }, 1000);
-
-        initUserData();
-        initTutoringSession();
+            initUserData();
+            initTutoringSession();
 
 
 
-        function initUserData() {
-            $.getJSON('https://tutorme.stetson.edu/user', function (data) {
-                //localStorage.setItem('User', JSON.stringify(data));
-                //var userNameJSON = JSON.parse(data);
-                userName = data.username;
-
-                initPendingAppointments();
-                initSessionButton();
-                initCalanderEvents();
-
-                var selfQuery = "https://tutorme.stetson.edu/api/students/get?field=Username&value=" + userName;
-
-                //grab info about self as student
-                $.getJSON(selfQuery, function (data) {
+            function initUserData() {
+                $.getJSON('https://tutorme.stetson.edu/user', function (data) {
                     //localStorage.setItem('User', JSON.stringify(data));
-                    //var selfJSON = JSON.parse(data);
+                    //var userNameJSON = JSON.parse(data);
+                    userName = data.username;
 
-                    //console.log(data.result[0].Email);
-                    firstName = data.result[0].FirstName;
-                    lastName = data.result[0].LastName;
+                    initPendingAppointments();
+                    //initSessionButton();
+                    initCalendarEvents();
 
-                    //set name
-                    document.getElementById("userName1").innerHTML = "Hello,<a href=\"Admin%20Home.html\">" + " " + userName + "</a>";
-                    document.getElementById("userName2").innerHTML = firstName + " " + lastName;
+                    var selfQuery = "https://tutorme.stetson.edu/api/students/get?field=Username&value=" + userName;
 
-                    //userName = UserNameJSON.username;
-
-                    //now grab tutor info
-                    var selfQuery = "https://tutorme.stetson.edu/api/tutors/get?field=ID&value=" + data.result[0].ID;
+                    //grab info about self as student
                     $.getJSON(selfQuery, function (data) {
-                        tutorRefID = data.result[0].id;
-                        tutorSubject = data.result[0].Subject;
+                        //localStorage.setItem('User', JSON.stringify(data));
+                        //var selfJSON = JSON.parse(data);
 
+                        //console.log(data.result[0].Email);
+                        firstName = data.result[0].FirstName;
+                        lastName = data.result[0].LastName;
+
+                        //set name
+                        document.getElementById("userName1").innerHTML = "Hello,<a href=\"Admin%20Home.html\">" + " " + userName + "</a>";
+                        document.getElementById("userName2").innerHTML = firstName + " " + lastName;
+
+                        //userName = UserNameJSON.username;
+
+                        //now grab tutor info
+                        var selfQuery = "https://tutorme.stetson.edu/api/tutors/get?field=ID&value=" + data.result[0].ID;
+                        $.getJSON(selfQuery, function (data) {
+                            tutorRefID = data.result[0].id;
+                            tutorSubject = data.result[0].Subject;
+
+                        });
                     });
+
+
+                });
+            };
+
+            var numOfRequests = 0;
+
+            function initPendingAppointments() {
+                var appointmentsQuery = "https://tutorme.stetson.edu/api/appointments/getAppointmentRequests?as=Tutor&Username=" + userName;
+                $.getJSON(appointmentsQuery, function (data) {
+                    //console.log(data)
+
+                    //button ids are student ref + A if accept or R if reject, assuming a student can only make one request to a tutor at a time before it's accepted, message ID is studentRef + M
+                    //I assume this works, but have not been able to test it
+
+                    for (var i = 0; i < data.result.length; i++) {
+                        //increment request counter
+                        numOfRequests++;
+
+                        var studentRef = data.result[i].student._id;
+                        var studentName = data.result[i].student.FullName;
+                        var startTime = data.result[i].RequestedStart;
+                        var sessionRef = data.result[i].SessionReference;
+
+                        //text for buttons
+                        document.getElementById("pending_requests").innerHTML += "<div class=\"col s8\" id=\"" + studentRef + "M" + "\"><b>" + studentName + "</b> wants an appointment on <b>" + startTime + "</b>";
+
+                        //accept button
+                        document.getElementById("pending_requests").innerHTML += "<div class=\"col s2\" id=\"" + studentRef + "A" + "\"><button type=\"button\">Accept</button></div>"
+
+                        //reject button
+                        document.getElementById("pending_requests").innerHTML += "<div class=\"col s2\" id=\"" + studentRef + "R" + "\"><button type=\"button\">Reject</button></div>"
+
+                        //add Accept function
+                        document.getElementById("studentRefA").onclick = function () {
+                            alert("you hit accept");
+
+
+                            //need to call accept appointment
+
+                            $.post("https://tutorme.stetson.edu/api/appointments/respondToRequest", {
+                                Reference: sessionRef,
+                                Response: true
+
+                            }, function (data) {
+                                //console.log(data)
+                            }, "json");
+
+                            //remove from list
+                            var acceptButton = document.getElementById(studentRef + "A");
+                            var rejectButton = document.getElementById(studentRef + "R");
+                            var message = document.getElementById(studentRef + "M");
+                            acceptButton.innerHTML = "";
+                            acceptButton.outterHTML = "";
+                            rejectButton.innerHTML = "";
+                            rejectButton.outterHTML = "";
+                            message.innerHTML = "";
+                            message.outterHTML = "";
+                            delete acceptButton;
+                            delete rejectButton;
+                            delete message;
+
+                            numOfRequests--;
+                            updateRequestsTab();
+                        };
+                        //add Reject function
+                        document.getElementById("studentRefR").onclick = function () {
+                            alert("you hit reject");
+
+                            //need to call reject appointment;
+                            $.post("https://tutorme.stetson.edu/api/appointments/respondToRequest", {
+                                Reference: sessionRef,
+                                Response: false
+
+                            }, function (data) {
+                                //console.log(data)
+                            }, "json");
+
+                            //remove from list
+                            var acceptButton = document.getElementById(studentRef + "A");
+                            var rejectButton = document.getElementById(studentRef + "R");
+                            var message = document.getElementById(studentRef + "M");
+                            acceptButton.innerHTML = "";
+                            acceptButton.outterHTML = "";
+                            rejectButton.innerHTML = "";
+                            rejectButton.outterHTML = "";
+                            message.innerHTML = "";
+                            message.outterHTML = "";
+                            delete acceptButton;
+                            delete rejectButton;
+                            delete message;
+
+                            numOfRequests--;
+                            updateRequestsTab();
+                        }
+                    }
+
+                    updateRequestsTab();
+
                 });
 
-
-            });
-        };
+            }
 
 
-        function initPendingAppointments() {
-            var appointmentsQuery = "https://tutorme.stetson.edu/api/getAppointmentRequests?as=Tutor&Username=" + userName;
-            $.getJSON(appointmentsQuery, function (data) {
-                //console.log(data)
-            });
+            function updateRequestsTab() {
+                //update html to show number of requests
+                if (numOfRequests > 0) {
+                    document.getElementById("requests_tab").innerHTML = "<li><a class=\"modal-trigger\" href=\"#viewRequests_modal\" id=requests_tab><i><img src=\"images/mail.png\" alt=\"\" /></i>View Requests<span class=\"messages\">" + numOfRequests + "</span></a></li>";
+                    //console.log(numOfRequests);
 
-        }
+                } else {
+                    document.getElementById("requests_tab").innerHTML = "<i><img src=\"images/mail.png\" alt=\"\"></i>View Requests"
 
-        //grabs logged in students from local storage and updates the session button accordingly
-        function initTutoringSession() {
-            //students exist in storage
-            if (localStorage.getItem("loggedInStudents") != undefined) {
+                }
 
-                //shows active session
-                document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Resume Session"
+            }
 
-                //more than one student
-                if (localStorage.getItem("loggedInStudents").length > 9) {
-                    for (var i = 0; i < localStorage.getItem("loggedInStudents").split(":").length; i++) {
-                        var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + localStorage.getItem("loggedInStudents").split(":")[i];
+
+            //grabs logged in students from local storage and updates the session button accordingly
+            function initTutoringSession() {
+                //students exist in storage
+                if (localStorage.getItem("loggedInStudents") != undefined) {
+
+                    //shows active session
+                    document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Resume Session"
+
+                    //more than one student
+                    if (localStorage.getItem("loggedInStudents").length > 9) {
+                        for (var i = 0; i < localStorage.getItem("loggedInStudents").split(":").length; i++) {
+                            var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + localStorage.getItem("loggedInStudents").split(":")[i];
+
+                            $.getJSON(studentQuery, function (data) {
+
+                                if (data.result[0] != undefined) {
+                                    //add to the table
+                                    var table = document.getElementById("loggedInStudents");
+
+                                    //append to table
+                                    var row = table.insertRow(-1);
+
+                                    //first element
+                                    var cell1 = row.insertCell(0);
+                                    //second element
+                                    var cell2 = row.insertCell(1);
+                                    var index = i
+                                    cell1.innerHTML = data.result[0].ID;
+                                    cell2.innerHTML = data.result[0].FirstName + " " + data.result[0].LastName;
+
+
+
+                                    //add click handlers to the rows
+                                    addRowHandlers();
+                                }
+                            });
+
+
+                        }
+
+
+
+                    } else {
+                        var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + localStorage.getItem("loggedInStudents");
 
                         $.getJSON(studentQuery, function (data) {
 
@@ -569,8 +740,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 var cell1 = row.insertCell(0);
                                 //second element
                                 var cell2 = row.insertCell(1);
-                                var index = i
-                                cell1.innerHTML = data.result[0].ID;
+                                cell1.innerHTML = localStorage.getItem("loggedInStudents");
                                 cell2.innerHTML = data.result[0].FirstName + " " + data.result[0].LastName;
 
 
@@ -580,49 +750,44 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             }
                         });
 
-
                     }
 
 
 
-                } else {
-                    var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + localStorage.getItem("loggedInStudents");
-
-                    $.getJSON(studentQuery, function (data) {
-
-                        if (data.result[0] != undefined) {
-                            //add to the table
-                            var table = document.getElementById("loggedInStudents");
-
-                            //append to table
-                            var row = table.insertRow(-1);
-
-                            //first element
-                            var cell1 = row.insertCell(0);
-                            //second element
-                            var cell2 = row.insertCell(1);
-                            cell1.innerHTML = localStorage.getItem("loggedInStudents");
-                            cell2.innerHTML = data.result[0].FirstName + " " + data.result[0].LastName;
-
-
-
-                            //add click handlers to the rows
-                            addRowHandlers();
-                        }
-                    });
-
                 }
 
+            }
+
+            function initCalendarEvents() {
+                //This functionality has not been tested, but I assume it will work
+
+                var eventsQuery = "Https://Tutorme.stetson.edu/api/sessions/getScheduledSessions?by=Username&value=" + userName;
+                $.getJSON(eventsQuery, function (data) {
+                    //console.log(data);
+
+                    if (data.result != undefined) {
+
+                        for (var i = 0; i < data.result.length; i++) {
+
+                            $('#calendar').fullCalendar('renderEvent', {
+                                title: data.result[i].Student,
+                                start: data.result[i].Start
+                            }, true);
+
+
+
+
+                        }
+
+
+                    }
+
+
+                });
 
 
             }
 
-        }
-
-        function initCalanderEvents() {
-
-
-        }
 
 
 
@@ -631,145 +796,173 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 
 
+            function toggleProfessors() {
+                // shows the list of professors
 
-        function toggleProfessors() {
-            // shows the list of professors
+                //if button is checked
+                if (document.getElementById("professor_toggle").checked) {
+                    if (document.getElementById("login_box").value.length == 9) {
 
-            //if button is checked
-            if (document.getElementById("professor_toggle").checked) {
-                if (document.getElementById("login_box").value.length == 9) {
-
-                    //need to check if student is valid
-                    var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + document.getElementById("login_box").value;
-                    $.getJSON(studentQuery, function (data) {
-                        if (data.result[0] != undefined) {
-
-                            //student is valid, grab professors
-                            var professorQuery = 'https://tutorme.stetson.edu/api/students/getStudentProfessors?StudentID=' + document.getElementById("login_box").value;
-
-                            //document.getElementById("professor_box").innerHTML = ""
-                            $.getJSON(professorQuery, function (data) {
-                                //localStorage.setItem('User', JSON.stringify(data));
-                                //var userNameJSON = JSON.parse(data);
-                                //console.log(data);
-                                //document.getElementById("professor_box").innerHTML = "List of Professors";
-                                document.getElementById("professor_box").style.visibility = "visible";
-                                document.getElementById("professor_form").innerHTML += "<p><input type=\"checkbox\" name=\"emailProf\" value=\"Yes\" id=\"mbranton@stetson.edu\" /><label for=\"mbranton@stetson.edu\">Michael Branton</label><br/></p>";
-                                document.getElementById("professor_form").innerHTML += "<p><input type=\"checkbox\" name=\"emailProf\" value=\"Yes\" id=\"jeckeroth@stetson.edu\" /><label for=\"jeckeroth@stetson.edu\">Joshua Eckroth</label<br/></p>";
-                                document.getElementById("professor_form").innerHTML += "<p><input type=\"checkbox\" name=\"emailProf\" value=\"Yes\" id=\"wanderson@stetson.edu\" /><label for=\"wanderson@stetson.edu\">Wanda Anderson</label<br/></p>";
-                                document.getElementById("professor_form").innerHTML += "<p><input type=\"checkbox\" name=\"emailProf\" value=\"Yes\" id=\"plucas@stetson.edu\" /><label for=\"plucas@stetson.edu\">Phillip Lucas</label<br/></p>";
-                            })
-
-                        } else {
-                            //invaild student   
-                            document.getElementById("professor_form").innerHTML = ""
-                            document.getElementById("studentError").innerHTML = "<font color=\"red\">Invalid Student ID</font>";
-                            setTimeout(function () {
-                                document.getElementById("studentError").innerHTML = "&nbsp;";
-                            }, 1500);
-                            document.getElementById("professor_toggle").checked = false;
-
-
-                        }
-                    })
-
-                } else {
-                    //student id not right length
-                    document.getElementById("professor_form").innerHTML = ""
-                    document.getElementById("professor_box").style.visibility = "hidden";
-                    document.getElementById("studentError").innerHTML = "<font color=\"red\">Invalid Student ID</font>";
-                    setTimeout(function () {
-                        document.getElementById("studentError").innerHTML = "&nbsp;";
-                    }, 1500);
-                    document.getElementById("professor_toggle").checked = false;
-
-                }
-
-            } else {
-
-                document.getElementById("professor_form").innerHTML = "";
-                document.getElementById("professor_box").style.visibility = "hidden";
-
-            }
-        }
-
-
-
-        function loginStudent() {
-
-            //make sure not already logged in
-            if (checkIfLoggedIn() == false) {
-                //make sure length = 9
-                if (document.getElementById("login_box").value.length == 9) {
-                    if (courseIDForSession.length > 1) {
-
+                        //need to check if student is valid
                         var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + document.getElementById("login_box").value;
-
                         $.getJSON(studentQuery, function (data) {
-
                             if (data.result[0] != undefined) {
-                                //add to the table
-                                var table = document.getElementById("loggedInStudents");
 
-                                //append to table
-                                var row = table.insertRow(-1);
+                                //student is valid, grab professors
+                                var professorQuery = 'https://tutorme.stetson.edu/api/students/getStudentProfessors?StudentID=' + document.getElementById("login_box").value;
 
-                                //first element
-                                var cell1 = row.insertCell(0);
-                                //second element
-                                var cell2 = row.insertCell(1);
-                                cell1.innerHTML = document.getElementById("login_box").value;
-                                cell2.innerHTML = data.result[0].FirstName + " " + data.result[0].LastName;
+                                //string to make sure each prof only gets added once
+                                var profCheck = "";
+
+                                //document.getElementById("professor_box").innerHTML = ""
+                                $.getJSON(professorQuery, function (data) {
+                                    //localStorage.setItem('User', JSON.stringify(data));
+                                    //var userNameJSON = JSON.parse(data);
+                                    //console.log(data);
+                                    //document.getElementById("professor_box").innerHTML = "List of Professors";
+                                    for (var i = 0; i < data.result.length; i++) {
+                                        var profEmail = data.result[i].InstructorEmail;
+                                        var profFirstName = data.result[i].InstructorFirstName;
+                                        var profLastName = data.result[i].InstructorLastName;
+
+                                        //check to make sure only added once
+                                        if (profCheck.indexOf(profEmail) == -1) {
+
+                                            var htmlString = "<p><input type=\"checkbox\" name=\"emailProf\" value=\"yes\" id=\"" + profEmail + "\" /><label for=\"" + profEmail + "\">" + profFirstName + " " + profLastName + "</label><br/></p>"
+                                            document.getElementById("professor_form").innerHTML += htmlString;
+                                            profCheck += profEmail;
+                                        }
+
+
+                                    }
 
 
 
-                                //add click handlers to the rows
-                                addRowHandlers();
+                                    document.getElementById("professor_box").style.visibility = "visible";
 
-                                //add logged in students to browser storage and stores date
-                                if (localStorage.getItem('loggedInStudents') != undefined) {
-                                    localStorage.setItem('loggedInStudents', localStorage.getItem('loggedInStudents') + ":" + document.getElementById("login_box").value);
-                                    localStorage.setItem('studentStartTime', localStorage.getItem('studentStartTime') + "|" + Date())
-                                    localStorage.setItem('studentCourseRef', localStorage.getItem('studentCourseRef') + ":" + courseIDForSession);
-                                } else {
-                                    localStorage.setItem('loggedInStudents', document.getElementById("login_box").value);
-                                    localStorage.setItem('studentStartTime', Date());
-                                    localStorage.setItem('studentCourseRef', courseIDForSession);
-                                }
+                                })
 
-                                //shows active session
-                                document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Resume Session"
-
-                                //resets fields
-                                document.getElementById("login_box").value = "";
-                                document.getElementById("professor_toggle").checked = false;
-                                document.getElementById("courses_form").innerHTML = "";
-                                courseIDForSession = "";
-                                toggleProfessors();
                             } else {
-                                //invalid ID
+                                //invaild student   
+                                document.getElementById("professor_form").innerHTML = ""
                                 document.getElementById("studentError").innerHTML = "<font color=\"red\">Invalid Student ID</font>";
                                 setTimeout(function () {
                                     document.getElementById("studentError").innerHTML = "&nbsp;";
                                 }, 1500);
+                                document.getElementById("professor_toggle").checked = false;
 
 
                             }
+                        })
 
-                        });
                     } else {
-                        //course not selected
-                        document.getElementById("studentError").innerHTML = "<font color=\"red\">Must Select A Course</font>";
-                        //alert(courseIDForSession);
+                        //student id not right length
+                        document.getElementById("professor_form").innerHTML = ""
+                        document.getElementById("professor_box").style.visibility = "hidden";
+                        document.getElementById("studentError").innerHTML = "<font color=\"red\">Invalid Student ID</font>";
+                        setTimeout(function () {
+                            document.getElementById("studentError").innerHTML = "&nbsp;";
+                        }, 1500);
+                        document.getElementById("professor_toggle").checked = false;
+
+                    }
+
+                } else {
+
+                    document.getElementById("professor_form").innerHTML = "";
+                    document.getElementById("professor_box").style.visibility = "hidden";
+
+                }
+            }
+
+
+
+            function loginStudent() {
+
+                //make sure not already logged in
+                if (checkIfLoggedIn() == false) {
+                    //make sure length = 9
+                    if (document.getElementById("login_box").value.length == 9) {
+                        if (courseIDForSession.length > 1) {
+
+                            var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + document.getElementById("login_box").value;
+
+                            $.getJSON(studentQuery, function (data) {
+
+                                if (data.result[0] != undefined) {
+                                    //add to the table
+                                    var table = document.getElementById("loggedInStudents");
+
+                                    //append to table
+                                    var row = table.insertRow(-1);
+
+                                    //first element
+                                    var cell1 = row.insertCell(0);
+                                    //second element
+                                    var cell2 = row.insertCell(1);
+                                    cell1.innerHTML = document.getElementById("login_box").value;
+                                    cell2.innerHTML = data.result[0].FirstName + " " + data.result[0].LastName;
+
+
+
+                                    //add click handlers to the rows
+                                    addRowHandlers();
+
+                                    //add logged in students to browser storage and stores date
+                                    if (localStorage.getItem('loggedInStudents') != undefined) {
+                                        localStorage.setItem('loggedInStudents', localStorage.getItem('loggedInStudents') + ":" + document.getElementById("login_box").value);
+                                        localStorage.setItem('studentStartTime', localStorage.getItem('studentStartTime') + "|" + Date())
+                                        localStorage.setItem('studentCourseRef', localStorage.getItem('studentCourseRef') + ":" + courseIDForSession);
+                                    } else {
+                                        localStorage.setItem('loggedInStudents', document.getElementById("login_box").value);
+                                        localStorage.setItem('studentStartTime', Date());
+                                        localStorage.setItem('studentCourseRef', courseIDForSession);
+                                    }
+
+                                    //shows active session
+                                    document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Resume Session"
+
+                                    //resets fields
+                                    document.getElementById("login_box").value = "";
+                                    document.getElementById("professor_toggle").checked = false;
+                                    document.getElementById("courses_form").innerHTML = "";
+                                    courseIDForSession = "";
+                                    toggleProfessors();
+                                } else {
+                                    //invalid ID
+                                    document.getElementById("studentError").innerHTML = "<font color=\"red\">Invalid Student ID</font>";
+                                    setTimeout(function () {
+                                        document.getElementById("studentError").innerHTML = "&nbsp;";
+                                    }, 1500);
+
+
+                                }
+
+                            });
+                        } else {
+                            //course not selected
+                            document.getElementById("studentError").innerHTML = "<font color=\"red\">Must Select A Course</font>";
+                            //alert(courseIDForSession);
+                            setTimeout(function () {
+                                document.getElementById("studentError").innerHTML = "&nbsp;";
+                            }, 1500);
+
+
+                        }
+                    } else {
+                        //dont need to check, ID isnt the right size
+                        document.getElementById("studentError").innerHTML = "<font color=\"red\">Invalid Student ID</font>";
                         setTimeout(function () {
                             document.getElementById("studentError").innerHTML = "&nbsp;";
                         }, 1500);
 
-
                     }
+
+
                 } else {
-                    //dont need to check, ID isnt the right size
-                    document.getElementById("studentError").innerHTML = "<font color=\"red\">Invalid Student ID</font>";
+
+                    //student is already logged in
+                    document.getElementById("studentError").innerHTML = "<font color=\"red\">Student Already Logged In</font>";
                     setTimeout(function () {
                         document.getElementById("studentError").innerHTML = "&nbsp;";
                     }, 1500);
@@ -777,265 +970,484 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 }
 
 
-            } else {
+            }
 
-                //student is already logged in
-                document.getElementById("studentError").innerHTML = "<font color=\"red\">Student Already Logged In</font>";
-                setTimeout(function () {
-                    document.getElementById("studentError").innerHTML = "&nbsp;";
-                }, 1500);
+            function checkIfLoggedIn() {
+                var table = document.getElementById("loggedInStudents");
+                var rows = table.getElementsByTagName("tr");
+
+
+                //go through rows looking for one with id
+                for (i = 0; i < rows.length; i++) {
+                    //alert(document.getElementById("loggedInStudents").getElementsByTagName("tr")[0].innerHTML);
+
+                    var currentRow = table.rows[i];
+                    var cell = currentRow.getElementsByTagName("td")[0];
+                    var tID = cell.innerHTML;
+                    //alert(currentRow.row.getElementsByTagName("td")[0])
+                    //alert(table.rows[i].cells[0].innerhtml);
+                    if (tID == document.getElementById("login_box").value) {
+                        return true;
+
+
+                    }
+                }
+                return false;
+            }
+
+            function addAppointment() {
+                var date = document.getElementById("date_box").value;
+                var time = document.getElementById("time_box").value;
+                var myDate = new Date(date);
+                //var myTitle = document.getElementById("reason_box").value;
+                var myTitle = "Null"
+
+
+                var year = myDate.getFullYear();
+
+                var month = myDate.getMonth() + 1;
+
+                var day = myDate.getDate();
+
+                if (day < 10) {
+                    day = "0" + day;
+                }
+
+                if (month < 10) {
+                    month = "0" + month;
+                }
+
+                myTime = time.split(":");
+
+                var hour = parseInt(myTime[0]);
+
+                if (myTime[1].indexOf("PM") != -1) {
+                    hour += 12;
+                }
+
+                time = "T" + hour + ":" + myTime[1].substring(0, 2) + ":00";
+
+                var finalDate = year + "-" + month + "-" + day + time;
+
+                //reset fields
+                document.getElementById("date_box").value = "";
+                document.getElementById("time_box").value = "";
+                //document.getElementById("reason_box").value = "";
+                //$('#appointments_modal').closeModal();
+                $('#makeRequests_modal').closeModal();
+
+
+                //add formated date to calendar
+                $('#calendar').fullCalendar('renderEvent', {
+                    title: myTitle,
+                    start: finalDate
+                }, true);
+
+
+
+
 
             }
 
-
-        }
-
-        function checkIfLoggedIn() {
-            var table = document.getElementById("loggedInStudents");
-            var rows = table.getElementsByTagName("tr");
+            function requestAppointment() {
+                //alert("hi");
+                addAppointment();
+            }
 
 
-            //go through rows looking for one with id
-            for (i = 0; i < rows.length; i++) {
-                //alert(document.getElementById("loggedInStudents").getElementsByTagName("tr")[0].innerHTML);
+            //took what Jeremy had finished
+            function studentRequestAppointment() {
+                if (document.getElementById("login_box").value != "") {
+                    var table = document.getElementById("loggedInStudents");
+                    var row = table.insertRow(-1);
+                    var cell0 = row.insertCell(0);
+                    var cell1 = row.insertCell(1);
+                    var cell2 = row.insertCell(2);
+                    cell0.innerHTML = document.getElementById("date_box").value + " at " + document.getElementById("time_box").value;
+                    cell1.innerHTML = document.getElementById("login_box").value;
+                    cell2.innerHTML = document.getElementById("chosen_tutor").value;
+                    addRowHandlers();
+                    document.getElementById("date_box").value = "";
+                    document.getElementById("time_box").value = "";
+                    document.getElementById("login_box").value = "";
+                    document.getElementById("chosen_tutor").value = "";
 
-                var currentRow = table.rows[i];
-                var cell = currentRow.getElementsByTagName("td")[0];
-                var tID = cell.innerHTML;
-                //alert(currentRow.row.getElementsByTagName("td")[0])
-                //alert(table.rows[i].cells[0].innerhtml);
-                if (tID == document.getElementById("login_box").value) {
-                    return true;
+                    var requestAppointmentQuery = "https://tutorme.stetson.edu/api/tutors/getAll?Subject=CSCI";
+                    $.getJSON(requestAppointmentQuery, function (data) {
+                        //console.log(data)
+                    });
 
+                    $('#calendar').fullCalendar('renderEvent', {
+                        title: "Tutoring Session",
+                        start: "2015-12-09T18:00:00"
+                    }, true);
+                    alert("Request sent!");
+                    // document.getElementById("professor_toggle").checked = false;
+                    // toggleProfessors();
 
+                    addAppointment();
+                }
+                //from http://jsfiddle.net/oh16h7cj/ | http://stackoverflow.com/questions/1207939/adding-an-onclick-event-to-a-table-row, adapted to my situation
+                function addRowHandlers() {
+                    var table = document.getElementById("loggedInStudents");
+                    var rows = table.getElementsByTagName("tr");
+                    for (i = 0; i < rows.length; i++) {
+                        var currentRow = table.rows[i];
+                        var createClickHandler =
+                            function (row) {
+                                return function () {
+                                    var cell = row.getElementsByTagName("td")[0];
+                                    var id = cell.innerHTML;
+                                    //removeRow(id);
+                                    resendRequest(id);
+
+                                };
+                            };
+                        currentRow.onclick = createClickHandler(currentRow);
+                    }
+                }
+
+                function removeRow(id) {
+                    var table = document.getElementById("loggedInStudents");
+                    var rows = table.getElementsByTagName("tr");
+                    for (i = 0; i < rows.length; i++) {
+                        //alert(document.getElementById("loggedInStudents").getElementsByTagName("tr")[0].innerHTML);
+                        var currentRow = table.rows[i];
+                        var cell = currentRow.getElementsByTagName("td")[0];
+                        var tID = cell.innerHTML;
+                        //alert(currentRow.row.getElementsByTagName("td")[0])
+                        //alert(table.rows[i].cells[0].innerhtml);
+                        if (tID == id) {
+                            table.deleteRow(i);
+                        }
+                    }
+                    //                if (rows.length == 0) {
+                    //                    document.getElementById("scheduleButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Start Session"
+                    //
+                    //                }
+                }
+
+            }
+
+            var subjectArray = ["Accounting", "Business", "Computer Science", "Economics", "Finance", "Health & Medical", "Math", "Music", "Physics", "Russian", "Writing"];
+            var accountingTutors; // = ["Bob", "Tim", "Lesz"];
+            var businessTutors; // = ["Hamlet", "George"];
+            var computerScienceTutors = ["Brandon Edwards", "Michael Clay"];
+            var economicsTutors; // = ["Hope", "Dameon", "Larkin"];
+            var financeTutors; // = ["Rose", "Daisy", "Penelope"];
+            var healthTutors; // =  ["James", "Neil", "Eric"];
+            var mathTutors; // = ["Matt", "Gerken"];
+            var musicTutors; // = ["Jazmin", "Neil", "Chris"];
+            var physicsTutors; // = ["Tyler", "Ari", "Jamontee"];
+            var russianTutors; // = ["Poop", "Peter", "Gerogia"];
+            var writingTutors; // = ["Melaina", "Vanessa", "Erica"];
+
+            function pickSubject(subject, tutors) {
+                if (subjectArray[tutors] == "Accounting") {
+                    subjectTutors = accountingTutors;
+                    //            var requestAppointmentQuery = "https://tutorme.stetson.edu/api/tutors/getAll?Subject=ACCT";
+                    //                $.getJSON(requestAppointmentQuery, function (data) {
+                    //                    console.log(data)
+                    //                });
+                    //            for(i = 0; i < data.result.length; i++)
+                    //                {
+                    //                    computerScienceTutors.push(data.result[9]);
+                    //                }
+                } else if (subjectArray[tutors] == "Business") {
+                    subjectTutors = businessTutors;
+                } else if (subjectArray[tutors] == "Computer Science") {
+                    subjectTutors = computerScienceTutors;
+                    //            var requestAppointmentQuery = "https://tutorme.stetson.edu/api/tutors/getAll?Subject=CSCI";
+                    //                $.getJSON(requestAppointmentQuery, function (data) {
+                    //                    console.log(data)
+                    //                });
+                    //            for(i = 0; i < data.result.length; i++)
+                    //                {
+                    //                    computerScienceTutors.push(data.result[9]);
+                    //                }
+                } else if (subjectArray[tutors] == "Economics") {
+                    subjectTutors = economicsTutors;
+                } else if (subjectArray[tutors] == "Finance") {
+                    subjectTutors = financeTutors;
+                } else if (subjectArray[tutors] == "Health & Medical") {
+                    subjectTutors = healthTutors;
+                } else if (subjectArray[tutors] == "Math") {
+                    subjectTutors = mathTutors;
+                } else if (subjectArray[tutors] == "Music") {
+                    subjectTutors = musicTutors;
+                } else if (subjectArray[tutors] == "Physics") {
+                    subjectTutors = physicsTutors;
+                } else if (subjectArray[tutors] == "Russian") {
+                    subjectTutors = russianTutors;
+                } else if (subjectArray[tutors] == "Writing") {
+                    subjectTutors = writingTutors;
+                }
+                document.getElementById("login_box").value = subject;
+                var subjectTutors;
+                var UL = document.getElementById("tutor_dropdown");
+                while (UL.firstChild) {
+                    UL.removeChild(UL.firstChild);
+                }
+                for (i = 0; i < subjectTutors.length; i++) {
+                    var ul = document.getElementById("tutor_dropdown");
+                    var li = document.createElement("li");
+                    li.appendChild(document.createTextNode(subjectTutors[i]));
+                    li.onclick = function () {
+                        document.getElementById("chosen_tutor").value = this.innerHTML
+                    };
+                    ul.appendChild(li);
                 }
             }
-            return false;
-        }
-
-        function addAppointment() {
-            var date = document.getElementById("date_box").value;
-            var time = document.getElementById("time_box").value;
-            var myDate = new Date(date);
-            //var myTitle = document.getElementById("reason_box").value;
-            var myTitle = "Null"
 
 
-            var year = myDate.getFullYear();
+            function pickSubject2(subject, tutors) {
+                var subjectTutors;
+                if (subjectArray[tutors] == "Accounting") {
+                    subjectTutors = accountingTutors;
+                } else if (subjectArray[tutors] == "Business") {
+                    subjectTutors = businessTutors;
+                } else if (subjectArray[tutors] == "Computer Science") {
+                    subjectTutors = computerScienceTutors;
+                } else if (subjectArray[tutors] == "Economics") {
+                    subjectTutors = economicsTutors;
+                } else if (subjectArray[tutors] == "Finance") {
+                    subjectTutors = financeTutors;
+                } else if (subjectArray[tutors] == "Health & Medical") {
+                    subjectTutors = healthTutors;
+                } else if (subjectArray[tutors] == "Math") {
+                    subjectTutors = mathTutors;
+                } else if (subjectArray[tutors] == "Music") {
+                    subjectTutors = musicTutors;
+                } else if (subjectArray[tutors] == "Physics") {
+                    subjectTutors = physicsTutors;
+                } else if (subjectArray[tutors] == "Russian") {
+                    subjectTutors = russianTutors;
+                } else if (subjectArray[tutors] == "Writing") {
+                    subjectTutors = writingTutors;
+                }
+                //        document.getElementById("login_box").value = subject;
+                //        var subjectTutors;
+                var UL = document.getElementById("slide2");
+                while (UL.firstChild) {
+                    UL.removeChild(UL.firstChild);
+                }
 
-            var month = myDate.getMonth() + 1;
+                for (i = 0; i < subjectTutors.length; i++) {
+                    var ul = document.getElementById("slide2");
+                    var li = document.createElement("li");
+                    li.appendChild(document.createTextNode(subjectTutors[i]));
+                    ul.appendChild(li);
+                }
 
-            var day = myDate.getDate();
-
-            if (day < 10) {
-                day = "0" + day;
             }
 
-            if (month < 10) {
-                month = "0" + month;
+            function resendRequest(id) {
+                var table = document.getElementById("loggedInStudents");
+                alert("Resend Request?");
             }
 
-            myTime = time.split(":");
+            function acceptAppointment() {
 
-            var hour = parseInt(myTime[0]);
 
-            if (myTime[1].indexOf("PM") != -1) {
-                hour += 12;
             }
 
-            time = "T" + hour + ":" + myTime[1].substring(0, 2) + ":00";
-
-            var finalDate = year + "-" + month + "-" + day + time;
-
-            //reset fields
-            document.getElementById("date_box").value = "";
-            document.getElementById("time_box").value = "";
-            //document.getElementById("reason_box").value = "";
-            //$('#appointments_modal').closeModal();
-            $('#makeRequests_modal').closeModal();
+            function rejectAppointment() {
 
 
-            //add formated date to calendar
-            $('#calendar').fullCalendar('renderEvent', {
-                title: myTitle,
-                start: finalDate
-            }, true);
+            }
+
+            //from http://jsfiddle.net/oh16h7cj/ | http://stackoverflow.com/questions/1207939/adding-an-onclick-event-to-a-table-row, adapted to my situation
+            function addRowHandlers() {
+                var table = document.getElementById("loggedInStudents");
+                var rows = table.getElementsByTagName("tr");
+                for (i = 0; i < rows.length; i++) {
+                    var currentRow = table.rows[i];
+                    var createClickHandler =
+                        function (row) {
+                            return function () {
+                                var cell = row.getElementsByTagName("td")[0];
+                                var id = cell.innerHTML;
+                                cell = row.getElementsByTagName("td")[1];
+                                var name = cell.innerHTML;
+
+                                var conf = confirm("Logout " + name + "?");
 
 
-
-
-
-        }
-
-        function requestAppointment() {
-            //alert("hi");
-            addAppointment();
-        }
-
-        function acceptAppointment() {
-
-
-        }
-
-        function rejectAppointment() {
-
-
-        }
-
-        //from http://jsfiddle.net/oh16h7cj/ | http://stackoverflow.com/questions/1207939/adding-an-onclick-event-to-a-table-row, adapted to my situation
-        function addRowHandlers() {
-            var table = document.getElementById("loggedInStudents");
-            var rows = table.getElementsByTagName("tr");
-            for (i = 0; i < rows.length; i++) {
-                var currentRow = table.rows[i];
-                var createClickHandler =
-                    function (row) {
-                        return function () {
-                            var cell = row.getElementsByTagName("td")[0];
-                            var id = cell.innerHTML;
-                            cell = row.getElementsByTagName("td")[1];
-                            var name = cell.innerHTML;
-
-                            var conf = confirm("Logout " + name + "?");
-
-
-                            //on click, look for row with this id
-                            if (conf == true) {
-                                removeRow(id);
-
-
-                                //need to call end session
-                                var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + id;
-
-                                //need to grab student ref
-                                $.getJSON(studentQuery, function (data) {
-                                    var studentRefID = data.result[0].id;
-
-
-                                });
+                                //on click, look for row with this id
+                                if (conf == true) {
+                                    removeRow(id);
 
 
 
-                                //need to check if we clear storage completely or remove from existing storage
-                                if (localStorage.getItem("loggedInStudents").length > 9) {
                                     var index = localStorage.getItem("loggedInStudents").split(":").indexOf(id);
-                                    var newLoggedList = "";
-                                    //remove from storage
-                                    for (var i = 0; i < localStorage.getItem("loggedInStudents").split(":").length; i++) {
-                                        if (i != index) {
-                                            newLoggedList += localStorage.getItem("loggedInStudents").split(":")[i] + ":";
+                                    var studentQuery = "https://tutorme.stetson.edu/api/students/get?field=ID&value=" + id;
+
+                                    //need to grab student ref
+                                    $.getJSON(studentQuery, function (data) {
+                                        var impromptu = true;
+                                        var startTime = localStorage.getItem("studentStartTime").split("|")[index];
+                                        //alert("Start: " + startTime);
+                                        var endTime = Date();
+                                        //alert("End: " + endTime);
+                                        //alert("Tutor Subject: " + tutorSubject);
+                                        var location = "";
+                                        var studentRefID = data.result[0].id;
+
+                                        //alert("studentRefID: " + studentRefID);
+                                        //alert("tutorRefID: " + tutorRefID);
+
+                                        var classRef = localStorage.getItem("studentCourseRef").split(":")[index];
+                                        //alert("Clasref: " + classRef);
+
+                                        var profNoti = false;
+
+
+                                        //need to call end session
+                                        $.post("https://tutorme.stetson.edu/api/sessions/endSession", {
+                                            SessionReference: "",
+                                            Impromptu: true,
+                                            Start: startTime,
+                                            End: endTime,
+                                            Subject: tutorSubject,
+                                            Location: location,
+                                            Student: studentRefID,
+                                            Tutor: tutorRefID,
+                                            ForClass: classRef,
+                                            RequestProfessorNotification: false
+
+                                        }, function (data) {
+                                            //console.log(data)
+                                        }, "json");
+
+
+                                        //need to check if we clear storage completely or remove from existing storage
+                                        if (localStorage.getItem("loggedInStudents").length > 9) {
+
+                                            var newLoggedList = "";
+                                            //remove from storage
+                                            for (var i = 0; i < localStorage.getItem("loggedInStudents").split(":").length; i++) {
+                                                if (i != index) {
+                                                    newLoggedList += localStorage.getItem("loggedInStudents").split(":")[i] + ":";
+
+                                                }
+
+                                            }
+
+                                            //remove last :
+
+                                            newLoggedList = newLoggedList.slice(0, -1);
+                                            localStorage.setItem("loggedInStudents", newLoggedList);
+
+                                            //now for date
+                                            var newDateList = "";
+
+                                            for (var i = 0; i < localStorage.getItem("studentStartTime").split("|").length; i++) {
+                                                if (i != index) {
+                                                    newDateList += localStorage.getItem("studentStartTime").split("|")[i] + "|";
+
+                                                }
+
+                                            }
+
+                                            //remove last |
+                                            newDateList = newDateList.slice(0, -1);
+
+                                            localStorage.setItem("studentStartTime", newDateList);
+
+                                            //now for course ref
+                                            var newCourseRefList = "";
+
+                                            for (var i = 0; i < localStorage.getItem("studentCourseRef").split(":").length; i++) {
+                                                if (i != index) {
+                                                    newCourseRefList += localStorage.getItem("studentCourseRef").split(":")[i] + ":";
+
+                                                }
+
+                                            }
+
+                                            //remove last :
+                                            newCourseRefList = newCourseRefList.slice(0, -1);
+
+                                            localStorage.setItem("studentCourseRef", newCourseRefList);
+
+
+
+                                        } else {
+
+                                            localStorage.clear();
 
                                         }
 
-                                    }
 
-                                    //remove last :
 
-                                    newLoggedList = newLoggedList.slice(0, -1);
-                                    localStorage.setItem("loggedInStudents", newLoggedList);
-
-                                    //now for date
-                                    var newDateList = "";
-
-                                    for (var i = 0; i < localStorage.getItem("studentStartTime").split("|").length; i++) {
-                                        if (i != index) {
-                                            newDateList += localStorage.getItem("studentStartTime").split("|")[i] + "|";
-
-                                        }
-
-                                    }
-
-                                    //remove last |
-                                    newDateList = newDateList.slice(0, -1);
-
-                                    localStorage.setItem("studentStartTime", newDateList);
-
-                                    //now for course ref
-                                    var newCourseRefList = "";
-
-                                    for (var i = 0; i < localStorage.getItem("studentCourseRef").split(":").length; i++) {
-                                        if (i != index) {
-                                            newCourseRefList += localStorage.getItem("studentCourseRef").split(":")[i] + ":";
-
-                                        }
-
-                                    }
-
-                                    //remove last :
-                                    newCourseRefList = newCourseRefList.slice(0, -1);
-
-                                    localStorage.setItem("studentCourseRef", newCourseRefList);
+                                    });
 
 
 
-                                } else {
-
-                                    localStorage.clear();
-
-                                }
 
 
 
+
+
+                                };
 
                             };
-
                         };
-                    };
 
-                currentRow.onclick = createClickHandler(currentRow);
-            }
-        }
-
-        function removeRow(id) {
-            var table = document.getElementById("loggedInStudents");
-            var rows = table.getElementsByTagName("tr");
-
-
-            //go through rows looking for one with id
-            for (i = 0; i < rows.length; i++) {
-                //alert(document.getElementById("loggedInStudents").getElementsByTagName("tr")[0].innerHTML);
-
-                var currentRow = table.rows[i];
-                var cell = currentRow.getElementsByTagName("td")[0];
-                var tID = cell.innerHTML;
-                //alert(currentRow.row.getElementsByTagName("td")[0])
-                //alert(table.rows[i].cells[0].innerhtml);
-                if (tID == id) {
-                    table.deleteRow(i);
-
-
+                    currentRow.onclick = createClickHandler(currentRow);
                 }
             }
 
-            //if no one is left, reset session button
-            if (rows.length == 0) {
-                document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Start Session"
+            function removeRow(id) {
+                var table = document.getElementById("loggedInStudents");
+                var rows = table.getElementsByTagName("tr");
+
+
+                //go through rows looking for one with id
+                for (i = 0; i < rows.length; i++) {
+                    //alert(document.getElementById("loggedInStudents").getElementsByTagName("tr")[0].innerHTML);
+
+                    var currentRow = table.rows[i];
+                    var cell = currentRow.getElementsByTagName("td")[0];
+                    var tID = cell.innerHTML;
+                    //alert(currentRow.row.getElementsByTagName("td")[0])
+                    //alert(table.rows[i].cells[0].innerhtml);
+                    if (tID == id) {
+                        table.deleteRow(i);
+
+
+                    }
+                }
+
+                //if no one is left, reset session button
+                if (rows.length == 0) {
+                    document.getElementById("sessionButton").innerHTML = "<i><img src=\"images/loginArrow.png\" alt=\"\" /></i> Start Session"
+
+                }
+
 
             }
 
-
-        }
-        
-        function demoAcceptRequest(){
-            document.getElementById("requests_tab").innerHTML = "<i><img src=\"images/mail.png\" alt=\"\"></i>View Requests"
-            document.getElementById("tempIDForDemo").innerHTML = ""
-            document.getElementById("tempIDForDemo2").innerHTML = ""
-            document.getElementById("tempIDForDemo3").innerHTML = ""
-            $('#calendar').fullCalendar('renderEvent', {
+            function demoAcceptRequest() {
+                document.getElementById("requests_tab").innerHTML = "<i><img src=\"images/mail.png\" alt=\"\"></i>View Requests"
+                document.getElementById("tempIDForDemo").innerHTML = ""
+                document.getElementById("tempIDForDemo2").innerHTML = ""
+                document.getElementById("tempIDForDemo3").innerHTML = ""
+                $('#calendar').fullCalendar('renderEvent', {
                     title: "Jeremy Rumsey",
                     start: "2015-12-09T18:00:00"
                 }, true);
             }
-            
-        
-        function demoRejectRequest(){
-            document.getElementById("requests_tab").innerHTML = "<i><img src=\"images/mail.png\" alt=\"\"></i>View Requests"
-            document.getElementById("tempIDForDemo").innerHTML = ""
-            document.getElementById("tempIDForDemo2").innerHTML = ""
-            document.getElementById("tempIDForDemo3").innerHTML = ""
-            
-        }
-    </script>
+
+
+            function demoRejectRequest() {
+                document.getElementById("requests_tab").innerHTML = "<i><img src=\"images/mail.png\" alt=\"\"></i>View Requests"
+                document.getElementById("tempIDForDemo").innerHTML = ""
+                document.getElementById("tempIDForDemo2").innerHTML = ""
+                document.getElementById("tempIDForDemo3").innerHTML = ""
+
+            }
+        </script>
 </body>
 
 </html>

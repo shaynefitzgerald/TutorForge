@@ -124,6 +124,12 @@
     position: absolute;
 }
 
+.modalTutor-SetSchedule {
+    left: 2%;
+    top: 2%;
+    position: absolute;
+}
+
 .modalTutor:target:before {
     display: block;
 }
@@ -181,4 +187,109 @@
     -webkit-transform: translate(-50%, 0);
     -ms-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
+}
+
+.modalSchedule:before {
+    content: "";
+    position: fixed;
+    display: none;
+    background-color: rgba(0, 0, 0, .8);
+    top: 0;
+    left: 0;
+    bottom: 20%;
+    height: 100%;
+    width: 100%;
+}
+
+.modalSchedule-container {
+    z-index: 105;
+    content: "";
+    display: none;
+    position: absolute;
+    text-align: left;
+    top: 30%;
+    right: 35%;
+    left: 50%;
+    bottom: 30%;
+    width: 100%;
+    height: 45%;
+    opacity: 1;
+    max-width: 1000px;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    padding: 0;
+    border-radius: 5px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, .6);
+    -webkit-transform: translate(-50%, -200%);
+    -ms-transform: translate(-50%, -200%);
+    transform: translate(-50%, -200%);
+}
+
+.modalSchedule:target:before {
+    display: block;
+}
+
+.modalSchedule:target .modalSchedule-container {
+    display: block;
+    -webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+}
+
+.modalSchedule-Options {
+    position: absolute;
+    overflow-y: scroll;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: 35%;
+    border-style: inset;
+    border-width: 5px;
+    font-color: #ffffff;
+    word-wrap: normal;
+}
+
+.modalSchedule-OptionsEnd {
+    position: absolute;
+    overflow-y: scroll;
+    left: 65%;
+    bottom: 0;
+    height: 100%;
+    width: 35%;
+    border-style: inset;
+    border-width: 5px;
+    font-color: #ffffff;
+    word-wrap: normal;
+}
+
+.modalSchedule-OptionsNotes {
+    position: absolute;
+    overflow-y: scroll;
+    left: 35%;
+    bottom: 0;
+    height: 100%;
+    width: 30%;
+    border-style: inset;
+    border-width: 5px;
+    font-color: #ffffff;
+    word-wrap: normal;
+}
+
+.modalSchedule-header {
+    height: 10%;
+    border-bottom: 1px solid #EEE;
+    background-color: #ffffff;
+    height: 40px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.modalSchedule-close {
+    right: 0;
+    bottom: -10%;
+    position: absolute;
 }
