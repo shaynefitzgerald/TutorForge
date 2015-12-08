@@ -40,14 +40,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 
-
+    <!--
+     Opening JS using .get to grab:
+        -All tutors currently in server
+        -All Major Tags currently in server
+-->
     <script>
         var allTutors;
         var checkGetSuccess;
         var NewTutorInfo;
+        var myTags;
 
         $(function () {
             var dialog, form,
+
+
+                // Establish finction for Register Tutor Form (Using JQuery)
 
                 // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
                 emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
@@ -59,6 +67,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 allFields = $([]).add(name).add(email).add(password),
                 tips = $(".validateTips");
 
+            //Get Call to pull all tutors from server
+
             $.get('https://tutorme.stetson.edu/api/tutors/getAll', function (data) {
                 sessionStorage.setItem('AllTutors', JSON.stringify(data));
                 console.log(data);
@@ -66,10 +76,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 console.log(allTutors);
                 console.log(data.success);
                 checkGetSuccess = data.success;
-                // console.log(allTutors[0].Username);
+            });
+            // Get Call to Pull all Major Tags from Server
+            $.get('https://tutorme.stetson.edu/api/courses/getMajorTags', function (data) {
+                sessionStorage.setItem('Tags', JSON.stringify(data));
+                console.log(data);
+                myTags = data.result;
+                console.log(myTags);
+                console.log(data.success);
             });
 
-
+            //functionality to update lines upon click
             function updateTips(t) {
                 tips
                     .text(t)
@@ -78,7 +95,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     tips.removeClass("ui-state-highlight", 1500);
                 }, 500);
             }
-
+            // checks against max and min length paramaters set by the dialog
             function checkLength(o, n, min, max) {
                 if (o.val().length > max || o.val().length < min) {
                     o.addClass("ui-state-error");
@@ -89,7 +106,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     return true;
                 }
             }
-
+            //activates checks for regExp
             function checkRegexp(o, regexp, n) {
                 if (!(regexp.test(o.val()))) {
                     o.addClass("ui-state-error");
@@ -99,12 +116,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     return true;
                 }
             }
-
+            // Function called when a user is submitted by admin to be a tutor
             function addUser() {
 
                 var valid = true;
                 allFields.removeClass("ui-state-error");
-
+                // (var, id, min Char Length,max Char Length)
                 valid = valid && checkLength(name, "username", 3, 24);
                 valid = valid && checkLength(email, "email", 6, 80);
                 valid = valid && checkLength(password, "password", 9, 9);
@@ -114,11 +131,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 valid = valid && checkRegexp(email, emailRegex, "eg. ui@jquery.com");
                 valid = valid && checkRegexp(password, /^([0-9])+$/, "#800 field only allow : 0-9");
                 valid = valid && checkRegexp(subject, /^[a-z]([0-9a-z_\s])+$/i, "Subject may consist of a-z, 0-9, underscores, spaces and must begin with a letter.");
-                //jQuery.ajaxSetup({async:false});
+
 
                 if (valid) {
-                    //Info(Properties) For New Student Tutor tbd
+                    //If all RegExp Rules are followed
                     var dataCheck;
+                    //Post to server with 800 Number, subject, and isTutor var true
                     $.post("https://tutorme.stetson.edu/api/administrator/setAsTutor", {
                             ID: password.val(),
                             Subject: subject.val(),
@@ -130,8 +148,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             dataCheck = data.success;
                             NewTutorInfo = data.result;
                             console.log(subject.val());
-                            //console.log(NewTutorInfo);
-                            //console.log(NewTutorInfo.Username);
+                            //determines if succesful and then appends to the table a new Tutor
                             if (dataCheck) {
                                 console.log(NewTutorInfo.Email);
                                 console.log(NewTutorInfo.ID);
@@ -140,12 +157,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     "<td><a href=\"#!\">" + NewTutorInfo.Email + "</a></td>" +
                                     "<td><a href=\"#!\">" + NewTutorInfo.ID + "</a></td>" +
                                     "</tr>");
+                                //Error handling
                             } else {
                                 alert("No Such Student in Our Registry");
                             }
 
                         });
-                    //jQuery.ajaxSetup({async:true});
 
 
 
@@ -153,6 +170,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 }
                 return valid;
             }
+            // Sets Dialog to be a percentage of the viewport
             var wWidth = $(window).width();
             var dWidth = wWidth * 0.5;
             var wHeight = $(window).height();
@@ -173,7 +191,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     allFields.removeClass("ui-state-error");
                 }
             });
-
+            //Jquery find form and calls addUser() upon submit
             form = dialog.find("form").on("submit", function (event) {
                 event.preventDefault();
                 addUser();
@@ -190,6 +208,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <body>
 
+
+    <!--
+    Header with Admin picture, menu option, Calendar Modal Pop-up
+    
+    
+    
+-->
     <link rel="stylesheet" href="css/modal.css">
 
     <div class="wrap">
@@ -220,7 +245,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     <div class="user-info">
                                         <h4>Hello,<a href="#"><div id="UNTop"></div></a></h4>
                                         <ul>
-                                            <!--                                            <li class="profile active"><a href="#">Profile </a></li>-->
+                                            <!-- Logout Session Button -->
                                             <li class="logout"><a href="https://tutorme.stetson.edu/api/logout"> Logout</a></li>
                                             <div class="clear"></div>
                                         </ul>
@@ -244,7 +269,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="column_left">
                 <div class="column_middle_grid1">
                     <div class="modalTutor-filler">
-                        <p><strong><font size='5' color='white'>Analytics</font></strong></p>
+                        <!--
+               TBAdded
+                R-Script Generated Graphs and Statistics of monthly usage
+                                    
+-->
+                        <p align='center'><strong><font size='5' color='white'>Analytics</font></strong></p>
                     </div>
                 </div>
             </div>
@@ -256,12 +286,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <div class="profile_picture_name">
                             <h2><div id="UN"></div></h2>
 
-                            <!--		            	<p>Lorem ipsum dolor sit amet consectetur adipisicing </p>-->
                         </div>
-                        <!--		             <span><a href="#"> <img src="images/follow_user.png" alt="" /> </a></span>-->
                     </div>
 
                     <script>
+                        //Get call for current logged in user's info to be displayed on screen
                         var username;
                         var usernameQuery;
                         $.getJSON('https://tutorme.stetson.edu/user', function (data) {
@@ -274,12 +303,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 
                         });
-                        //usernameQuery = "https://tutorme.stetson.edu/api/students/get?field=Username&value=" + username;
-                        //        $.getJSON(usernameQuery, function (data) {
-                        //            sessionStorage.setItem('User Info', JSON.stringify(data));
-                        //        });
                     </script>
-
+                    <!--                 Inline css for table and dialog form styling               -->
                     <style>
                         body {
                             font-size: 62.5%;
@@ -345,6 +370,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         }
                     </style>
                     <script>
+                        // Function to remove tutor via post to server using 800 Number
                         function removeTutor(idNum) {
                             $.post("https://tutorme.stetson.edu/api/administrator/removeTutor", {
                                     ID: idNum,
@@ -356,38 +382,226 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     if (removeCheck == false) {
                                         var err = data.error;
                                     }
+                                    // Error handling
                                     if (removeCheck) {
                                         alert("Tutor was succesfully removed! When the Page is refreshed the table will be updated!");
                                     } else {
                                         alert(err + ": If you believe this to be a system error please contact the development team!");
                                     }
-                                    //console.log(subject.val());
-                                    //console.log(NewTutorInfo);
-                                    //console.log(NewTutorInfo.Username);
                                 });
 
                         }
-                    </script>
+                        // Function to set Tutor's Schedule Via (800 Num, starting times (JS Date object), Ending Times (JS Date Object))
+                        function setTutorSchedule(id, dates, datesEnd) {
+                            console.log(dates);
+                            console.log(datesEnd);
+                            console.log(id);
+                            //Post to server to give a tutor a weekly schedule
+                            $.post("https://tutorme.stetson.edu/api/tutors/createSchedule", {
+                                    field: "ID",
+                                    value: id,
+                                    Schedule: {
+                                        "M": [{
+                                            Start: dates[0],
+                                            End: datesEnd[0]
+                                        }],
+                                        "T": [{
+                                            Start: dates[1],
+                                            End: datesEnd[1]
+                                        }],
+                                        "W": [{
+                                            Start: dates[2],
+                                            End: datesEnd[2]
+                                        }],
+                                        "R": [{
+                                            Start: dates[3],
+                                            End: datesEnd[3]
+                                        }],
+                                        "F": [{
+                                            Start: dates[4],
+                                            End: datesEnd[4]
+                                        }],
+                                        "S": [{
+                                            Start: dates[5],
+                                            End: datesEnd[5]
+                                        }],
+                                        "U": [{
+                                            Start: dates[6],
+                                            End: datesEnd[6]
+                                        }],
+                                    }
+                                },
+                                //Check for Success
+                                function (data, status) {
+                                    sessionStorage.setItem('New Tutor Info', JSON.stringify(data));
+                                    console.log(data);
+                                    var removeCheck = data.success;
+                                    if (removeCheck == false) {
+                                        var err = data.error;
+                                    }
+                                    // Error Handling
+                                    if (removeCheck) {
+                                        alert("Tutor Schedule was succesfully updated!");
+                                    } else {
+                                        alert(err + ": If you believe this to be a system error please contact the development team!");
+                                    }
+                                });
 
+                        }
+
+                        // Validates Date objects from SetScheduleForm Time Objects
+                        function validateForm(id) {
+                            console.log("success");
+                            //prevents re-direct
+                            $("#Time-Form").submit(function (event) {
+                                alert("Handler for .submit() called.");
+                                event.preventDefault();
+                            });
+
+                            var mon, tues, weds, thurs, fri, sat, sun;
+
+                            var monE, tuesE, wedsE, thursE, friE, satE, sunE;
+
+                            mon = $("#monS").val();
+
+                            tues = $("#tuesS").val();
+
+                            weds = $("#wedsS").val();
+
+                            thurs = $("#thursS").val();
+
+                            fri = $("#friS").val();
+
+                            sat = $("#satS").val();
+
+                            sun = $("#sunS").val();
+
+                            if (mon == "") {
+                                mon = "00:00";
+                            }
+                            if (tues == "") {
+                                tues = "00:00";
+                            }
+                            if (weds == "") {
+                                weds = "00:00";
+                            }
+                            if (thurs == "") {
+                                thurs = "00:00";
+                            }
+                            if (fri == "") {
+                                fri = "00:00";
+                            }
+                            if (sat == "") {
+                                sat = "00:00";
+                            }
+                            if (sun == "") {
+                                sun = "00:00";
+                            }
+                            mon = "Thu Jun 24 1999 " + mon + ":00 GMT-0400 (Eastern Daylight Time)";
+
+                            tues = "Thu Jun 24 1999 " + tues + ":00 GMT-0400 (Eastern Daylight Time)";
+
+                            weds = "Thu Jun 24 1999 " + weds + ":00 GMT-0400 (Eastern Daylight Time)";
+
+                            thurs = "Thu Jun 24 1999 " + thurs + ":00 GMT-0400 (Eastern Daylight Time)";
+
+                            fri = "Thu Jun 24 1999 " + fri + ":00 GMT-0400 (Eastern Daylight Time)";
+
+                            sat = "Thu Jun 24 1999 " + sat + ":00 GMT-0400 (Eastern Daylight Time)";
+
+                            sun = "Thu Jun 24 1999 " + sun + ":00 GMT-0400 (Eastern Daylight Time)";
+
+                            var StartTimes = new Array(mon, tues, weds, thurs, fri, sat, sun);
+
+                            console.log(StartTimes);
+
+                            monE = $("#monE").val();
+
+                            tuesE = $("#tuesE").val();
+
+                            wedsE = $("#wedsE").val();
+
+                            thursE = $("#thursE").val();
+
+                            friE = $("#friE").val();
+
+                            satE = $("#satE").val();
+
+                            sunE = $("#sunE").val();
+
+                            if (monE == "") {
+                                monE = "00:00";
+                            }
+                            if (tuesE == "") {
+                                tuesE = "00:00";
+                            }
+                            if (wedsE == "") {
+                                wedsE = "00:00";
+                            }
+                            if (thursE == "") {
+                                thursE = "00:00";
+                            }
+                            if (friE == "") {
+                                friE = "00:00";
+                            }
+                            if (satE == "") {
+                                satE = "00:00";
+                            }
+                            if (sunE == "") {
+                                sunE = "00:00";
+                            }
+                            monE = "Thu Jun 24 1999 " + monE + ":00 GMT-0400 (Eastern Daylight Time)";
+
+                            tuesE = "Thu Jun 24 1999 " + tuesE + ":00 GMT-0400 (Eastern Daylight Time)";
+
+                            wedsE = "Thu Jun 24 1999 " + wedsE + ":00 GMT-0400 (Eastern Daylight Time)";
+
+                            thursE = "Thu Jun 24 1999 " + thursE + ":00 GMT-0400 (Eastern Daylight Time)";
+
+                            friE = "Thu Jun 24 1999 " + friE + ":00 GMT-0400 (Eastern Daylight Time)";
+
+                            satE = "Thu Jun 24 1999 " + satE + ":00 GMT-0400 (Eastern Daylight Time)";
+
+                            sunE = "Thu Jun 24 1999 " + sunE + ":00 GMT-0400 (Eastern Daylight Time)";
+
+                            var EndTimes = new Array(monE, tuesE, wedsE, thursE, friE, satE, sunE);
+
+                            console.log(EndTimes);
+
+                            setTutorSchedule(id, StartTimes, EndTimes);
+                            return false;
+                        }
+                    </script>
+                    <!--
+                    Creates Form fieldset and data fields for Registering a Tutor
+                    
+                    
+                    
+-->
                     <div id="dialog-form" title="Register Tutor">
                         <p class="validateTips">Register Tutor!</p>
                         <form>
                             <fieldset>
                                 <label for="name">Name</label>
-                                <input type="text" name="name" id="name" value="Jane Smith" class="text ui-widget-content ui-corner-all">
-                                <label for="name">Subject</label>
-                                <input type="text" name="name" id="subject" value="CSCI" class="text ui-widget-content ui-corner-all">
+                                <font size='3'><input type="text" name="name" id="name" placeholder= "Jane Smith" class="text ui-widget-content ui-corner-all"></font>
+                                <label for="MTags">Subject</label>
+                                <font size='3'><input name="name" list="MTags" id="subject"/></font>
+                                <datalist id="MTags"></datalist>
                                 <label for="email">Email</label>
-                                <input type="text" name="email" id="email" value="Jane@Smith.com" class="text ui-widget-content ui-corner-all">
+                                <font size='3'><input type="text" name="email" id="email" placeholder= "jsmith@stetson.edu" class="text ui-widget-content ui-corner-all"></font>
                                 <label for="password">#800</label>
-                                <input type="text" name="password" id="password" value="800" class="text ui-widget-content ui-corner-all">
+                                <font size='3'><input type="text" name="password" id="password" placeholder= "800000000" class="text ui-widget-content ui-corner-all"></font>
 
                                 <!-- Allow form submission with keyboard without duplicating the dialog button -->
                                 <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
                             </fieldset>
                         </form>
                     </div>
-
+                    <!--
+                    Creates Table to house Tutors
+                    As well as their personal pages
+                    
+-->
 
                     <div id="users-contain" class="ui-widget">
                         <h1><div align = "center"><font size= 3 color= "#ffffff" > Registered Tutors! </font></div></h1>
@@ -416,13 +630,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
             </div>
 
-
+            <!--             Generates Full Calendar for Right card-->
             <div class="column_right">
-                <!--
-<div class="column_right_grid calender" style="background-color: white">
-<div id="calendar_1"></div>
-</div>
--->
                 <div id="calendar_1" style="background-color: #ffffff"></div>
             </div>
             <div class="clear"></div>
@@ -433,6 +642,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     </div>
 
     <script>
+        //Script to load data into Calendar
+        //TBAddedTo
         $(window).load(function () {
 
             // page is now ready, initialize the calendar...
@@ -492,6 +703,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         //from http://jsfiddle.net/oh16h7cj/ | http://stackoverflow.com/questions/1207939/adding-an-onclick-event-to-a-table-row, adapted to my situation
     </script>
     <script>
+        //Script to load data into Calendar (Modal)
+        //TBAdded TO
         $(window).load(function () {
 
             // page is now ready, initialize the calendar...
@@ -545,28 +758,46 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
         });
 
+        //Creates a Wait Timer on these funtions so that they can get all the relevant get requests back without having to hang page on a synchronous call
         setTimeout(function () {
+
             var dateTemp;
             var dates
+
+            var options = '';
+            // Updates Tags in the Register Tutor Form
+            for (var i = 0; i < myTags.length; i++) {
+                options += '<option value="' + myTags[i].MajorSubject + '" />';
+                console.log(myTags[i]);
+            }
+
+            document.getElementById('MTags').innerHTML = options;
+            // To Be Finished.. Calls to get Previous and upcoming sessions... Server Errors on call
             if (checkGetSuccess) {
                 for (i = 0; i < allTutors.length; i++) {
-                    $.get('https://tutorme.stetson.edu/api/sessions/getPreviousSessions?by=Username&value=' + allTutors[i].Username, function (data) {
+                    $.get('https://tutorme.stetson.edu/api/sessions/getPreviousSessions?by=ID&value=' + allTutors[i].ID, function (data) {
                         sessionStorage.setItem('Prev_Appointments', JSON.stringify(data));
-
-
-
+                        console.log(data);
+                    });
+                    // To Be Finished.. Calls to get Previous and upcoming sessions... Server Errors on call
+                    $.get('https://tutorme.stetson.edu/api/sessions/getScheduledSessions?by=Username&value=' + allTutors[i].Username, function (data) {
+                        sessionStorage.setItem('Upcoming_Appointments', JSON.stringify(data));
+                        console.log(data);
                     });
 
-                    console.log("Add Row");
+                    //console.log("Add Row");
                     dateTemp = new Date(allTutors[i].LastArchivedSession);
-
+                    //Dynamically updates the table to have each tutor from the list of tutors added as well as have their own page modal pop-ups that populate themselves as well as handle their own removeTutor Functionality and SetSchedule Functionality
+                    // Be very careful with changing this as it is completely free form and a slight mistake in syntax ex(',") can ruin the entire 
                     $("#users tbody").append("<tr>" +
                         "<td><a href='#mTut" + i + "'>" + allTutors[i].FullName + "</a></td>" +
                         "<td><a href='#mTut" + i + "'>" + allTutors[i].Email + "</a></td>" +
                         "<td><a href='#mTut" + i + "'>" + allTutors[i].ID + "</a></td>" +
-                        "</tr>", "<div class='modalTutor' id='mTut" + i +
-                        "'> <div class='modalTutor-container'>" +
+                        "</tr>",
+                        "<div class='modalTutor' id='mTut" + i + "'>" +
+                        "<div class='modalTutor-container'>" +
                         "<p align= 'center'><font size= '7' color= 'white'><strong>" + allTutors[i].FullName + "</strong></font>" +
+                        "<div class='modalTutor-SetSchedule'><a class = 'myButton' href='#mTS" + i + "'>Set Schedule</a></div></p>" +
                         "<div class='modalTutor-rmTutor'><a class = 'myButton' onclick='removeTutor(" + allTutors[i].ID + ")'>Remove Tutor</a></div></p>" +
                         "<div class= 'modalTutor-feedback'><p align= 'center'><font size= '7' color='white'><strong>Feedback</strong></font></p> " +
                         "</div> <div class= 'modalTutor-stats'><p align= 'center'><font size= '7' color='white'><strong>Statistics</strong></font></p> " +
@@ -581,15 +812,71 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         "<p><font size= '3' color='white'><strong>Session History:</strong></font></p>" +
                         "<p><font size= '2' color='white'>No Session History</font></p>" +
                         "<p><font size= '3' color='white'><strong>Last Archived Session:</strong></font></p>" +
-                        "<p><font size= '2' color='white'>" + dateTemp.getMonth() + "/" + dateTemp.getDate() + "/" + dateTemp.getFullYear() + " At " + dateTemp.getTime() + "</font>" +
-
+                        "<p><font size= '2' color='white'>" + dateTemp.getMonth() + "/" + dateTemp.getDate() + "/" + dateTemp.getFullYear() + " At " + dateTemp.getTime() +
+                        "</font>" +
                         "</p>" +
 
                         "</div>" +
-                        "<div class = 'modalTutor-close'><p align= 'right'><a href='#'><font size= '5' color='#66e0ff'>Close</font></a></p></div></div></div>");
+                        "<div class = 'modalTutor-close'><p align= 'right'><a href='#'><font size= '5' color='#66e0ff'>Close</font></a></p></div></div></div>" +
+                        "<div class='modalSchedule' id='mTS" + i + "'>" +
+                        "<div class='modalSchedule-container'>" +
+                        "<div class='modalSchedule-Options'>" +
+                        "<iframe name='hiddenFrame' width='0' height='0' border='0' style='display: none;'></iframe>" +
+                        "<div style= 'font:1.5em/1em Arial, Helvetica, Sans-Serif;'>" +
+                        "Select a Start Time: Monday" +
+                        "<input id = 'monS' type='time' name='mon_STime'>" +
+                        "Select a Start Time: Tuesday" +
+                        "<input id = 'tuesS' type='time' name='tues_STime'>" +
+                        "Select a Start Time: Wednesday" +
+                        "<input id = 'wedsS' type='time' name='weds_STime'>" +
+                        "Select a Start Time: Thursday" +
+                        "<input id = 'thursS' type='time' name='thurs_STime'>" +
+                        "Select a Start Time: Friday" +
+                        "<input id = 'friS' type='time' name='fri_STime'>" +
+                        "Select a Start Time: Saturday" +
+                        "<input id = 'satS' type='time' name='sat_STime'>" +
+                        "Select a Start Time: Sunday" +
+                        "<input id = 'sunS' type='time' name='sun_STime'>" +
+                        "</div>" +
 
-                    console.log("Add Row End");
-                    //document.getElementById("TutorID" + i).innerHTML=allTutors[i].ID;
+                        "</div>" +
+                        "<div class=modalSchedule-OptionsEnd>" +
+                        "<div style= 'font:1.5em/1em Arial, Helvetica, Sans-Serif;'>" +
+                        "Select a End Time: Monday" +
+                        "<input id = 'monE' type='time' name='mon_ETime'>" +
+                        "Select a End Time: Tuesday" +
+                        "<input id = 'tuesE' type='time' name='tues_ETime'>" +
+                        "Select a End Time: Wednesday" +
+                        "<input id = 'wedsE' type='time' name='weds_ETime'>" +
+                        "Select a End Time: Thursday" +
+                        "<input id = 'thursE' type='time' name='thurs_ETime'>" +
+                        "Select a End Time: Friday" +
+                        "<input id = 'friE' type='time' name='fri_ETime'>" +
+                        "Select a End Time: Saturday" +
+                        "<input id = 'satE' type='time' name='sat_ETime'>" +
+                        "Select a End Time: Sunday" +
+                        "<input id = 'sunE' type='time' name='sun_ETime'>" +
+
+                        "</div>" +
+                        "</div>" +
+                        "<div style= 'font:1.5em/1em Arial, Helvetica, Sans-Serif;'>" +
+                        "<div class=modalSchedule-OptionsNotes>" +
+                        "<p><strong>This Menu is to setup a tutor's schedule!</strong></p>" +
+                        "<BR>&nbsp;<BR>" +
+                        "<p><strong>Use the time selectors on the left to select the beginning of the tutor's shift!</strong></p>" +
+                        "<BR>&nbsp;<BR>" +
+                        "<p><strong>Use the time selectors on the right to select the end of the tutor's shift!!</strong></p>" +
+                        "<BR>&nbsp;<BR>" +
+                        "<input type = 'submit' onclick='validateForm(" + allTutors[i].ID + ")'>" +
+                        "</form>" +
+                        "</div>" +
+                        "</div>" +
+                        "<div class = 'modalSchedule-close'><p align= 'right'><a href='#'><font size= '5' color='#66e0ff'>Close</font></a></p></div></div></div>" +
+                        "</div>" +
+                        "</div>");
+
+
+                    //console.log("Add Row End");
                 }
             } else {
                 console.log("GetAllTutors Failed");
