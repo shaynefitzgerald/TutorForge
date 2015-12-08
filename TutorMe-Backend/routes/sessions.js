@@ -77,7 +77,7 @@ var db_getPreviousSessions = function(db, by, value, callback){
 };
 var db_endSession = function(db, sessionData, callback){
   var SessionModel = db.model("SessionModel");
-  if(sessionData.improptu === true){
+  if(sessionData.Improptu === true){
     return (new SessionModel(sessionData)).save(function(err){
       if(err) return callback(false, err);
       return callback(true);
@@ -154,9 +154,9 @@ exports.init = function(cas, db){
     var query = ( url.parse( req.url ).query !== null ) ?
      querystring.parse( url.parse( req.url ).query ) : {};
 
-    if(req.session.cas_user === undefined)
+    if(req.session.cas_user === undefined){
       return fn_error(res, "Unauthorized, please authenticate.");
-    else if(query.by === undefined || query.value === undefined){
+    } else if(query.by === undefined || query.value === undefined){
       if(req.session.userPermissions.indexOf('t') < 0){
         return fn_error(res, "You are not a Tutor. Please specify a tutor to get sessions for.");
       } else {
@@ -173,9 +173,9 @@ exports.init = function(cas, db){
     var query = ( url.parse( req.url ).query !== null ) ?
      querystring.parse( url.parse( req.url ).query ) : {};
 
-    if(req.session.cas_user === undefined)
+    if(req.session.cas_user === undefined){
       return fn_error(res, "Unauthorized, please authenticate.");
-    else if(query.by === undefined || query.value === undefined){
+    } else if(query.by === undefined || query.value === undefined){
         query.by = "Username"; query.value = req.session.cas_user;
     }
     return db_getPreviousSessions(db, query.by, query.value, function(success, result) {

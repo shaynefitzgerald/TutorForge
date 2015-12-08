@@ -215,8 +215,8 @@ exports.init = function(cas, db) {
       'RequestedStart', 'Location', 'Subject'
     ];
     if (containsKeys(query, validKeys)) {
-      return db_makeRequest(db, query, function(err, result) {
-        if (err) return fn_error(res, result);
+      return db_makeRequest(db, query, function(success, result) {
+        if (!success) return fn_error(res, result);
         return fn_success(res, result);
       });
     } else {

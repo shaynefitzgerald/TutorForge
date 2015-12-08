@@ -40,21 +40,6 @@ exports.init = function(cas, db) {
       username: req.session.cas_user
     }));
   });
-  router.post('/addAdministrator', cas.block, function(req, res){
-    res.type('applicaiton/json');
-    var body = req.body;
-    var Administrator = db.model('AdministratorModel');
-    if(body.Email !== undefined){
-      return (new Administrator({
-        Email : body.Email
-      })).save(function(err){
-        if(err) return fn_error(err);
-        return fn_success();
-      });
-    } else {
-      return fn_error();
-    }
-  });
   router.get('/docs', function(req, res, next) {
     try {
       require('fs').readFile(__dirname + "/../README.html", function(err, data) {
