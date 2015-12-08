@@ -191,6 +191,11 @@ exports.init = function(cas, db) {
       return fn_success(res, result);
     });
   });
+
+  /*
+    TODO: pfukit, ship it. This code needs debugging, badly.
+  */
+
   router.post('/createSchedule', function(req, res){
     res.type('application/json');
     var body = req.body;
