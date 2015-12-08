@@ -21,8 +21,11 @@ app.set('port', port);
  */
 
 var options = {
-  key: fs.readFileSync('/app/tutorme.stetson.edu.ssl/tutorme.stetson.edu.key'),
-  cert: fs.readFileSync('/app/tutorme.stetson.edu.ssl/35005776576718d6.crt')
+  key: fs.readFileSync('/app/tutorme.stetson.edu.ssl/tutorme.stetson.edu.key', 'utf-8'),
+  cert: fs.readFileSync('/app/tutorme.stetson.edu.ssl/35005776576718d6.crt', 'utf-8'),
+  ca : [
+    fs.readFileSync('/app/tutorme.stetson.edu.ssl/gd_bundle-g2-g1.crt', 'utf-8')
+  ],
 };
 
 /**
