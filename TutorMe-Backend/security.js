@@ -4,8 +4,8 @@ var init = function(cas, db) {
   try {
     routeFlags = JSON.parse(fs.readFileSync(__dirname + 'routeFlagsConf.json'));
   } catch(e){
-    console.err(e);
-    console.err("Security Init Failed. Terminating...");
+    console.error(e);
+    console.error("Security Init Failed. Terminating...");
     process.exit(-1);
   }
   return function(req, res, next) {
