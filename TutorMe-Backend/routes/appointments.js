@@ -208,7 +208,7 @@ exports.init = function(cas, db) {
 
   AppointmentRequestModel = db.model('AppointmentRequestModel');
 
-  router.post('/makeRequest', function(req, res) {
+  router.post('/makeRequest', cas.block, function(req, res) {
     res.type('application/json');
     var query = req.body;
     var validKeys = ['Student', 'StudentField', 'TutorField', 'Tutor',
@@ -223,8 +223,11 @@ exports.init = function(cas, db) {
       return fn_error(res, "Invalid or Missing Fields");
     }
   });
-  router.get('/getAppointmentRequests', function(req, res) {
+  router.get('/getAppointmentRequests', cas.block, function(req, res) {
     res.type('application/json');
+
+    if(!routeSecurity.authorized(req)) return fn_error(res, "Unauthorized");
+
     var query = (url.parse(req.url).query !== null) ?
       querystring.parse(url.parse(req.url).query) : {};
 
@@ -247,7 +250,7 @@ exports.init = function(cas, db) {
     }
   });
 
-  router.post('/respondToRequest', function(req, res) {
+  router.post('/respondToRequest', cas.block, function(req, res) {
     res.type('application/json');
     var query = (url.parse(req.url).query !== null) ?
       querystring.parse(url.parse(req.url).query) : {};
@@ -271,7 +274,7 @@ exports.init = function(cas, db) {
       }
     }
   });
-  router.post('/withdrawRequest', function(req, res) {
+  router.post('/withdrawRequest', cas.block, function(req, res) {
     res.type('application/json');
     var query = (url.parse(req.url).query !== null) ?
       querystring.parse(url.parse(req.url).query) : {};

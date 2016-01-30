@@ -24,7 +24,7 @@ var db_getMajorTags = function(db, callback) {
 exports.init = function(cas, db) {
   var router = express.Router();
 
-  router.get('/getMajorTags', function(req, res) {
+  router.get('/getMajorTags', cas.block, function(req, res) {
     res.type('application/json');
     return db_getMajorTags(db, function(success, result) {
       if (!success) return fn_error(res, result);

@@ -1,5 +1,5 @@
 var express = require('express');
-
+var routeSecurity = require('../security.js');
 {
   var containsKeys = function(a, b) {
     var ret = true;
@@ -128,9 +128,12 @@ var db_removeTutor = function(db, query, callback) {
 exports.init = function(cas, db) {
   var router = express.Router();
 
-  router.post('/setAsTutor', function(req, res) {
+  router.post('/setAsTutor', cas.block , function(req, res) {
     res.type('application/json');
     var body = req.body;
+
+    if(!routeSecurity.authorized(req)) return fn_error(res, "Unauthorized");
+
     if (!containsKeys(body, ['ID', 'Subject', 'isStudentTutor'])) {
       return fn_error(res, "Missing or Malformed Parameters");
     }
@@ -139,8 +142,11 @@ exports.init = function(cas, db) {
       return fn_success(res, result);
     });
   });
-  router.post('/createNonStudentTutor', function(req, res) {
+  router.post('/createNonStudentTutor', cas.block, function(req, res) {
     res.type('application/json');
+    var body = req.body;
+    if(!routeSecurity.authorized(req)) return fn_error(res, "Unauthorized");
+
     if (!containsKeys(body, ['ID', 'FirstName', 'LastName', 'Subject', 'isStudentTutor'])) {
       return fn_error(res, "Missing or Malformed Parameters");
     }
@@ -149,8 +155,9 @@ exports.init = function(cas, db) {
       return fn_success(res, result);
     });
   });
-  router.post('/removeTutor', function(req, res) {
+  router.post('/removeTutor', cas.block, function(req, res) {
     res.type('application/json');
+    if(!routeSecurity.authorized(req)) return fn_error(res, "Unauthorized");
     var body = req.body;
     if (!containsKeys(body, ['ID'])) {
       return fn_error(res, "Missing or Malformed Parameters");

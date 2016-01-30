@@ -109,7 +109,7 @@ exports.init = function(cas, db) {
       result : Boolean,
     }
   */
-  router.get('/isTutor', function(req, res, next) {
+  router.get('/isTutor', cas.block, function(req, res, next) {
     res.type('application/json');
     var query = (url.parse(req.url).query !== null) ?
       querystring.parse(url.parse(req.url).query) : {};
@@ -146,7 +146,7 @@ exports.init = function(cas, db) {
       result : [Object]
     }
   */
-  router.get('/getStudentProfessors', function(req, res, next) {
+  router.get('/getStudentProfessors', cas.block, function(req, res, next) {
     res.type('application/json');
     var StudentID;
     var query = (url.parse(req.url).query !== null) ?
@@ -186,7 +186,7 @@ exports.init = function(cas, db) {
       result : [Object]
     }
   */
-  router.get('/getStudentCourses', function(req, res, next) {
+  router.get('/getStudentCourses', cas.block, function(req, res, next) {
     res.type('application/json');
     var StudentID;
     var query = (url.parse(req.url).query !== null) ?
@@ -225,7 +225,7 @@ exports.init = function(cas, db) {
       result : [Object],
     }
   */
-  router.get('/get', function(req, res, next) {
+  router.get('/get', cas.block, function(req, res, next) {
     res.type('application/json');
     var validFields = [
       "ID", "OtherID", "FirstName", "LastName", "FullName", "Email", "Username", "IsTutor"
