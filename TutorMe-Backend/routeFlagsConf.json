@@ -1,0 +1,23 @@
+{
+  "/api/appointments/makeRequest" : "s",
+  "/api/appointments/getAppointmentRequests" : "st",
+  "/api/appointments/respondToRequest" : "t",
+  "/api/appointments/withdrawRequest" : "s",
+
+  "/api/tutors/getAll" : "sta",
+  "/api/tutors/get" : "sta",
+  "/api/tutors/createSchedule" : "a",
+  "/api/tutors/updateSchedule" : "a",
+  "/api/tutors/getSchedule" : "sta",
+
+  "/api/sessions/endSession" : "t",
+  "/api/sessions/getPreviousSessions" : "ta",
+  "/api/sessions/getScheduledSessions" : "ta",
+
+  "/api/students/isTutor" : "sta",
+  "/api/students/getStudentCourses" : "sta",
+  "/api/students/getStudentProfessors" : "sta",
+  "/api/students/get" : "sta",
+
+  "/api/courses/getMajorTags" : "sta",
+}

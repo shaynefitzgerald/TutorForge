@@ -118,7 +118,8 @@ var db_endSession = function(db, sessionData, callback){
 exports.init = function(cas, db){
   var router = express.Router();
 
-  router.post('/endSession',  function(req, res){
+  router.post('/endSession', cas.block,  function(req, res){
+    if(!routeSecurity.authorized(req)) return fn_error(res, "Unauthorized");
     res.type('application/json');
     var body = req.body;
     if(body.improptu === true){
@@ -149,7 +150,8 @@ exports.init = function(cas, db){
       }
     }
   });
-  router.get('/getPreviousSessions',  function(req, res){
+  router.get('/getPreviousSessions', cas.block,  function(req, res){
+    if(!routeSecurity.authorized(req)) return fn_error(res, "Unauthorized");
     res.type('application/json');
     var query = ( url.parse( req.url ).query !== null ) ?
      querystring.parse( url.parse( req.url ).query ) : {};
@@ -168,7 +170,8 @@ exports.init = function(cas, db){
       return fn_success(res, result);
     });
   });
-  router.get('/getScheduledSessions', function(req, res){
+  router.get('/getScheduledSessions', cas.block, function(req, res){
+    if(!routeSecurity.authorized(req)) return fn_error(res, "Unauthorized");
     res.type('application/json');
     var query = ( url.parse( req.url ).query !== null ) ?
      querystring.parse( url.parse( req.url ).query ) : {};

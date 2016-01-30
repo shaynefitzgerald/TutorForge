@@ -163,7 +163,8 @@ var db_createSchedule = function(db, query, callback){
 };
 exports.init = function(cas, db) {
   var router = express.Router();
-  router.get('/getAll', function(req, res) {
+  router.get('/getAll', cas.block, function(req, res) {
+    if(!routeSecurity.authorized(req)) return fn_error(res, "Unauthorized");
     res.type('application/json');
     var query = (url.parse(req.url).query !== null) ?
       querystring.parse(url.parse(req.url).query) : {};
@@ -173,7 +174,8 @@ exports.init = function(cas, db) {
       return fn_success(res, result);
     });
   });
-  router.get('/get', function(req, res) {
+  router.get('/get', cas.block, function(req, res) {
+    if(!routeSecurity.authorized(req)) return fn_error(res, "Unauthorized");
     res.type('application/json');
     var validFields = ["ID", "Email", "Subject", "Username"];
     var queryRequirements = ['field', 'value'];
@@ -196,7 +198,8 @@ exports.init = function(cas, db) {
     TODO: pfukit, ship it. This code needs debugging, badly.
   */
 
-  router.post('/createSchedule', function(req, res){
+  router.post('/createSchedule', cas.block, function(req, res){
+    if(!routeSecurity.authorized(req)) return fn_error(res, "Unauthorized");
     res.type('application/json');
     var body = req.body;
     var validScheduleFields = ['M','T','W','R','F','S','U'];
@@ -216,7 +219,8 @@ exports.init = function(cas, db) {
       return fn_error(res, 'Invalid or Missing Schedule Fields');
     }
   });
-  router.post('/updateSchedule', function(req, res){
+  router.post('/updateSchedule', cas.block, function(req, res){
+    if(!routeSecurity.authorized(req)) return fn_error(res, "Unauthorized");
     res.type('application/json');
     var body = req.body;
     var validScheduleFields = ['M','T','W','R','F','S','U'];
@@ -236,7 +240,8 @@ exports.init = function(cas, db) {
       return fn_error(res, 'Invalid or Missing Schedule Fields');
     }
   });
-  router.get('/getSchedule', function(req, res){
+  router.get('/getSchedule', cas.block, function(req, res){
+    if(!routeSecurity.authorized(req)) return fn_error(res, "Unauthorized");
     res.type('application/json');
     var validFields = ["ID", "Email", "Username"];
     var queryRequirements = ['field', 'value'];
