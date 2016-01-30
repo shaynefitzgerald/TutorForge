@@ -7,6 +7,6 @@ exports.init = function(app, routePrefix, CASInstance, db) {
   });
   for(var x = 0; x < files.length; x++){
     var routePath = '/api/' + path.basename(files[x], '.js');
-    app.use(routePath, require(path.join(routePrefix, files[x])).init(CASInstance, db));
+    app.use(routePath, require(path.join(__dirname, routePrefix, files[x])).init(CASInstance, db));
   }
 };
