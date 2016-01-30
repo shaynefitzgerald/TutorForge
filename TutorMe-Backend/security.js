@@ -2,7 +2,7 @@ var fs = require('fs');
 var init = function(cas, db) {
   var routeFlags;
   try {
-    routeFlags = JSON.parse(fs.readFileSync(__dirname + 'routeFlagsConf.json'));
+    routeFlags = JSON.parse(fs.readFileSync(__dirname + '/routeFlagsConf.json'));
   } catch(e){
     console.error(e);
     console.error("Security Init Failed. Terminating...");
