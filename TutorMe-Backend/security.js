@@ -2,8 +2,8 @@ var fs = require('fs');
 var init = function(cas, db) {
   var routeFlags;
   try {
-    routeFlags = JSON.parse(fs.readFileSync(__dirname + 'routeFlagsConf.json'));
-  } catch(e){
+    routeFlags = JSON.parse(fs.readFileSync(__dirname + '/routeFlagsConf.json'));
+  } catch (e) {
     console.error(e);
     console.error("Security Init Failed. Terminating...");
     process.exit(-1);
@@ -25,7 +25,7 @@ var init = function(cas, db) {
     var TutorModel = db.model('TutorModel');
     var AdministratorModel = db.model('AdministratorModel');
     return StudentModel.findOne({
-      Email : toEmail(req.session.cas_user)
+      Email: toEmail(req.session.cas_user)
     }, function(err, studentResult) {
       //console.log(studentResult);
       if (err) return error(res, err);
@@ -37,7 +37,7 @@ var init = function(cas, db) {
         }
       }
       return TutorModel.findOne({
-        Email : toEmail(req.session.cas_user)
+        Email: toEmail(req.session.cas_user)
       }, function(err, tutorResult) {
         //console.log(tutorResult);
         if (err) return error(res, err);
@@ -49,10 +49,10 @@ var init = function(cas, db) {
           }
         }
         return AdministratorModel.findOne({
-          Email : toEmail(req.session.cas_user)
+          Email: toEmail(req.session.cas_user)
         }, function(err, administratorResult) {
           //console.log(administratorResult);
-          if(err) return error(res, err);
+          if (err) return error(res, err);
           if (administratorResult !== undefined && administratorResult !== null) {
             if (req.session.userPermissions === undefined) {
               req.session.userPermissions = "a";
@@ -68,18 +68,18 @@ var init = function(cas, db) {
 };
 exports.init = init;
 
-var authorized = function(req){
+var authorized = function(req) {
   var isStudent = req.session.userPermissions.indexOf("s");
   var isTutor = req.session.userPermissions.indexOf("t");
   var isAdministrator = req.session.userPermissions.indexOf("a");
-  if(routeFlags[req.baseUrl] !== undefined){
-    if(routeFlags[req.baseUrl].indexOf("s") && isStudent){
+  if (routeFlags[req.baseUrl] !== undefined) {
+    if (routeFlags[req.baseUrl].indexOf("s") && isStudent) {
       return true;
     }
-    if(routeFlags[req.baseUrl].indexOf("t") && isTutor){
+    if (routeFlags[req.baseUrl].indexOf("t") && isTutor) {
       return true;
     }
-    if(routeFlags[req.baseUrl].indexOf("a") && isAdministrator){
+    if (routeFlags[req.baseUrl].indexOf("a") && isAdministrator) {
       return true;
     }
   }

@@ -19,5 +19,5 @@
   "/api/students/getStudentProfessors" : "sta",
   "/api/students/get" : "sta",
 
-  "/api/courses/getMajorTags" : "sta",
+  "/api/courses/getMajorTags" : "sta"
 }
