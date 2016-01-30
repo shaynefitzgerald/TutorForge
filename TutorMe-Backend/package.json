@@ -15,7 +15,8 @@
     "mongoose": "*",
     "morgan": "*",
     "node-markdown": "~0.1.1",
-    "serve-favicon": "*"
+    "serve-favicon": "*",
+    "helmet": "~0.15.0"
   },
   "devDependencies": {},
   "scripts": {
